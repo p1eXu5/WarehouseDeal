@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="SdelkaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="SdelkaModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SdelkaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SdelkaModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategorySet" EntityType="SdelkaModel.Category" />
+          <EntitySet Name="AppointmentSet" EntityType="SdelkaModel.Appointment" />
+          <EntitySet Name="RankSet" EntityType="SdelkaModel.Rank" />
+          <AssociationSet Name="CategoryCategory" Association="SdelkaModel.CategoryCategory">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Category1" EntitySet="CategorySet" />
+          </AssociationSet>
+          <EntitySet Name="DeptSet" EntityType="SdelkaModel.Dept" />
+          <EntitySet Name="ChangeSet" EntityType="SdelkaModel.Change" />
+          <EntitySet Name="WorkersStatusSet" EntityType="SdelkaModel.WorkersStatus" />
+          <EntitySet Name="WorkerSet" EntityType="SdelkaModel.Worker" />
+          <AssociationSet Name="WorkersStatusWorker" Association="SdelkaModel.WorkersStatusWorker">
+            <End Role="WorkersStatus" EntitySet="WorkersStatusSet" />
+            <End Role="Worker" EntitySet="WorkerSet" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentWorker" Association="SdelkaModel.AppointmentWorker">
+            <End Role="Appointment" EntitySet="AppointmentSet" />
+            <End Role="Worker" EntitySet="WorkerSet" />
+          </AssociationSet>
+          <AssociationSet Name="RankWorker" Association="SdelkaModel.RankWorker">
+            <End Role="Rank" EntitySet="RankSet" />
+            <End Role="Worker" EntitySet="WorkerSet" />
+          </AssociationSet>
+          <AssociationSet Name="DeptWorker" Association="SdelkaModel.DeptWorker">
+            <End Role="Dept" EntitySet="DeptSet" />
+            <End Role="Worker" EntitySet="WorkerSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChangeWorker" Association="SdelkaModel.ChangeWorker">
+            <End Role="Change" EntitySet="ChangeSet" />
+            <End Role="Worker" EntitySet="WorkerSet" />
+          </AssociationSet>
+          <EntitySet Name="ProductSet" EntityType="SdelkaModel.Product" />
+          <AssociationSet Name="CategoryProduct" Association="SdelkaModel.CategoryProduct">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+          <EntitySet Name="OperationSet" EntityType="SdelkaModel.Operation" />
+          <EntitySet Name="DevelopmentSet" EntityType="SdelkaModel.Development" />
+          <AssociationSet Name="WorkerDevelopment" Association="SdelkaModel.WorkerDevelopment">
+            <End Role="Worker" EntitySet="WorkerSet" />
+            <End Role="Development" EntitySet="DevelopmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationDevelopment" Association="SdelkaModel.OperationDevelopment">
+            <End Role="Operation" EntitySet="OperationSet" />
+            <End Role="Development" EntitySet="DevelopmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductDevelopment" Association="SdelkaModel.ProductDevelopment">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Development" EntitySet="DevelopmentSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" DefaultValue="Unnamed" />
+          <Property Name="ParentId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="CategoryChild" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
+          <Property Name="SearchComplexity" Type="Double" Nullable="true" />
+          <Property Name="PickingComplexity" Type="Double" Nullable="true" />
+          <Property Name="PackagingComplexity" Type="Double" Nullable="true" />
+          <Property Name="RankingComplexity" Type="Double" Nullable="true" />
+          <Property Name="CountingComplexity" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
+          </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseTitle" Type="String" Nullable="false" />
+          <Property Name="OfficialTitle" Type="String" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.AppointmentWorker" FromRole="Appointment" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HourlyRate" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="MonthlySalary" Type="Decimal" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="9" Scale="2" />
+          <Property Name="FinalHourlyRateReception" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="FinalHourlyRateShipment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.RankWorker" FromRole="Rank" ToRole="Worker" />
+        </EntityType>
+        <Association Name="CategoryCategory">
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="SdelkaModel.Category" Role="Category1" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Dept">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.DeptWorker" FromRole="Dept" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Change">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="true" DefaultValue="&quot;&quot;" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.ChangeWorker" FromRole="Change" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="WorkersStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkersStatusWorker" FromRole="WorkersStatus" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" />
+          <NavigationProperty Name="WorkersStatus" Relationship="SdelkaModel.WorkersStatusWorker" FromRole="Worker" ToRole="WorkersStatus" />
+          <Property Name="WorkersStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Appointment" Relationship="SdelkaModel.AppointmentWorker" FromRole="Worker" ToRole="Appointment" />
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rank" Relationship="SdelkaModel.RankWorker" FromRole="Worker" ToRole="Rank" />
+          <Property Name="RankId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptWorker" FromRole="Worker" ToRole="Dept" />
+          <Property Name="DeptId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Change" Relationship="SdelkaModel.ChangeWorker" FromRole="Worker" ToRole="Change" />
+          <Property Name="ChangeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Development" Relationship="SdelkaModel.WorkerDevelopment" FromRole="Worker" ToRole="Development" />
+        </EntityType>
+        <Association Name="WorkersStatusWorker">
+          <End Type="SdelkaModel.WorkersStatus" Role="WorkersStatus" Multiplicity="1" />
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="WorkersStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentWorker">
+          <End Type="SdelkaModel.Appointment" Role="Appointment" Multiplicity="1" />
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Appointment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="AppointmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RankWorker">
+          <End Type="SdelkaModel.Rank" Role="Rank" Multiplicity="1" />
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeptWorker">
+          <End Type="SdelkaModel.Dept" Role="Dept" Multiplicity="1" />
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChangeWorker">
+          <End Type="SdelkaModel.Change" Role="Change" Multiplicity="1" />
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Change">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="ChangeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="SdelkaModel.CategoryProduct" FromRole="Product" ToRole="Category" />
+          <Property Name="CategoryId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Development" Relationship="SdelkaModel.ProductDevelopment" FromRole="Product" ToRole="Development" />
+        </EntityType>
+        <Association Name="CategoryProduct">
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Cost" Type="Decimal" Nullable="true" Precision="5" Scale="2" />
+          <NavigationProperty Name="Development" Relationship="SdelkaModel.OperationDevelopment" FromRole="Operation" ToRole="Development" />
+        </EntityType>
+        <EntityType Name="Development">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period" Type="DateTime" Nullable="false" />
+          <Property Name="OperationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerDevelopment" FromRole="Development" ToRole="Worker" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Operation" Relationship="SdelkaModel.OperationDevelopment" FromRole="Development" ToRole="Operation" />
+          <Property Name="OperationId1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductDevelopment" FromRole="Development" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+        </EntityType>
+        <Association Name="WorkerDevelopment">
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Development">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationDevelopment">
+          <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="1" />
+          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Development">
+              <PropertyRef Name="OperationId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductDevelopment">
+          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Development">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="SdelkaModel" />
+        <Alias Key="Target" Value="SdelkaModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="SdelkaModelContainer" StorageEntityContainer="SdelkaModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1">
+        <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="10.375" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Dept" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Change" Width="1.5" PointX="5.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.WorkersStatus" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Worker" Width="1.5" PointX="5.125" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Product" Width="1.5" PointX="10.375" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Operation" Width="1.5" PointX="12.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Development" Width="1.5" PointX="10.375" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="SdelkaModel.CategoryCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.WorkersStatusWorker" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.AppointmentWorker" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.RankWorker" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.DeptWorker" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.ChangeWorker" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.CategoryProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.WorkerDevelopment" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.OperationDevelopment" ManuallyRouted="false" />
+        <AssociationConnector Association="SdelkaModel.ProductDevelopment" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
