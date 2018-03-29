@@ -50,18 +50,105 @@
             <End Role="Product" EntitySet="ProductSet" />
           </AssociationSet>
           <EntitySet Name="OperationSet" EntityType="SdelkaModel.Operation" />
-          <EntitySet Name="DevelopmentSet" EntityType="SdelkaModel.Development" />
-          <AssociationSet Name="WorkerDevelopment" Association="SdelkaModel.WorkerDevelopment">
-            <End Role="Worker" EntitySet="WorkerSet" />
-            <End Role="Development" EntitySet="DevelopmentSet" />
-          </AssociationSet>
+          <EntitySet Name="ShipmentSet" EntityType="SdelkaModel.Shipment" />
           <AssociationSet Name="OperationDevelopment" Association="SdelkaModel.OperationDevelopment">
             <End Role="Operation" EntitySet="OperationSet" />
-            <End Role="Development" EntitySet="DevelopmentSet" />
+            <End Role="Development" EntitySet="ShipmentSet" />
           </AssociationSet>
-          <AssociationSet Name="ProductDevelopment" Association="SdelkaModel.ProductDevelopment">
+          <EntitySet Name="GoodsReceptionDocumentSet" EntityType="SdelkaModel.GoodsReceptionDocument" />
+          <EntitySet Name="DocumentPrefixSet" EntityType="SdelkaModel.DocumentPrefix" />
+          <AssociationSet Name="WorkerGoodsReceptionDocument" Association="SdelkaModel.WorkerGoodsReceptionDocument">
+            <End Role="Worker" EntitySet="WorkerSet" />
+            <End Role="GoodsReceptionDocument" EntitySet="GoodsReceptionDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentPrefixGoodsReceptionDocument" Association="SdelkaModel.DocumentPrefixGoodsReceptionDocument">
+            <End Role="DocumentPrefix" EntitySet="DocumentPrefixSet" />
+            <End Role="GoodsReceptionDocument" EntitySet="GoodsReceptionDocumentSet" />
+          </AssociationSet>
+          <EntitySet Name="GoodsMovementDocumentSet" EntityType="SdelkaModel.GoodsMovementDocument" />
+          <EntitySet Name="AdressInventoryDocumentSet" EntityType="SdelkaModel.AdressInventoryDocument" />
+          <EntitySet Name="LoadingUnloadingDocumentSet" EntityType="SdelkaModel.LoadingUnloadingDocument" />
+          <AssociationSet Name="WorkerGoodsMovementDocument" Association="SdelkaModel.WorkerGoodsMovementDocument">
+            <End Role="Worker" EntitySet="WorkerSet" />
+            <End Role="GoodsMovementDocument" EntitySet="GoodsMovementDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentPrefixGoodsMovementDocument" Association="SdelkaModel.DocumentPrefixGoodsMovementDocument">
+            <End Role="DocumentPrefix" EntitySet="DocumentPrefixSet" />
+            <End Role="GoodsMovementDocument" EntitySet="GoodsMovementDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="WorkerAdressInventoryDocument" Association="SdelkaModel.WorkerAdressInventoryDocument">
+            <End Role="Worker" EntitySet="WorkerSet" />
+            <End Role="AdressInventoryDocument" EntitySet="AdressInventoryDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentPrefixAdressInventoryDocument" Association="SdelkaModel.DocumentPrefixAdressInventoryDocument">
+            <End Role="DocumentPrefix" EntitySet="DocumentPrefixSet" />
+            <End Role="AdressInventoryDocument" EntitySet="AdressInventoryDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="WorkerLoadingUnloadingDocument" Association="SdelkaModel.WorkerLoadingUnloadingDocument">
+            <End Role="Worker" EntitySet="WorkerSet" />
+            <End Role="LoadingUnloadingDocument" EntitySet="LoadingUnloadingDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentPrefixLoadingUnloadingDocument" Association="SdelkaModel.DocumentPrefixLoadingUnloadingDocument">
+            <End Role="DocumentPrefix" EntitySet="DocumentPrefixSet" />
+            <End Role="LoadingUnloadingDocument" EntitySet="LoadingUnloadingDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="GoodsMovementDocumentShipment" Association="SdelkaModel.GoodsMovementDocumentShipment">
+            <End Role="GoodsMovementDocument" EntitySet="GoodsMovementDocumentSet" />
+            <End Role="Shipment" EntitySet="ShipmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductShipment" Association="SdelkaModel.ProductShipment">
             <End Role="Product" EntitySet="ProductSet" />
-            <End Role="Development" EntitySet="DevelopmentSet" />
+            <End Role="Shipment" EntitySet="ShipmentSet" />
+          </AssociationSet>
+          <EntitySet Name="AdressSet" EntityType="SdelkaModel.Adress" />
+          <EntitySet Name="AdressTypeSet" EntityType="SdelkaModel.AdressType" />
+          <EntitySet Name="AdressKindSet" EntityType="SdelkaModel.AdressKind" />
+          <AssociationSet Name="AdressKindAdressType" Association="SdelkaModel.AdressKindAdressType">
+            <End Role="AdressKind" EntitySet="AdressKindSet" />
+            <End Role="AdressType" EntitySet="AdressTypeSet" />
+          </AssociationSet>
+          <AssociationSet Name="AdressTypeAdress" Association="SdelkaModel.AdressTypeAdress">
+            <End Role="AdressType" EntitySet="AdressTypeSet" />
+            <End Role="Adress" EntitySet="AdressSet" />
+          </AssociationSet>
+          <AssociationSet Name="AdressGoodsMovementDocument" Association="SdelkaModel.AdressGoodsMovementDocument">
+            <End Role="Adress" EntitySet="AdressSet" />
+            <End Role="GoodsMovementDocument" EntitySet="GoodsMovementDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="AdressGoodsMovementDocument1" Association="SdelkaModel.AdressGoodsMovementDocument1">
+            <End Role="Adress" EntitySet="AdressSet" />
+            <End Role="GoodsMovementDocument" EntitySet="GoodsMovementDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="AdressGoodsReceptionDocument" Association="SdelkaModel.AdressGoodsReceptionDocument">
+            <End Role="Adress" EntitySet="AdressSet" />
+            <End Role="GoodsReceptionDocument" EntitySet="GoodsReceptionDocumentSet" />
+          </AssociationSet>
+          <EntitySet Name="ReceptionSet" EntityType="SdelkaModel.Reception" />
+          <AssociationSet Name="GoodsReceptionDocumentReception" Association="SdelkaModel.GoodsReceptionDocumentReception">
+            <End Role="GoodsReceptionDocument" EntitySet="GoodsReceptionDocumentSet" />
+            <End Role="Reception" EntitySet="ReceptionSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductReception" Association="SdelkaModel.ProductReception">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Reception" EntitySet="ReceptionSet" />
+          </AssociationSet>
+          <EntitySet Name="InventorySet" EntityType="SdelkaModel.Inventory" />
+          <AssociationSet Name="AdressAdressInventoryDocument" Association="SdelkaModel.AdressAdressInventoryDocument">
+            <End Role="Adress" EntitySet="AdressSet" />
+            <End Role="AdressInventoryDocument" EntitySet="AdressInventoryDocumentSet" />
+          </AssociationSet>
+          <AssociationSet Name="AdressInventoryDocumentInventory" Association="SdelkaModel.AdressInventoryDocumentInventory">
+            <End Role="AdressInventoryDocument" EntitySet="AdressInventoryDocumentSet" />
+            <End Role="Inventory" EntitySet="InventorySet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductInventory" Association="SdelkaModel.ProductInventory">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Inventory" EntitySet="InventorySet" />
+          </AssociationSet>
+          <EntitySet Name="LoadingUnloadingSet" EntityType="SdelkaModel.LoadingUnloading" />
+          <AssociationSet Name="LoadingUnloadingDocumentLoadingUnloading" Association="SdelkaModel.LoadingUnloadingDocumentLoadingUnloading">
+            <End Role="LoadingUnloadingDocument" EntitySet="LoadingUnloadingDocumentSet" />
+            <End Role="LoadingUnloading" EntitySet="LoadingUnloadingSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -145,7 +232,10 @@
           <Property Name="DeptId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Change" Relationship="SdelkaModel.ChangeWorker" FromRole="Worker" ToRole="Change" />
           <Property Name="ChangeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Development" Relationship="SdelkaModel.WorkerDevelopment" FromRole="Worker" ToRole="Development" />
+          <NavigationProperty Name="GoodsReceptionDocument" Relationship="SdelkaModel.WorkerGoodsReceptionDocument" FromRole="Worker" ToRole="GoodsReceptionDocument" />
+          <NavigationProperty Name="GoodsMovementDocument" Relationship="SdelkaModel.WorkerGoodsMovementDocument" FromRole="Worker" ToRole="GoodsMovementDocument" />
+          <NavigationProperty Name="AdressInventoryDocument" Relationship="SdelkaModel.WorkerAdressInventoryDocument" FromRole="Worker" ToRole="AdressInventoryDocument" />
+          <NavigationProperty Name="LoadingUnloadingDocument" Relationship="SdelkaModel.WorkerLoadingUnloadingDocument" FromRole="Worker" ToRole="LoadingUnloadingDocument" />
         </EntityType>
         <Association Name="WorkersStatusWorker">
           <End Type="SdelkaModel.WorkersStatus" Role="WorkersStatus" Multiplicity="1" />
@@ -211,11 +301,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="SdelkaModel.CategoryProduct" FromRole="Product" ToRole="Category" />
           <Property Name="CategoryId" Type="Int32" Nullable="true" />
-          <NavigationProperty Name="Development" Relationship="SdelkaModel.ProductDevelopment" FromRole="Product" ToRole="Development" />
+          <NavigationProperty Name="Shipment" Relationship="SdelkaModel.ProductShipment" FromRole="Product" ToRole="Shipment" />
+          <NavigationProperty Name="Reception" Relationship="SdelkaModel.ProductReception" FromRole="Product" ToRole="Reception" />
+          <NavigationProperty Name="Inventory" Relationship="SdelkaModel.ProductInventory" FromRole="Product" ToRole="Inventory" />
         </EntityType>
         <Association Name="CategoryProduct">
           <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
@@ -239,36 +331,22 @@
           <Property Name="Cost" Type="Decimal" Nullable="true" Precision="5" Scale="2" />
           <NavigationProperty Name="Development" Relationship="SdelkaModel.OperationDevelopment" FromRole="Operation" ToRole="Development" />
         </EntityType>
-        <EntityType Name="Development">
+        <EntityType Name="Shipment">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Period" Type="DateTime" Nullable="false" />
+          <Property Name="GoodsMovementDocumentId" Type="Int32" Nullable="false" />
           <Property Name="OperationId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerDevelopment" FromRole="Development" ToRole="Worker" />
-          <Property Name="WorkerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Operation" Relationship="SdelkaModel.OperationDevelopment" FromRole="Development" ToRole="Operation" />
-          <Property Name="OperationId1" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductDevelopment" FromRole="Development" ToRole="Product" />
-          <Property Name="ProductId" Type="Int32" Nullable="true" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="GoodsMovementDocument" Relationship="SdelkaModel.GoodsMovementDocumentShipment" FromRole="Shipment" ToRole="GoodsMovementDocument" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductShipment" FromRole="Shipment" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="WorkerDevelopment">
-          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
-          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Development">
-              <PropertyRef Name="WorkerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="OperationDevelopment">
           <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="1" />
-          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
+          <End Type="SdelkaModel.Shipment" Role="Development" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Operation">
               <PropertyRef Name="Id" />
@@ -278,15 +356,392 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductDevelopment">
+        <EntityType Name="GoodsReceptionDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DocumentPrefixId" Type="Int32" Nullable="false" />
+          <Property Name="ReceptionDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerGoodsReceptionDocument" FromRole="GoodsReceptionDocument" ToRole="Worker" />
+          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DocumentPrefix" Relationship="SdelkaModel.DocumentPrefixGoodsReceptionDocument" FromRole="GoodsReceptionDocument" ToRole="DocumentPrefix" />
+          <Property Name="DurationTime" Type="DateTimeOffset" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="SdelkaModel.AdressGoodsReceptionDocument" FromRole="GoodsReceptionDocument" ToRole="Adress" />
+          <Property Name="AdressId" Type="Int32" Nullable="false" />
+          <Property Name="IsTransit" Type="String" Nullable="false" />
+          <NavigationProperty Name="Reception" Relationship="SdelkaModel.GoodsReceptionDocumentReception" FromRole="GoodsReceptionDocument" ToRole="Reception" />
+        </EntityType>
+        <EntityType Name="DocumentPrefix">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prefix" Type="String" Nullable="false" />
+          <NavigationProperty Name="GoodsReceptionDocument" Relationship="SdelkaModel.DocumentPrefixGoodsReceptionDocument" FromRole="DocumentPrefix" ToRole="GoodsReceptionDocument" />
+          <NavigationProperty Name="GoodsMovementDocument" Relationship="SdelkaModel.DocumentPrefixGoodsMovementDocument" FromRole="DocumentPrefix" ToRole="GoodsMovementDocument" />
+          <NavigationProperty Name="AdressInventoryDocument" Relationship="SdelkaModel.DocumentPrefixAdressInventoryDocument" FromRole="DocumentPrefix" ToRole="AdressInventoryDocument" />
+          <NavigationProperty Name="LoadingUnloadingDocument" Relationship="SdelkaModel.DocumentPrefixLoadingUnloadingDocument" FromRole="DocumentPrefix" ToRole="LoadingUnloadingDocument" />
+        </EntityType>
+        <Association Name="WorkerGoodsReceptionDocument">
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsReceptionDocument" Role="GoodsReceptionDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsReceptionDocument">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentPrefixGoodsReceptionDocument">
+          <End Type="SdelkaModel.DocumentPrefix" Role="DocumentPrefix" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsReceptionDocument" Role="GoodsReceptionDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentPrefix">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsReceptionDocument">
+              <PropertyRef Name="DocumentPrefixId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GoodsMovementDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DocumentPrefixId" Type="Int32" Nullable="false" />
+          <Property Name="MovementDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerGoodsMovementDocument" FromRole="GoodsMovementDocument" ToRole="Worker" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DocumentPrefix" Relationship="SdelkaModel.DocumentPrefixGoodsMovementDocument" FromRole="GoodsMovementDocument" ToRole="DocumentPrefix" />
+          <NavigationProperty Name="Shipment" Relationship="SdelkaModel.GoodsMovementDocumentShipment" FromRole="GoodsMovementDocument" ToRole="Shipment" />
+          <NavigationProperty Name="AdressSender" Relationship="SdelkaModel.AdressGoodsMovementDocument" FromRole="GoodsMovementDocument" ToRole="Adress" />
+          <Property Name="SenderAdressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdressReceiver" Relationship="SdelkaModel.AdressGoodsMovementDocument1" FromRole="GoodsMovementDocument" ToRole="Adress" />
+          <Property Name="ReceiverAdressId" Type="Int32" Nullable="false" />
+          <Property Name="DurationTime" Type="DateTimeOffset" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdressInventoryDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DocumentPrefixId" Type="Int32" Nullable="false" />
+          <Property Name="InventoryDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerAdressInventoryDocument" FromRole="AdressInventoryDocument" ToRole="Worker" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DocumentPrefix" Relationship="SdelkaModel.DocumentPrefixAdressInventoryDocument" FromRole="AdressInventoryDocument" ToRole="DocumentPrefix" />
+          <Property Name="DurationTime" Type="DateTimeOffset" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="SdelkaModel.AdressAdressInventoryDocument" FromRole="AdressInventoryDocument" ToRole="Adress" />
+          <Property Name="AdressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventory" Relationship="SdelkaModel.AdressInventoryDocumentInventory" FromRole="AdressInventoryDocument" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="LoadingUnloadingDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="DocumentPrefixId" Type="Int32" Nullable="false" />
+          <Property Name="LoadingUnloadingDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="SdelkaModel.WorkerLoadingUnloadingDocument" FromRole="LoadingUnloadingDocument" ToRole="Worker" />
+          <Property Name="WorkerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DocumentPrefix" Relationship="SdelkaModel.DocumentPrefixLoadingUnloadingDocument" FromRole="LoadingUnloadingDocument" ToRole="DocumentPrefix" />
+          <NavigationProperty Name="LoadingUnloading" Relationship="SdelkaModel.LoadingUnloadingDocumentLoadingUnloading" FromRole="LoadingUnloadingDocument" ToRole="LoadingUnloading" />
+          <Property Name="DurationTime" Type="DateTimeOffset" Nullable="false" />
+        </EntityType>
+        <Association Name="WorkerGoodsMovementDocument">
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsMovementDocument" Role="GoodsMovementDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsMovementDocument">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentPrefixGoodsMovementDocument">
+          <End Type="SdelkaModel.DocumentPrefix" Role="DocumentPrefix" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsMovementDocument" Role="GoodsMovementDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentPrefix">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsMovementDocument">
+              <PropertyRef Name="DocumentPrefixId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkerAdressInventoryDocument">
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SdelkaModel.AdressInventoryDocument" Role="AdressInventoryDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdressInventoryDocument">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentPrefixAdressInventoryDocument">
+          <End Type="SdelkaModel.DocumentPrefix" Role="DocumentPrefix" Multiplicity="1" />
+          <End Type="SdelkaModel.AdressInventoryDocument" Role="AdressInventoryDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentPrefix">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdressInventoryDocument">
+              <PropertyRef Name="DocumentPrefixId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkerLoadingUnloadingDocument">
+          <End Type="SdelkaModel.Worker" Role="Worker" Multiplicity="1" />
+          <End Type="SdelkaModel.LoadingUnloadingDocument" Role="LoadingUnloadingDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoadingUnloadingDocument">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentPrefixLoadingUnloadingDocument">
+          <End Type="SdelkaModel.DocumentPrefix" Role="DocumentPrefix" Multiplicity="1" />
+          <End Type="SdelkaModel.LoadingUnloadingDocument" Role="LoadingUnloadingDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentPrefix">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoadingUnloadingDocument">
+              <PropertyRef Name="DocumentPrefixId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GoodsMovementDocumentShipment">
+          <End Type="SdelkaModel.GoodsMovementDocument" Role="GoodsMovementDocument" Multiplicity="1" />
+          <End Type="SdelkaModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodsMovementDocument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="GoodsMovementDocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductShipment">
           <End Type="SdelkaModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="SdelkaModel.Development" Role="Development" Multiplicity="*" />
+          <End Type="SdelkaModel.Shipment" Role="Shipment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Development">
+            <Dependent Role="Shipment">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <NavigationProperty Name="AdressType" Relationship="SdelkaModel.AdressTypeAdress" FromRole="Adress" ToRole="AdressType" />
+          <Property Name="AdressTypeId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <EntityType Name="AdressType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Width" Type="Double" Nullable="false" />
+          <Property Name="Height" Type="Double" Nullable="false" />
+          <Property Name="Depth" Type="Double" Nullable="false" />
+          <Property Name="FullnessCoef" Type="String" Nullable="false" />
+          <Property Name="ComplexityCoef" Type="String" Nullable="false" />
+          <NavigationProperty Name="AdressKind" Relationship="SdelkaModel.AdressKindAdressType" FromRole="AdressType" ToRole="AdressKind" />
+          <Property Name="AdressKindId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="SdelkaModel.AdressTypeAdress" FromRole="AdressType" ToRole="Adress" />
+        </EntityType>
+        <EntityType Name="AdressKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="AdressType" Relationship="SdelkaModel.AdressKindAdressType" FromRole="AdressKind" ToRole="AdressType" />
+        </EntityType>
+        <Association Name="AdressKindAdressType">
+          <End Type="SdelkaModel.AdressKind" Role="AdressKind" Multiplicity="1" />
+          <End Type="SdelkaModel.AdressType" Role="AdressType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressKind">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdressType">
+              <PropertyRef Name="AdressKindId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdressTypeAdress">
+          <End Type="SdelkaModel.AdressType" Role="AdressType" Multiplicity="1" />
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="AdressTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdressGoodsMovementDocument">
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsMovementDocument" Role="GoodsMovementDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsMovementDocument">
+              <PropertyRef Name="SenderAdressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdressGoodsMovementDocument1">
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsMovementDocument" Role="GoodsMovementDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsMovementDocument">
+              <PropertyRef Name="ReceiverAdressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdressGoodsReceptionDocument">
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="SdelkaModel.GoodsReceptionDocument" Role="GoodsReceptionDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsReceptionDocument">
+              <PropertyRef Name="AdressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Reception">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="GoodsReceptionDocument" Relationship="SdelkaModel.GoodsReceptionDocumentReception" FromRole="Reception" ToRole="GoodsReceptionDocument" />
+          <Property Name="GoodsReceptionDocumentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductReception" FromRole="Reception" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Scans" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="GoodsReceptionDocumentReception">
+          <End Type="SdelkaModel.GoodsReceptionDocument" Role="GoodsReceptionDocument" Multiplicity="1" />
+          <End Type="SdelkaModel.Reception" Role="Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodsReceptionDocument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="GoodsReceptionDocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductReception">
+          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="SdelkaModel.Reception" Role="Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AdressInventoryDocument" Relationship="SdelkaModel.AdressInventoryDocumentInventory" FromRole="Inventory" ToRole="AdressInventoryDocument" />
+          <Property Name="AdressInventoryDocumentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductInventory" FromRole="Inventory" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="GoodsShouldBe" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="AdressAdressInventoryDocument">
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="SdelkaModel.AdressInventoryDocument" Role="AdressInventoryDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdressInventoryDocument">
+              <PropertyRef Name="AdressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdressInventoryDocumentInventory">
+          <End Type="SdelkaModel.AdressInventoryDocument" Role="AdressInventoryDocument" Multiplicity="1" />
+          <End Type="SdelkaModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressInventoryDocument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="AdressInventoryDocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductInventory">
+          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="SdelkaModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LoadingUnloading">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="LoadingUnloadingDocument" Relationship="SdelkaModel.LoadingUnloadingDocumentLoadingUnloading" FromRole="LoadingUnloading" ToRole="LoadingUnloadingDocument" />
+          <Property Name="LoadingUnloadingDocumentId" Type="Int32" Nullable="false" />
+          <Property Name="IsLoading" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="LoadingUnloadingDocumentLoadingUnloading">
+          <End Type="SdelkaModel.LoadingUnloadingDocument" Role="LoadingUnloadingDocument" Multiplicity="1" />
+          <End Type="SdelkaModel.LoadingUnloading" Role="LoadingUnloading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoadingUnloadingDocument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LoadingUnloading">
+              <PropertyRef Name="LoadingUnloadingDocumentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -318,17 +773,17 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1">
-        <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="10.375" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Dept" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Change" Width="1.5" PointX="5.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.WorkersStatus" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Worker" Width="1.5" PointX="5.125" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Product" Width="1.5" PointX="10.375" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Operation" Width="1.5" PointX="12.625" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SdelkaModel.Development" Width="1.5" PointX="10.375" PointY="1.125" IsExpanded="true" />
+      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="5.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="1" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="1" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Dept" Width="1.5" PointX="1" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Change" Width="1.5" PointX="8.875" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.WorkersStatus" Width="1.5" PointX="7" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Worker" Width="1.5" PointX="5.375" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Product" Width="1.5" PointX="9.25" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Operation" Width="1.5" PointX="12.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SdelkaModel.Shipment" Width="1.5" PointX="13.5" PointY="3.625" IsExpanded="true" />
         <AssociationConnector Association="SdelkaModel.CategoryCategory" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.WorkersStatusWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.AppointmentWorker" ManuallyRouted="false" />
@@ -336,9 +791,39 @@
         <AssociationConnector Association="SdelkaModel.DeptWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.ChangeWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.CategoryProduct" ManuallyRouted="false" />
-        <AssociationConnector Association="SdelkaModel.WorkerDevelopment" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.OperationDevelopment" ManuallyRouted="false" />
-        <AssociationConnector Association="SdelkaModel.ProductDevelopment" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SdelkaModel.GoodsReceptionDocument" Width="2.125" PointX="16.125" PointY="7.625" />
+        <EntityTypeShape EntityType="SdelkaModel.DocumentPrefix" Width="1.5" PointX="18" PointY="14.125" />
+        <AssociationConnector Association="SdelkaModel.WorkerGoodsReceptionDocument" />
+        <AssociationConnector Association="SdelkaModel.DocumentPrefixGoodsReceptionDocument" />
+        <EntityTypeShape EntityType="SdelkaModel.GoodsMovementDocument" Width="2.125" PointX="13.25" PointY="7.625" />
+        <EntityTypeShape EntityType="SdelkaModel.AdressInventoryDocument" Width="2.125" PointX="19.375" PointY="7.625" />
+        <EntityTypeShape EntityType="SdelkaModel.LoadingUnloadingDocument" Width="2.125" PointX="22" PointY="7.625" />
+        <AssociationConnector Association="SdelkaModel.WorkerGoodsMovementDocument" />
+        <AssociationConnector Association="SdelkaModel.DocumentPrefixGoodsMovementDocument" />
+        <AssociationConnector Association="SdelkaModel.WorkerAdressInventoryDocument" />
+        <AssociationConnector Association="SdelkaModel.DocumentPrefixAdressInventoryDocument" />
+        <AssociationConnector Association="SdelkaModel.WorkerLoadingUnloadingDocument" />
+        <AssociationConnector Association="SdelkaModel.DocumentPrefixLoadingUnloadingDocument" />
+        <AssociationConnector Association="SdelkaModel.GoodsMovementDocumentShipment" />
+        <AssociationConnector Association="SdelkaModel.ProductShipment" />
+        <EntityTypeShape EntityType="SdelkaModel.Adress" Width="1.5" PointX="11.875" PointY="14" />
+        <EntityTypeShape EntityType="SdelkaModel.AdressType" Width="1.5" PointX="13.875" PointY="14" />
+        <EntityTypeShape EntityType="SdelkaModel.AdressKind" Width="1.5" PointX="15.75" PointY="14" />
+        <AssociationConnector Association="SdelkaModel.AdressKindAdressType" />
+        <AssociationConnector Association="SdelkaModel.AdressTypeAdress" />
+        <AssociationConnector Association="SdelkaModel.AdressGoodsMovementDocument" />
+        <AssociationConnector Association="SdelkaModel.AdressGoodsMovementDocument1" />
+        <AssociationConnector Association="SdelkaModel.AdressGoodsReceptionDocument" />
+        <EntityTypeShape EntityType="SdelkaModel.Reception" Width="1.5" PointX="16.25" PointY="3.875" />
+        <AssociationConnector Association="SdelkaModel.GoodsReceptionDocumentReception" />
+        <AssociationConnector Association="SdelkaModel.ProductReception" />
+        <EntityTypeShape EntityType="SdelkaModel.Inventory" Width="1.5" PointX="19.625" PointY="3.75" />
+        <AssociationConnector Association="SdelkaModel.AdressAdressInventoryDocument" />
+        <AssociationConnector Association="SdelkaModel.AdressInventoryDocumentInventory" />
+        <AssociationConnector Association="SdelkaModel.ProductInventory" />
+        <EntityTypeShape EntityType="SdelkaModel.LoadingUnloading" Width="1.5" PointX="22.125" PointY="3.75" />
+        <AssociationConnector Association="SdelkaModel.LoadingUnloadingDocumentLoadingUnloading" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
