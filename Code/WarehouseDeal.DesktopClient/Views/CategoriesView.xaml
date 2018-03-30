@@ -1,0 +1,144 @@
+﻿<Window x:Class="WarehouseDeal.DesktopClient.Views.CategoriesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WarehouseDeal.DesktopClient.Views"
+        mc:Ignorable="d"
+        Title="CategoriesView" Height="439" Width="632.975" MinHeight="450" MinWidth="632">
+    <Window.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="TextBlock.Margin" Value="15,0,4,0"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Margin" Value="0,0,30,0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TreeView Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        </TreeView>
+
+        <GridSplitter Width="3" Grid.Column="1" HorizontalAlignment="Center"/>
+
+        <DockPanel Grid.Column="2" >
+            <TextBlock DockPanel.Dock="Top"
+                       HorizontalAlignment="Center"
+                       FontSize="24"
+                       Text="Категория">
+            </TextBlock>
+            <Grid DockPanel.Dock="Top" Margin="5,20,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="36"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" 
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Категория: </Run>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="0" Margin="0"
+                           Style="{StaticResource TextBlockStyle}"
+                           Text="{}{Binding SelectedCategory.Name}">
+                </TextBlock>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" 
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Родитель: </Run>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Margin="0"
+                           Style="{StaticResource TextBlockStyle}"
+                           Text="{}{Binding SelectedCategory.CategoryParent}">
+                </TextBlock>
+
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Hyperlink>Убрать категорию из сделки</Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Collapsed">
+                    <Hyperlink>Добавить категорию в сделку</Hyperlink>
+                </TextBlock>
+
+            </Grid>
+
+            <Grid Margin="5,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="44"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Сложность поиска</Run>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="0" ></TextBox>
+
+                <Slider Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"></Slider>
+
+                <TextBlock Grid.Column="0" Grid.Row="2"
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Сложность подбора</Run>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="2" ></TextBox>
+
+                <Slider Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"></Slider>
+
+                <TextBlock Grid.Column="0" Grid.Row="4"
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Сложность упаковки</Run>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="4" ></TextBox>
+
+                <Slider Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"></Slider>
+
+                <TextBlock Grid.Column="0" Grid.Row="6"
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Сложность расстановки</Run>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="6" ></TextBox>
+
+                <Slider Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"></Slider>
+
+                <TextBlock Grid.Column="0" Grid.Row="8"
+                           Style="{StaticResource TextBlockStyle}">
+                    <Run>Сложность подсчёта</Run>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="8" ></TextBox>
+
+                <Slider Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9"></Slider>
+
+                <CheckBox Grid.ColumnSpan="2" Grid.Row="10" 
+                          HorizontalAlignment="Center" VerticalAlignment="Center">Поштучный учёт</CheckBox>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
