@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarehouseDeal.Data
 {
-    class BusinessContext : IDisposable
+    public class BusinessContext : IDisposable
     {
         private readonly DataContext context;
         private bool disposed;
@@ -16,6 +16,10 @@ namespace WarehouseDeal.Data
             this.context = new DataContext();
         }
 
+        public ICollection<Category> GetCategoriesList()
+        {
+            return context.CategorySet.OrderBy (p => p.Id).ToArray();
+        }
         #region IDisposable Members
         public void Dispose ()
         {

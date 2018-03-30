@@ -54,9 +54,6 @@
     <Compile Include="UnitTests\ViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Code\WarehouseDeal.BaseClasses\WarehouseDeal.BaseClasses.csproj">
       <Project>{24852181-8a1a-485f-b7b1-a1735030f757}</Project>
       <Name>WarehouseDeal.BaseClasses</Name>
