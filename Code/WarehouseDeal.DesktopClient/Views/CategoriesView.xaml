@@ -27,9 +27,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView Grid.Column="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Height="32">
+                <Button>
+                    <Image Source=""/>
+                </Button>
+            </StackPanel>
+            <TreeView HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
 
-        </TreeView>
+            </TreeView>
+        </StackPanel>
 
         <GridSplitter Width="3" Grid.Column="1" HorizontalAlignment="Center"/>
 
