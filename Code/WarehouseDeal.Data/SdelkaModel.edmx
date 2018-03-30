@@ -45,16 +45,8 @@
             <End Role="Worker" EntitySet="WorkerSet" />
           </AssociationSet>
           <EntitySet Name="ProductSet" EntityType="SdelkaModel.Product" />
-          <AssociationSet Name="CategoryProduct" Association="SdelkaModel.CategoryProduct">
-            <End Role="Category" EntitySet="CategorySet" />
-            <End Role="Product" EntitySet="ProductSet" />
-          </AssociationSet>
           <EntitySet Name="OperationSet" EntityType="SdelkaModel.Operation" />
           <EntitySet Name="ShipmentSet" EntityType="SdelkaModel.Shipment" />
-          <AssociationSet Name="OperationDevelopment" Association="SdelkaModel.OperationDevelopment">
-            <End Role="Operation" EntitySet="OperationSet" />
-            <End Role="Development" EntitySet="ShipmentSet" />
-          </AssociationSet>
           <EntitySet Name="GoodsReceptionDocumentSet" EntityType="SdelkaModel.GoodsReceptionDocument" />
           <EntitySet Name="DocumentPrefixSet" EntityType="SdelkaModel.DocumentPrefix" />
           <AssociationSet Name="WorkerGoodsReceptionDocument" Association="SdelkaModel.WorkerGoodsReceptionDocument">
@@ -106,10 +98,6 @@
           <AssociationSet Name="AdressKindAdressType" Association="SdelkaModel.AdressKindAdressType">
             <End Role="AdressKind" EntitySet="AdressKindSet" />
             <End Role="AdressType" EntitySet="AdressTypeSet" />
-          </AssociationSet>
-          <AssociationSet Name="AdressTypeAdress" Association="SdelkaModel.AdressTypeAdress">
-            <End Role="AdressType" EntitySet="AdressTypeSet" />
-            <End Role="Adress" EntitySet="AdressSet" />
           </AssociationSet>
           <AssociationSet Name="AdressGoodsMovementDocument" Association="SdelkaModel.AdressGoodsMovementDocument">
             <End Role="Adress" EntitySet="AdressSet" />
@@ -168,6 +156,18 @@
             <End Role="AuxiliaryWorkDocument" EntitySet="AuxiliaryWorkDocumentSet" />
             <End Role="AuxiliaryWork" EntitySet="AuxiliaryWorkSet" />
           </AssociationSet>
+          <AssociationSet Name="AdressTypeAdress" Association="SdelkaModel.AdressTypeAdress">
+            <End Role="AdressType" EntitySet="AdressTypeSet" />
+            <End Role="Adress" EntitySet="AdressSet" />
+          </AssociationSet>
+          <AssociationSet Name="OperationShipment" Association="SdelkaModel.OperationShipment">
+            <End Role="Operation" EntitySet="OperationSet" />
+            <End Role="Shipment" EntitySet="ShipmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryProduct" Association="SdelkaModel.CategoryProduct">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -178,13 +178,13 @@
           <Property Name="ParentId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="CategoryChild" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
-          <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
           <Property Name="SearchComplexity" Type="Double" Nullable="true" />
           <Property Name="PickingComplexity" Type="Double" Nullable="true" />
           <Property Name="PackagingComplexity" Type="Double" Nullable="true" />
           <Property Name="RankingComplexity" Type="Double" Nullable="true" />
           <Property Name="CountingComplexity" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
           </EntityType>
         <EntityType Name="Appointment">
           <Key>
@@ -322,24 +322,12 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="SdelkaModel.CategoryProduct" FromRole="Product" ToRole="Category" />
-          <Property Name="CategoryId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Shipment" Relationship="SdelkaModel.ProductShipment" FromRole="Product" ToRole="Shipment" />
           <NavigationProperty Name="Reception" Relationship="SdelkaModel.ProductReception" FromRole="Product" ToRole="Reception" />
           <NavigationProperty Name="Inventory" Relationship="SdelkaModel.ProductInventory" FromRole="Product" ToRole="Inventory" />
+          <NavigationProperty Name="Category" Relationship="SdelkaModel.CategoryProduct" FromRole="Product" ToRole="Category" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="CategoryProduct">
-          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Operation">
           <Key>
             <PropertyRef Name="Id" />
@@ -348,8 +336,8 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Unit" Type="String" Nullable="false" MaxLength="10" />
           <Property Name="Cost" Type="Decimal" Nullable="true" Precision="5" Scale="2" />
-          <NavigationProperty Name="Development" Relationship="SdelkaModel.OperationDevelopment" FromRole="Operation" ToRole="Development" />
           <NavigationProperty Name="AuxiliaryWorkDocument" Relationship="SdelkaModel.OperationAuxiliaryWorkDocument" FromRole="Operation" ToRole="AuxiliaryWorkDocument" />
+          <NavigationProperty Name="Shipment" Relationship="SdelkaModel.OperationShipment" FromRole="Operation" ToRole="Shipment" />
         </EntityType>
         <EntityType Name="Shipment">
           <Key>
@@ -357,25 +345,13 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GoodsMovementDocumentId" Type="Int32" Nullable="false" />
-          <Property Name="OperationId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Operation" Relationship="SdelkaModel.OperationDevelopment" FromRole="Development" ToRole="Operation" />
           <NavigationProperty Name="GoodsMovementDocument" Relationship="SdelkaModel.GoodsMovementDocumentShipment" FromRole="Shipment" ToRole="GoodsMovementDocument" />
           <NavigationProperty Name="Product" Relationship="SdelkaModel.ProductShipment" FromRole="Shipment" ToRole="Product" />
+          <Property Name="OperationId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Operation" Relationship="SdelkaModel.OperationShipment" FromRole="Shipment" ToRole="Operation" />
         </EntityType>
-        <Association Name="OperationDevelopment">
-          <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="1" />
-          <End Type="SdelkaModel.Shipment" Role="Development" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Operation">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Development">
-              <PropertyRef Name="OperationId1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="GoodsReceptionDocument">
           <Key>
             <PropertyRef Name="Id" />
@@ -576,7 +552,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" />
           <NavigationProperty Name="AdressType" Relationship="SdelkaModel.AdressTypeAdress" FromRole="Adress" ToRole="AdressType" />
-          <Property Name="AdressTypeId" Type="Int32" Nullable="true" />
+          <Property Name="AdressTypeId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AdressType">
           <Key>
@@ -610,18 +586,6 @@
             </Principal>
             <Dependent Role="AdressType">
               <PropertyRef Name="AdressKindId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AdressTypeAdress">
-          <End Type="SdelkaModel.AdressType" Role="AdressType" Multiplicity="1" />
-          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AdressType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Adress">
-              <PropertyRef Name="AdressTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -842,6 +806,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AdressTypeAdress">
+          <End Type="SdelkaModel.AdressType" Role="AdressType" Multiplicity="1" />
+          <End Type="SdelkaModel.Adress" Role="Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="AdressTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OperationShipment">
+          <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="1" />
+          <End Type="SdelkaModel.Shipment" Role="Shipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipment">
+              <PropertyRef Name="OperationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryProduct">
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="SdelkaModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -870,7 +870,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="67">
+      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="21.5" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="2.25" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="2.25" PointY="14.125" IsExpanded="true" />
@@ -887,8 +887,6 @@
         <AssociationConnector Association="SdelkaModel.RankWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.DeptWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.ChangeWorker" ManuallyRouted="false" />
-        <AssociationConnector Association="SdelkaModel.CategoryProduct" ManuallyRouted="false" />
-        <AssociationConnector Association="SdelkaModel.OperationDevelopment" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SdelkaModel.GoodsReceptionDocument" Width="2.125" PointX="16.25" PointY="9.875" />
         <EntityTypeShape EntityType="SdelkaModel.DocumentPrefix" Width="1.5" PointX="20.875" PointY="18.625" />
         <AssociationConnector Association="SdelkaModel.WorkerGoodsReceptionDocument" />
@@ -908,7 +906,6 @@
         <EntityTypeShape EntityType="SdelkaModel.AdressType" Width="1.5" PointX="16.75" PointY="18.5" />
         <EntityTypeShape EntityType="SdelkaModel.AdressKind" Width="1.5" PointX="18.625" PointY="18.5" />
         <AssociationConnector Association="SdelkaModel.AdressKindAdressType" />
-        <AssociationConnector Association="SdelkaModel.AdressTypeAdress" />
         <AssociationConnector Association="SdelkaModel.AdressGoodsMovementDocument" />
         <AssociationConnector Association="SdelkaModel.AdressGoodsMovementDocument1" />
         <AssociationConnector Association="SdelkaModel.AdressGoodsReceptionDocument" />
@@ -927,6 +924,9 @@
         <AssociationConnector Association="SdelkaModel.OperationAuxiliaryWorkDocument" />
         <EntityTypeShape EntityType="SdelkaModel.AuxiliaryWork" Width="2.125" PointX="24.75" PointY="6" />
         <AssociationConnector Association="SdelkaModel.AuxiliaryWorkDocumentAuxiliaryWork" />
+        <AssociationConnector Association="SdelkaModel.AdressTypeAdress" />
+        <AssociationConnector Association="SdelkaModel.OperationShipment" />
+        <AssociationConnector Association="SdelkaModel.CategoryProduct" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -23,6 +23,20 @@
         }
 
         [TestMethod]
+        public void IsObservableObject ()
+        {
+            Assert.IsTrue (typeof (ObservableObject).IsAssignableFrom (typeof (ViewModel)));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void IDataError_ErrorProperty_IsNotSupported()
+        {
+            var obj = new StubViewModel();
+            string value = obj.Error;
+        }
+
+        [TestMethod]
         public void IndexerPropertyValidatesPropertyNameWithInvalidValue()
         {
             var obj = new StubViewModel ();
@@ -39,6 +53,14 @@
             };
 
             Assert.IsNull (obj["RequiredProperty"]);
+        }
+
+        [TestMethod]
+        public void IDataErrorInfo_Indexer_ReturnsErrorMessageForInvalidRequestedProperty()
+        {
+            var obj = new StubViewModel();
+
+            Assert.IsTrue (obj["RequiredProperty"] == "Требуется поле RequiredProperty.");
         }
 
         class StubViewModel : ViewModel
