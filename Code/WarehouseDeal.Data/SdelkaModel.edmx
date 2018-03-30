@@ -12,7 +12,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SdelkaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
-        <EntityContainer Name="SdelkaModelContainer" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CategorySet" EntityType="SdelkaModel.Category" />
           <EntitySet Name="AppointmentSet" EntityType="SdelkaModel.Appointment" />
           <EntitySet Name="RankSet" EntityType="SdelkaModel.Rank" />
@@ -849,7 +849,7 @@
       <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
         <Alias Key="Model" Value="SdelkaModel" />
         <Alias Key="Target" Value="SdelkaModel.Store" />
-        <EntityContainerMapping CdmEntityContainer="SdelkaModelContainer" StorageEntityContainer="SdelkaModelTargetContainer">
+        <EntityContainerMapping CdmEntityContainer="DataContext" StorageEntityContainer="SdelkaModelTargetContainer">
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
