@@ -1,6 +1,0 @@
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\bin\Debug\WarehouseDeal.ServiceClasses.dll
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\bin\Debug\WarehouseDeal.ServiceClasses.pdb
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\obj\Debug\WarehouseDeal.ServiceClasses.csprojResolveAssemblyReference.cache
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\obj\Debug\WarehouseDeal.ServiceClasses.csproj.CoreCompileInputs.cache
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\obj\Debug\WarehouseDeal.ServiceClasses.dll
-D:\programming projects\C# Projects\WarehouseDeal\Code\WarehouseDeal.ServiceClasses\obj\Debug\WarehouseDeal.ServiceClasses.pdb
