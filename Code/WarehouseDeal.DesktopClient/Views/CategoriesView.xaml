@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarehouseDeal.DesktopClient.Views"
+        xmlns:viewModels="clr-namespace:WarehouseDeal.DesktopClient.ViewModels"
         mc:Ignorable="d"
-        Title="CategoriesView" Height="439" Width="632.975" MinHeight="450" MinWidth="632">
+        d:DataContext="{d:DesignInstance viewModels:CategoriesModelView}"
+        Title="CategoriesView" Height="463" Width="632.975" MinHeight="460" MinWidth="632">
     <Window.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="TextBlock.Margin" Value="15,0,4,0"/>
@@ -27,16 +29,48 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0">
-            <StackPanel Orientation="Horizontal" Height="32">
-                <Button>
-                    <Image Source=""/>
+        <DockPanel Grid.Column="0">
+            <StackPanel Orientation="Horizontal" Height="24" DockPanel.Dock="Top">
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" Width="24" Height="24" ToolTip="Обновить" Padding="0">
+                    <Rectangle Width="14" Height="16">
+                        <Rectangle.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FF116A56" Offset="1"/>
+                                <GradientStop Color="#FF20BD9A"/>
+                            </RadialGradientBrush>
+                        </Rectangle.Fill>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Visual="{StaticResource updateIcon}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.RenderTransform>
+                            <TranslateTransform Y="0" />
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Button>
+                <Button Background="{x:Null}" BorderBrush="{x:Null}"  Width="24" Height="24" ToolTip="Сохранить">
+                    <Rectangle Width="14" Height="14">
+                        <Rectangle.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FF116A56" Offset="1"/>
+                                <GradientStop Color="#FF20BD9A"/>
+                            </RadialGradientBrush>
+                        </Rectangle.Fill>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource saveIcon}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
                 </Button>
             </StackPanel>
-            <TreeView HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
-
+            <TreeView HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      ItemsSource="{Binding Categories}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
+                        <TextBlock Text="{Binding Category.Name}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
             </TreeView>
-        </StackPanel>
+        </DockPanel>
 
         <GridSplitter Width="3" Grid.Column="1" HorizontalAlignment="Center"/>
 

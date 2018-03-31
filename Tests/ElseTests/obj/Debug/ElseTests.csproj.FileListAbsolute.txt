@@ -1,0 +1,6 @@
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\bin\Debug\ElseTests.exe.config
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\bin\Debug\ElseTests.exe
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\bin\Debug\ElseTests.pdb
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\obj\Debug\ElseTests.csproj.CoreCompileInputs.cache
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\obj\Debug\ElseTests.exe
+D:\programming projects\C# Projects\WarehouseDeal\Tests\ElseTests\obj\Debug\ElseTests.pdb

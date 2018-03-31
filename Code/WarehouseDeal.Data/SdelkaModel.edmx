@@ -164,6 +164,10 @@
             <End Role="Operation" EntitySet="OperationSet" />
             <End Role="Shipment" EntitySet="ShipmentSet" />
           </AssociationSet>
+          <AssociationSet Name="DeptCategory" Association="SdelkaModel.DeptCategory">
+            <End Role="Dept" EntitySet="DeptSet" />
+            <End Role="Category" EntitySet="CategorySet" />
+          </AssociationSet>
           <AssociationSet Name="CategoryProduct" Association="SdelkaModel.CategoryProduct">
             <End Role="Category" EntitySet="CategorySet" />
             <End Role="Product" EntitySet="ProductSet" />
@@ -173,9 +177,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" FixedLength="true" MaxLength="8" />
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="Unnamed" />
-          <Property Name="ParentId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="CategoryChild" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
           <Property Name="SearchComplexity" Type="Double" Nullable="true" />
@@ -184,6 +187,8 @@
           <Property Name="RankingComplexity" Type="Double" Nullable="true" />
           <Property Name="CountingComplexity" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptCategory" FromRole="Category" ToRole="Dept" />
+          <Property Name="DeptId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
           </EntityType>
         <EntityType Name="Appointment">
@@ -217,6 +222,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="Worker" Relationship="SdelkaModel.DeptWorker" FromRole="Dept" ToRole="Worker" />
+          <NavigationProperty Name="Category" Relationship="SdelkaModel.DeptCategory" FromRole="Dept" ToRole="Category" />
         </EntityType>
         <EntityType Name="Change">
           <Key>
@@ -326,7 +332,7 @@
           <NavigationProperty Name="Reception" Relationship="SdelkaModel.ProductReception" FromRole="Product" ToRole="Reception" />
           <NavigationProperty Name="Inventory" Relationship="SdelkaModel.ProductInventory" FromRole="Product" ToRole="Inventory" />
           <NavigationProperty Name="Category" Relationship="SdelkaModel.CategoryProduct" FromRole="Product" ToRole="Category" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="String" Nullable="false" MaxLength="8" FixedLength="true" />
         </EntityType>
         <EntityType Name="Operation">
           <Key>
@@ -373,7 +379,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Prefix" Type="String" Nullable="false" />
+          <Property Name="Prefix" Type="String" Nullable="false" FixedLength="true" MaxLength="3" />
           <NavigationProperty Name="GoodsReceptionDocument" Relationship="SdelkaModel.DocumentPrefixGoodsReceptionDocument" FromRole="DocumentPrefix" ToRole="GoodsReceptionDocument" />
           <NavigationProperty Name="GoodsMovementDocument" Relationship="SdelkaModel.DocumentPrefixGoodsMovementDocument" FromRole="DocumentPrefix" ToRole="GoodsMovementDocument" />
           <NavigationProperty Name="AdressInventoryDocument" Relationship="SdelkaModel.DocumentPrefixAdressInventoryDocument" FromRole="DocumentPrefix" ToRole="AdressInventoryDocument" />
@@ -830,6 +836,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DeptCategory">
+          <End Type="SdelkaModel.Dept" Role="Dept" Multiplicity="1" />
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CategoryProduct">
           <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
           <End Type="SdelkaModel.Product" Role="Product" Multiplicity="*" />
@@ -870,7 +888,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="21.5" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="2.25" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="2.25" PointY="14.125" IsExpanded="true" />
@@ -926,6 +944,7 @@
         <AssociationConnector Association="SdelkaModel.AuxiliaryWorkDocumentAuxiliaryWork" />
         <AssociationConnector Association="SdelkaModel.AdressTypeAdress" />
         <AssociationConnector Association="SdelkaModel.OperationShipment" />
+        <AssociationConnector Association="SdelkaModel.DeptCategory" />
         <AssociationConnector Association="SdelkaModel.CategoryProduct" />
       </Diagram>
     </edmx:Diagrams>

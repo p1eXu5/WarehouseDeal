@@ -24,7 +24,7 @@ namespace WarehouseDeal.Data
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shipment> Shipment { get; set; }

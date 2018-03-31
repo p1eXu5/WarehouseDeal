@@ -1,0 +1,15 @@
+<FixedPage Width="511.68" Height="511.68" xmlns="http://schemas.microsoft.com/xps/2005/06" xml:lang="und">
+	<!-- Microsoft XPS Document Converter (MXDC) Generated! Version: 0.3.7601.17514 -->
+	<Canvas RenderOptions.EdgeMode="Aliased">
+		<Path Data="M 64,67.04 L 447.04,67.04 447.04,450.08 64,450.08 z"  Clip="M 64,67.04 L 446.88,67.04 446.88,449.92 64,449.92 z" >
+			<Path.Fill>
+				<ImageBrush ImageSource="/Documents/1/Resources/Images/1.PNG" Viewbox="0,0,288,288" TileMode="None" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewport="64,67.04,383.04,383.04" />
+			</Path.Fill>
+		</Path>
+		<Path Data="M 77.92,78.88 L 432.16,78.88 432.16,433.12 77.92,433.12 z"  Clip="M 77.92,78.88 L 432,78.88 432,433.12 77.92,433.12 z" >
+			<Path.Fill>
+				<ImageBrush ImageSource="/Documents/1/Resources/Images/2.PNG" Viewbox="0,0,1107,1107" TileMode="None" ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewport="77.92,78.88,354.24,354.24" />
+			</Path.Fill>
+		</Path>
+	</Canvas>
+</FixedPage>

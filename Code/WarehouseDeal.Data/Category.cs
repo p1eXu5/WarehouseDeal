@@ -22,18 +22,19 @@ namespace WarehouseDeal.Data
             this.Product = new HashSet<Product>();
         }
     
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> ParentId { get; set; }
         public Nullable<double> SearchComplexity { get; set; }
         public Nullable<double> PickingComplexity { get; set; }
         public Nullable<double> PackagingComplexity { get; set; }
         public Nullable<double> RankingComplexity { get; set; }
         public bool CountingComplexity { get; set; }
         public bool IsPiecesInDeal { get; set; }
+        public int DeptId { get; set; }
     
         public virtual Category CategoryParent { get; set; }
         public virtual Category CategoryChild { get; set; }
+        public virtual Dept Dept { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Product { get; set; }
     }

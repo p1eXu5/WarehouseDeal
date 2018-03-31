@@ -20,11 +20,13 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         public CategoriesModelView (BusinessContext context)
         {
             _context = context;
-            Categories = new ObservableCollection<Category>();
+            //Categories = new ObservableCollection<Category>();
+            GetCategoriesList();
         }
 
 
-        public ICollection<Category> Categories { get; private set; }
+        //public ICollection<Category> Categories { get; private set; }
+        public ObservableCollection<CategoriesList> Categories { get; private set; }
 
         public Category SelectedCategory
         {
@@ -38,13 +40,36 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         private void GetCategoriesList()
         {
-            Categories.Clear();
+            Categories = new ObservableCollection<CategoriesList>
+            {
+                new CategoriesList
+                {
+                    Category = new Category {Name = "Категория"},
+                    Categories = new ObservableCollection<CategoriesList>
+                    {
+                        new CategoriesList {Category = new Category {Name = "Первая категория"}},
+                        new CategoriesList
+                        {
+                            Category = new Category {Name = "Вторая категория"},
+                            Categories = new ObservableCollection<CategoriesList>
+                            {
+                                new CategoriesList {Category = new Category {Name = "Вложенная категория"}}
+                            }
+                        }
+                    }
+                }
+            };
 
-            foreach (Category category in _context.GetCategoriesList()) {
-                
-                Categories.Add (category);
-            }
+            //foreach (Category category in _context.GetCategoriesList()) {
+
+            //    Categories.Add (category);
+            //}
         }
 
+        public class CategoriesList
+        {
+            public Category Category { get; set; }
+            public ObservableCollection<CategoriesList> Categories { get; set; }
+        }
     }
 }

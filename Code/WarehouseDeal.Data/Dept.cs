@@ -18,6 +18,7 @@ namespace WarehouseDeal.Data
         public Dept()
         {
             this.Worker = new HashSet<Worker>();
+            this.Category = new HashSet<Category>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace WarehouseDeal.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Worker> Worker { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Category { get; set; }
     }
 }
