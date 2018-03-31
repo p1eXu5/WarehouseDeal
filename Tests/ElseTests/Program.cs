@@ -17,6 +17,13 @@ namespace ElseTests
                 Console.WriteLine("Equal");
             else
                 Console.WriteLine ("Not Equal");
+
+            string kod = "AM18162";
+            string rus = "АМ18162";
+            string eng = "AM18162";
+
+            Console.WriteLine (kod.Equals (rus));
+            Console.WriteLine (kod.Equals (eng));
         }
     }
 }

@@ -16,24 +16,24 @@ namespace WarehouseDeal.Data
     public partial class DataContext : DbContext
     {
         public DataContext()
-            : base("Default")
+            : base ("Default")
         {
         }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Category>()
-                .HasOptional (p => p.CategoryParent)
-                .WithOptionalPrincipal(c => c.CategoryChild)
-                .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Category>()
+        protected override void OnModelCreating (DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category> ()
+                .HasOptional (p => p.CategoryParent)
+                .WithOptionalPrincipal (c => c.CategoryChild)
+                .WillCascadeOnDelete (false);
+
+            modelBuilder.Entity<Category> ()
                 .HasMany (p => p.Product)
                 .WithRequired (c => c.Category)
                 .HasForeignKey (k => k.CategoryId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete (false);
         }
-    
+
         public virtual DbSet<Category> CategorySet { get; set; }
         public virtual DbSet<Appointment> AppointmentSet { get; set; }
         public virtual DbSet<Rank> RankSet { get; set; }

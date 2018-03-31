@@ -177,7 +177,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" FixedLength="true" MaxLength="8" />
+          <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" FixedLength="true" MaxLength="7" />
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="Unnamed" />
           <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="CategoryChild" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
@@ -188,7 +188,7 @@
           <Property Name="CountingComplexity" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptCategory" FromRole="Category" ToRole="Dept" />
-          <Property Name="DeptId" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
           </EntityType>
         <EntityType Name="Appointment">
@@ -837,7 +837,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="DeptCategory">
-          <End Type="SdelkaModel.Dept" Role="Dept" Multiplicity="1" />
+          <End Type="SdelkaModel.Dept" Role="Dept" Multiplicity="0..1" />
           <End Type="SdelkaModel.Category" Role="Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Dept">

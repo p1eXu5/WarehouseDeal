@@ -109,6 +109,7 @@
     <Compile Include="Reception.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="RestoreDataContext.cs" />
     <Compile Include="SdelkaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

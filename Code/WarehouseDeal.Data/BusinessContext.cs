@@ -27,6 +27,21 @@ namespace WarehouseDeal.Data
 
             return null;
         }
+
+        public Category AddNewCategory (string id, string name, bool group, string parentId)
+        {
+            Category category = new Category
+            {
+                Id = id,
+                Name = name,
+                CategoryParent = null
+            };
+
+            category = context.CategorySet.Add (category);
+            context.SaveChanges();
+
+            return category;
+        }
         #region IDisposable Members
         public void Dispose ()
         {

@@ -30,7 +30,7 @@ namespace WarehouseDeal.Data
         public Nullable<double> RankingComplexity { get; set; }
         public bool CountingComplexity { get; set; }
         public bool IsPiecesInDeal { get; set; }
-        public int DeptId { get; set; }
+        public Nullable<int> DeptId { get; set; }
     
         public virtual Category CategoryParent { get; set; }
         public virtual Category CategoryChild { get; set; }
