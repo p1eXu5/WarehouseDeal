@@ -21,7 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDeal.ServiceClasse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElseTests", "..\Tests\ElseTests\ElseTests.csproj", "{79E7ED45-A849-4EE0-94B6-952C72B675C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDeal.Data.Tests", "WarehouseDeal.Data.Tests\WarehouseDeal.Data.Tests.csproj", "{C8956127-99F7-4C0D-9EF0-660BCB5B4E01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDeal.DesktopClient.Tests", "..\Tests\WarehouseDeal.DesktopClient.Tests\WarehouseDeal.DesktopClient.Tests.csproj", "{2505E171-2D49-446E-B0F4-1F4757206DB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseDeal.Data.Tests", "..\Tests\WarehouseDeal.Data.Tests\WarehouseDeal.Data.Tests.csproj", "{C8956127-99F7-4C0D-9EF0-660BCB5B4E01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{79E7ED45-A849-4EE0-94B6-952C72B675C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E7ED45-A849-4EE0-94B6-952C72B675C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79E7ED45-A849-4EE0-94B6-952C72B675C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2505E171-2D49-446E-B0F4-1F4757206DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2505E171-2D49-446E-B0F4-1F4757206DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2505E171-2D49-446E-B0F4-1F4757206DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2505E171-2D49-446E-B0F4-1F4757206DB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8956127-99F7-4C0D-9EF0-660BCB5B4E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8956127-99F7-4C0D-9EF0-660BCB5B4E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8956127-99F7-4C0D-9EF0-660BCB5B4E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,6 +79,7 @@ Global
 		{3E87E127-720D-4868-843F-1F0D163764E8} = {EB543BB5-4152-4B03-99A4-54B0EF2FAAAC}
 		{4BF64D09-9DC4-4D2A-BC38-783E29C67035} = {E3C446EA-583D-42E3-92C2-0089EC7DDC75}
 		{79E7ED45-A849-4EE0-94B6-952C72B675C5} = {E3C446EA-583D-42E3-92C2-0089EC7DDC75}
+		{2505E171-2D49-446E-B0F4-1F4757206DB4} = {E3C446EA-583D-42E3-92C2-0089EC7DDC75}
 		{C8956127-99F7-4C0D-9EF0-660BCB5B4E01} = {E3C446EA-583D-42E3-92C2-0089EC7DDC75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

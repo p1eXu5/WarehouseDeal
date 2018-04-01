@@ -63,7 +63,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WarehouseDeal.Data\WarehouseDeal.Data.csproj">
+    <ProjectReference Include="..\..\Code\WarehouseDeal.Data\WarehouseDeal.Data.csproj">
       <Project>{bedc1eb6-ad6c-4aa9-83ca-6eae4e250aca}</Project>
       <Name>WarehouseDeal.Data</Name>
     </ProjectReference>

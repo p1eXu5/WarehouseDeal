@@ -120,6 +120,10 @@
       <Project>{bedc1eb6-ad6c-4aa9-83ca-6eae4e250aca}</Project>
       <Name>WarehouseDeal.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WarehouseDeal.ServiceClasses\WarehouseDeal.ServiceClasses.csproj">
+      <Project>{3e87e127-720d-4868-843f-1f0d163764e8}</Project>
+      <Name>WarehouseDeal.ServiceClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

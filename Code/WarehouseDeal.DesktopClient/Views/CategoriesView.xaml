@@ -21,17 +21,46 @@
             <Setter Property="Margin" Value="0,0,30,0"/>
             <Setter Property="HorizontalAlignment" Value="Right"></Setter>
         </Style>
+        <ControlTemplate x:Key="DataGridViewTemplate">
+            <DataGrid AutoGenerateColumns="False"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+
+            </DataGrid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="TreeViewTemplate">
+            <TreeView HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      ItemsSource="{Binding Categories}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
+                        <TextBlock Text="{Binding Category.Name}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="DataTemplate" >
+            <Control x:Name="myControl" Template="{StaticResource DataGridViewTemplate}"/>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsTreeView}" Value="True">
+                    <Setter TargetName="myControl" Property="Template" Value="{StaticResource TreeViewTemplate}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MinWidth="256"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0">
-            <StackPanel Orientation="Horizontal" Height="24" DockPanel.Dock="Top">
-                <Button Background="{x:Null}" BorderBrush="{x:Null}" Width="24" Height="24" ToolTip="Обновить" Padding="0">
+            <DockPanel Height="24" DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Width="24" Height="24" ToolTip="Обновить" Padding="0">
                     <Rectangle Width="14" Height="16">
                         <Rectangle.Fill>
                             <RadialGradientBrush>
@@ -47,7 +76,7 @@
                         </Rectangle.RenderTransform>
                     </Rectangle>
                 </Button>
-                <Button Background="{x:Null}" BorderBrush="{x:Null}"  Width="24" Height="24" ToolTip="Сохранить">
+                <Button DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}"  Width="24" Height="24" ToolTip="Сохранить">
                     <Rectangle Width="14" Height="14">
                         <Rectangle.Fill>
                             <RadialGradientBrush>
@@ -60,16 +89,17 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-            </StackPanel>
-            <TreeView HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch"
-                      ItemsSource="{Binding Categories}">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
-                        <TextBlock Text="{Binding Category.Name}" />
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+                <Separator DockPanel.Dock="Left"></Separator>
+                <Button DockPanel.Dock="Left"
+                        Command="ApplicationCommands.Open"
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        Width="auto" Height="24" 
+                        ToolTip="Импорт">
+                    <TextBlock>Импорт</TextBlock>
+                </Button>
+                <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" Content="{Binding ViewContent}" BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>
+            </DockPanel>
+            <ContentControl ContentTemplate="{StaticResource DataTemplate}" Content="{Binding}"></ContentControl>
         </DockPanel>
 
         <GridSplitter Width="3" Grid.Column="1" HorizontalAlignment="Center"/>

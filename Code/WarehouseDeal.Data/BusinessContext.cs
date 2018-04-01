@@ -18,17 +18,15 @@ namespace WarehouseDeal.Data
 
         public Category GetRootCategory()
         {
-            try {
-                return context.CategorySet.First (p => p.CategoryParent == null);
-            }
-            catch {
-
-            }
-
-            return null;
+            return context.CategorySet.First (p => p.CategoryParent == null);
         }
 
-        public Category AddNewCategory (string id, string name, bool group, string parentId)
+        public IEnumerable<Category> GetChildCategiries (Category rootCategory)
+        {
+            return context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
+        }
+
+        public Category AddNewCategory (string id, string name)
         {
             Category category = new Category
             {
@@ -42,6 +40,30 @@ namespace WarehouseDeal.Data
 
             return category;
         }
+
+        public void AddNewCategory (Category category)
+        {
+            context.CategorySet.Add (category);
+            context.SaveChanges ();
+        }
+
+        public void AddParentCategory (string idChild, string idParent)
+        {
+            Category category = context.CategorySet.Find (idChild);
+            if (category != null)
+                category.CategoryParent = context.CategorySet.Find (idParent);
+            context.SaveChanges();
+        }
+
+        public void AddParentCategory (Category child, Category parent)
+        {
+            Category category = context.CategorySet.Find (child.Id);
+            if (category != null)
+                category.CategoryParent = context.CategorySet.Find (parent.Id);
+            context.SaveChanges ();
+        }
+
+
         #region IDisposable Members
         public void Dispose ()
         {

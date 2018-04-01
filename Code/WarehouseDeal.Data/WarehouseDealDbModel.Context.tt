@@ -56,7 +56,7 @@ using System.Linq;
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext
 {
     public <#=code.Escape(container)#>()
-        : base("name=<#=container.Name#>")
+        : base("Default")
     {
 <#
 if (!loader.IsLazyLoadingEnabled(container))
@@ -82,7 +82,16 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-        throw new UnintentionalCodeFirstException();
+         modelBuilder.Entity<Category> ()
+                .HasOptional (p => p.CategoryParent)
+                .WithOptionalPrincipal (c => c.CategoryChild)
+                .WillCascadeOnDelete (false);
+
+            modelBuilder.Entity<Category> ()
+                .HasMany (p => p.Product)
+                .WithRequired (c => c.Category)
+                .HasForeignKey (k => k.CategoryId)
+                .WillCascadeOnDelete (false);
     }
 
 <#
