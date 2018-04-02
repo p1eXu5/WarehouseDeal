@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WarehouseDeal.Data.Tests;
 using WarehouseDeal.DesktopClient.ViewModels;
+using WarehouseDeal.Data;
 
 namespace WarehouseDeal.DesktopClient.Tests
 {
@@ -66,6 +67,19 @@ namespace WarehouseDeal.DesktopClient.Tests
 
             Assert.IsTrue (count == 1311);
         }
- 
+
+        [TestMethod]
+        public void CanSetCategoriesListsFromDatabase()
+        {
+            var viewModel = new CategoriesModelView ();
+
+            int count = viewModel.LoadCategoriesFromFile ("D:\\programming projects\\C# Projects\\WarehouseDeal\\Code\\WarehouseDeal.Data\\Assets\\Categories.csv");
+
+            viewModel.SetCategoriesLists();
+
+            int countFromModel = viewModel.Categories.Count<Category>();
+
+            Assert.IsTrue (count == countFromModel);
+        }
     }
 }

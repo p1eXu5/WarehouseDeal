@@ -67,6 +67,10 @@
       <Project>{24852181-8a1a-485f-b7b1-a1735030f757}</Project>
       <Name>WarehouseDeal.BaseClasses</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Code\WarehouseDeal.Data\WarehouseDeal.Data.csproj">
+      <Project>{bedc1eb6-ad6c-4aa9-83ca-6eae4e250aca}</Project>
+      <Name>WarehouseDeal.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Code\WarehouseDeal.DesktopClient\WarehouseDeal.DesktopClient.csproj">
       <Project>{d5adecbd-56cf-47db-a5b4-eb44a1802f46}</Project>
       <Name>WarehouseDeal.DesktopClient</Name>

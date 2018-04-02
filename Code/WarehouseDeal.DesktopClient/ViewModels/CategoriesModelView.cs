@@ -79,7 +79,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         #endregion Commands
 
         #region Methods
-        private void SetCategoriesLists()
+        public void SetCategoriesLists()
         {
             GetCategoryHierarchy();
             GetCategoryList();
