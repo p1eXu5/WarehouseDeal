@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Assets\Categories.csv" />
     <None Include="packages.config" />
     <EntityDeploy Include="SdelkaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

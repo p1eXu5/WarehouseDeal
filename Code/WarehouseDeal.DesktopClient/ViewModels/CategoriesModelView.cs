@@ -35,11 +35,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             _context = context;
             Categories = new ObservableCollection<Category>();
             CategoriesHierarchy = new ObservableCollection<CategoryHierarchy>();
-            GetCategoriesLists ();
+            SetCategoriesLists ();
             IsTreeView = true;
         }
         #endregion constructors
 
+        #region Properties
         public ICollection<Category> Categories { get; private set; }
         public ObservableCollection<CategoryHierarchy> CategoriesHierarchy { get; private set; }
         public Category SelectedCategory
@@ -70,16 +71,17 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 NotifyPropertyChanged ();
             }
         }
+        #endregion Properties
 
         #region Commands
         public ICommand ImportCommand => new ActionCommand (a => ImportFileCategory());
-        public ICommand GetCategoryListCommand => new ActionCommand (a => GetCategoriesLists());
+        public ICommand GetCategoryListCommand => new ActionCommand (a => SetCategoriesLists());
         #endregion Commands
 
-
-        private void GetCategoriesLists()
+        #region Methods
+        private void SetCategoriesLists()
         {
-            GetHierarchyCategories();
+            GetCategoryHierarchy();
             GetCategoryList();
         }
 
@@ -93,7 +95,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             }
         }
 
-        private void GetHierarchyCategories()
+        private void GetCategoryHierarchy()
         {
             CategoriesHierarchy.Clear();
 
@@ -126,24 +128,27 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             if (ofd.ShowDialog() == true) {
 
                 string fileName = ofd.FileName;
-
-                IEnumerable<string[]> lines = GetStringsArrayEnumeratorFromCsvFile (fileName);
-
-                foreach (var line in lines) {
-                    
-                    if (!IsCategoryString(line)) continue;
-
-                    _context.AddNewCategory(line[(int)Id], line[(int)Name]);
-                }
-
-                foreach (var line in lines) {
-
-                    _context.AddParentCategory (line[(int)Id], line[(int)Parent]);
-                }
+                LoadCategoriesFromFile(fileName);
             }
 
-            GetCategoriesLists();
+            SetCategoriesLists();
         }
+
+        private void LoadCategoriesFromFile (string fileName)
+        {
+            IEnumerable<string[]> lines = GetStringsArrayEnumeratorFromCsvFile (fileName).ToList();
+
+            foreach (var line in lines) {
+                if (!IsCategoryString (line)) continue;
+
+                _context.AddNewCategory (line[(int) Id], line[(int) Name]);
+            }
+
+            foreach (var line in lines) {
+                _context.AddParentCategory (line[(int) Id], line[(int) Parent]);
+            }
+        }
+        #endregion Methods
 
 
         public bool IsCategoryString (string[] line)
@@ -162,6 +167,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             public ObservableCollection<CategoryHierarchy> Categories { get; set; }
         }
 
+        private int ind = 0;
         public CategoryHierarchy TestCategoryHierarchy => new CategoryHierarchy
                                                             {
                                                                 Category = new Category {Name = $"Категория {ind++}"},
