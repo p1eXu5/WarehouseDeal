@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace WarehouseDeal.Data
 {
+    using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
+    using static FileOfCategoriesColumns;
+
+    public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
+
     public sealed class BusinessContext : IDisposable
     {
         private readonly DataContext _context;
@@ -79,13 +84,41 @@ namespace WarehouseDeal.Data
         {
             Check.IsCategoryIdCorrect (category.Id);
             Check.IsCategoryNameCorrect (category.Name);
+            category.CategoryParent = null;
+            category.CategoryChild = null;
+            category.Dept = null;
+            category.Product = null;
 
-            Category entity = new Category { Id = category.Id, Name = category.Name };
 
-            _context.CategorySet.Add (entity);
+            _context.CategorySet.Add (category);
             _context.SaveChanges ();
         }
 
+
+        public int LoadCategoriesFromFile (string fileName)
+        {
+            ICollection<string[]> lines = GetStringsArrayEnumeratorFromCsvFile (fileName).ToList ();
+            ICollection<string[]> removableLines = new List<string[]> ();
+
+            foreach (var line in lines) {
+                if (!Check.IsCategoryString (line)) {
+                    removableLines.Add (line);
+                    continue;
+                }
+
+                AddNewCategory (line[(int)Id], line[(int)Name]);
+            }
+
+            foreach (string[] line in removableLines) {
+                lines.Remove (line);
+            }
+
+            foreach (var line in lines) {
+                AddParentCategory (line[(int)Id], line[(int)Parent]);
+            }
+
+            return lines.Count;
+        }
         //-----------------------------------------------------------------------------------------------
         #endregion Create Data
 
@@ -121,7 +154,7 @@ namespace WarehouseDeal.Data
 
 
         #region Check Class
-        static class Check
+        public static class Check
         {
             public static void IsCategoryIdCorrect (string id)
             {
@@ -139,6 +172,16 @@ namespace WarehouseDeal.Data
 
                 if (name.Trim ().Length == 0)
                     throw new ArgumentException ();
+            }
+
+            public static bool IsCategoryString (string[] line)
+            {
+
+                return !(line == null || line.Length != 4 ||
+                         String.IsNullOrEmpty (line[0]) || line[0].Length != 7 ||
+                         String.IsNullOrWhiteSpace (line[1]) ||
+                         (!string.IsNullOrEmpty (line[3]) && line[3].Length != 7) ||
+                         (!line[2].Equals ("Да") && !line[2].Equals ("Нет")));
             }
         }
         #endregion Check Class

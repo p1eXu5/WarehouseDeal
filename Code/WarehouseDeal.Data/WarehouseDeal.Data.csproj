@@ -117,6 +117,7 @@
     <Compile Include="Shipment.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseDealDbInitializer.cs" />
     <Compile Include="WarehouseDealDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,6 +158,12 @@
       <LastGenOutput>WarehouseDealDbModel.cs</LastGenOutput>
       <DependentUpon>SdelkaModel.edmx</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WarehouseDeal.ServiceClasses\WarehouseDeal.ServiceClasses.csproj">
+      <Project>{3e87e127-720d-4868-843f-1f0d163764e8}</Project>
+      <Name>WarehouseDeal.ServiceClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

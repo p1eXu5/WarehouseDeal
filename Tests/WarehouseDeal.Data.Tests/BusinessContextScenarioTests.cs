@@ -81,5 +81,60 @@ namespace WarehouseDeal.Data.Tests
                 //Assert.IsTrue (childCategories.Contains (category1));
             }
         }
+
+        [TestMethod]
+        public void IsCategoryStringReturnsFalseWhenLineIsNotCorrect ()
+        {
+                string[] line = {"12345678", "Some CategoryName", "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"1234567", "Some CategoryName", "Да", "12345678"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"1234567", "Some CategoryName", "Да", "123456"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"123456", "Some CategoryName", "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"1234567", "", "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"1234567", null, "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {"", "Some CategoryName", "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+
+                line = new[] {null, "Some CategoryName", "Да", "1234567"};
+                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+        }
+
+        [TestMethod]
+        public void IsCategoryStringReturnsTrueWhenLineIsCorrect ()
+        {
+            string[] line = { "1234567", "Some CategoryName", "Да", "1234567" };
+            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+
+            line = new[] { "1234567", "Some CategoryName", "Да", "" };
+            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+
+            line = new[] { "1234567", "Some CategoryName", "Да", null };
+            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+        }
+
+        [TestMethod]
+        public void CanLoadCategoriesFromFile ()
+        {
+            using (var bc = new BusinessContext()) {
+
+                int count = bc.LoadCategoriesFromFile (
+                    "D:\\programming projects\\C# Projects\\WarehouseDeal\\Code\\WarehouseDeal.Data\\Assets\\Categories.csv");
+
+                Assert.IsTrue (count == 1311);
+            }
+        }
+
+        
     }
 }
