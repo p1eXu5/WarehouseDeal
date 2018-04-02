@@ -8,26 +8,51 @@ namespace WarehouseDeal.Data
 {
     public sealed class BusinessContext : IDisposable
     {
-        private readonly DataContext context;
-        private bool disposed;
+        private readonly DataContext _context;
+        public DataContext DataContext => _context;
+
+        private bool _disposed;
 
         public BusinessContext ()
         {
-            this.context = new DataContext();
+            this._context = new DataContext();
+        }
+
+        #region Read Data
+        //-----------------------------------------------------------------------------------------------
+
+        public IEnumerable<Category> GetAllCategories ()
+        {
+            return _context.CategorySet.Select (s => s).ToArray();
         }
 
         public Category GetRootCategory()
         {
-            return context.CategorySet.First (p => p.CategoryParent == null);
+            return _context.CategorySet.First (p => p.CategoryParent == null);
+        }
+
+        public IEnumerable<Category> GetRootsCategiries ()
+        {
+            return _context.CategorySet.Where (p => p.CategoryParent == null).ToArray ();
         }
 
         public IEnumerable<Category> GetChildCategiries (Category rootCategory)
         {
-            return context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
+            return _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
         }
+
+        //-----------------------------------------------------------------------------------------------
+        #endregion Read Data
+
+
+        #region Create Data
+        //-----------------------------------------------------------------------------------------------
 
         public Category AddNewCategory (string id, string name)
         {
+            Check.IsCategoryIdCorrect (id);
+            Check.IsCategoryNameCorrect (name);
+
             Category category = new Category
             {
                 Id = id,
@@ -35,33 +60,79 @@ namespace WarehouseDeal.Data
                 CategoryParent = null
             };
 
-            category = context.CategorySet.Add (category);
-            context.SaveChanges();
+            category = _context.CategorySet.Add (category);
+            _context.SaveChanges();
 
             return category;
         }
 
         public void AddNewCategory (Category category)
         {
-            context.CategorySet.Add (category);
-            context.SaveChanges ();
+            Check.IsCategoryIdCorrect (category.Id);
+            Check.IsCategoryNameCorrect (category.Name);
+
+            Category entity = new Category { Id = category.Id, Name = category.Name };
+
+            _context.CategorySet.Add (entity);
+            _context.SaveChanges ();
         }
 
+        //-----------------------------------------------------------------------------------------------
+        #endregion Create Data
+
+
+        #region Update Data
+        //-----------------------------------------------------------------------------------------------
         public void AddParentCategory (string idChild, string idParent)
         {
-            Category category = context.CategorySet.Find (idChild);
-            if (category != null)
-                category.CategoryParent = context.CategorySet.Find (idParent);
-            context.SaveChanges();
+            Category category = _context.CategorySet.Find (idChild);
+
+            if (category == null)
+                throw new ArgumentException ();
+
+            category.CategoryParent = _context.CategorySet.Find (idParent);
+
+            _context.SaveChanges();
         }
 
         public void AddParentCategory (Category child, Category parent)
         {
-            Category category = context.CategorySet.Find (child.Id);
-            if (category != null)
-                category.CategoryParent = context.CategorySet.Find (parent.Id);
-            context.SaveChanges ();
+            Category category = _context.CategorySet.Find (child.Id);
+
+            if (category == null)
+                throw new ArgumentException();
+
+            category.CategoryParent = _context.CategorySet.Find (parent.Id);
+
+            _context.SaveChanges ();
         }
+
+        //-----------------------------------------------------------------------------------------------
+        #endregion Update Data
+
+
+        #region Check Class
+        static class Check
+        {
+            public static void IsCategoryIdCorrect (string id)
+            {
+                if (id == null) 
+                    throw new ArgumentNullException();
+
+                if (id.Trim().Length != 7)
+                    throw new ArgumentException();
+            }
+
+            public static void IsCategoryNameCorrect (string name)
+            {
+                if (name == null)
+                    throw new ArgumentNullException ();
+
+                if (name.Trim ().Length == 0)
+                    throw new ArgumentException ();
+            }
+        }
+        #endregion Check Class
 
 
         #region IDisposable Members
@@ -75,12 +146,12 @@ namespace WarehouseDeal.Data
 
         private void Dispose (bool disposing)
         {
-            if (!disposing || disposed)
+            if (!disposing || _disposed)
                 return;
 
-            context?.Dispose();
+            _context?.Dispose();
 
-            disposed = true;
+            _disposed = true;
         }
         #endregion IDisposable Members
     }

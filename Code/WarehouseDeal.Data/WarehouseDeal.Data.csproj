@@ -118,8 +118,6 @@
     <Compile Include="Shipment.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TestTable.cs" />
-    <Compile Include="WarehouseDealDBInitializer.cs" />
     <Compile Include="WarehouseDealDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

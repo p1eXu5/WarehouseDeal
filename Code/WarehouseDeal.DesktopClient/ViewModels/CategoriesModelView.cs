@@ -13,28 +13,33 @@ using WarehouseDeal.Data;
 namespace WarehouseDeal.DesktopClient.ViewModels
 {
     using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
+    using static FileOfCategoriesColumns;
+     
+    public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
 
     public class CategoriesModelView : ViewModel
     {
+        private int ind = 0;
         private readonly BusinessContext _context;
         private Category _selectedCategory;
 
-        public ActionCommand ImportCommand => new ActionCommand (a => ImportFileCategory());
+        public ICommand ImportCommand => new ActionCommand (a => ImportFileCategory());
+        public ICommand GetCategoryList => new ActionCommand (a => GetCategoriesLists());
 
         public CategoriesModelView() : this(new BusinessContext()) { }
 
         public CategoriesModelView (BusinessContext context)
         {
             _context = context;
-            //Categories = new ObservableCollection<Category>();
-            GetCategoriesList();
+            Categories = new ObservableCollection<Category>();
+            CategoriesHierarchy = new ObservableCollection<CategoryHierarchy>();
+            GetCategoriesLists ();
             IsTreeView = true;
-      
         }
 
 
-        //public ICollection<Category> Categories { get; private set; }
-        public ObservableCollection<CategoriesList> Categories { get; private set; }
+        public ICollection<Category> Categories { get; private set; }
+        public ObservableCollection<CategoryHierarchy> CategoriesHierarchy { get; private set; }
 
         public Category SelectedCategory
         {
@@ -69,31 +74,14 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             }
         }
 
-        private void GetCategoriesList()
+        private void GetCategoriesLists()
         {
-            Categories = new ObservableCollection<CategoriesList>
-            {
-                new CategoriesList
-                {
-                    Category = new Category {Name = "Категория"},
-                    Categories = new ObservableCollection<CategoriesList>
-                    {
-                        new CategoriesList {Category = new Category {Name = "Первая категория"}},
-                        new CategoriesList
-                        {
-                            Category = new Category {Name = "Вторая категория"},
-                            Categories = new ObservableCollection<CategoriesList>
-                            {
-                                new CategoriesList {Category = new Category {Name = "Вложенная категория"}}
-                            }
-                        }
-                    }
-                }
-            };
+            CategoriesHierarchy.Clear();
+            CategoriesHierarchy.Add (TestCategoryHierarchy);
 
-            //foreach (Category category in _context.GetCategoriesList()) {
+            //foreach (Category category in _context.GetCategoriesLists()) {
 
-            //    Categories.Add (category);
+            //    CategoriesHierarchy.Add (category);
             //}
         }
 
@@ -115,9 +103,16 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                     
                     if (!IsCategoryString(line)) continue;
 
-                    _context.AddNewCategory(line[0], line[1]);
+                    _context.AddNewCategory(line[(int)Id], line[(int)Name]);
+                }
+
+                foreach (var line in lines) {
+
+                    _context.AddParentCategory (line[(int)Id], line[(int)Parent]);
                 }
             }
+
+            GetCategoriesLists();
         }
 
         public bool IsCategoryString (string[] line)
@@ -129,10 +124,28 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                      (!line[2].Equals ("Да") && !line[2].Equals ("Нет")));
         }
 
-        public class CategoriesList
+        public class CategoryHierarchy
         {
             public Category Category { get; set; }
-            public ObservableCollection<CategoriesList> Categories { get; set; }
+            public ObservableCollection<CategoryHierarchy> Categories { get; set; }
         }
+
+        public CategoryHierarchy TestCategoryHierarchy => new CategoryHierarchy
+                                                            {
+                                                                Category = new Category {Name = $"Категория {ind++}"},
+                                                                Categories = new ObservableCollection<CategoryHierarchy>
+                                                                {
+                                                                    new CategoryHierarchy {Category = new Category {Name = "Первая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категорияПервая категория"}},
+                                                                    new CategoryHierarchy
+                                                                    {
+                                                                        Category = new Category {Name = "Вторая категория"},
+                                                                        Categories = new ObservableCollection<CategoryHierarchy>
+                                                                        {
+                                                                            new CategoryHierarchy {Category = new Category {Name = "Вложенная категория"}}
+                                                                        }
+                                                                    }
+                                                                }
+                                                            };
+        
     }
 }

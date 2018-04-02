@@ -71,6 +71,10 @@
       <Project>{d5adecbd-56cf-47db-a5b4-eb44a1802f46}</Project>
       <Name>WarehouseDeal.DesktopClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WarehouseDeal.Data.Tests\WarehouseDeal.Data.Tests.csproj">
+      <Project>{c8956127-99f7-4c0d-9ef0-660bcb5b4e01}</Project>
+      <Name>WarehouseDeal.Data.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

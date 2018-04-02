@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:WarehouseDeal.DesktopClient.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:CategoriesModelView}"
-        Title="CategoriesView" Height="463" Width="632.975" MinHeight="460" MinWidth="632">
+        Title="CategoriesHierarchyView" Height="463" Width="632.975" MinHeight="460" MinWidth="632">
     <Window.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="TextBlock.Margin" Value="15,0,4,0"/>
@@ -32,7 +32,7 @@
         <ControlTemplate x:Key="TreeViewTemplate">
             <TreeView HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
-                      ItemsSource="{Binding Categories}">
+                      ItemsSource="{Binding CategoriesHierarchy}">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
                         <TextBlock Text="{Binding Category.Name}" />
@@ -60,7 +60,11 @@
 
         <DockPanel Grid.Column="0">
             <DockPanel Height="24" DockPanel.Dock="Top">
-                <Button DockPanel.Dock="Left" Background="{x:Null}" BorderBrush="{x:Null}" Width="24" Height="24" ToolTip="Обновить" Padding="0">
+                <Button Command="{Binding GetCategoryList}" 
+                        DockPanel.Dock="Left" 
+                        Background="{x:Null}" BorderBrush="{x:Null}" 
+                        Width="24" Height="24" 
+                        ToolTip="Обновить" Padding="0">
                     <Rectangle Width="14" Height="16">
                         <Rectangle.Fill>
                             <RadialGradientBrush>
