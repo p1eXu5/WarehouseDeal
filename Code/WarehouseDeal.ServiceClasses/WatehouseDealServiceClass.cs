@@ -16,7 +16,7 @@ namespace WarehouseDeal.ServiceClasses
             if (!File.Exists (fileName) || !fileName.EndsWith (ConstCsvFileExtension))
                 throw new ArgumentException ($"File does't exist or file have wrong extension: {fileName}", nameof(fileName));
 
-            using (StreamReader sr = new StreamReader (fileName)) {
+            using (StreamReader sr = new StreamReader (fileName, Encoding.GetEncoding ("Windows-1251"))) {
 
                 while (!sr.EndOfStream) {
                     yield return sr.ReadLine ().Split (';');

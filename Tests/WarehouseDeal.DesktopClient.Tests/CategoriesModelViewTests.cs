@@ -56,5 +56,16 @@ namespace WarehouseDeal.DesktopClient.Tests
             line = new[] { "1234567", "Some CategoryName", "Да", null };
             Assert.IsTrue (viewModel.IsCategoryString (line));
         }
+
+        [TestMethod]
+        public void CanLoadCategoriesFromFile()
+        {
+            var viewModel = new CategoriesModelView();
+
+            int count = viewModel.LoadCategoriesFromFile ("D:\\programming projects\\C# Projects\\WarehouseDeal\\Code\\WarehouseDeal.Data\\Assets\\Categories.csv");
+
+            Assert.IsTrue (count == 1311);
+        }
+ 
     }
 }

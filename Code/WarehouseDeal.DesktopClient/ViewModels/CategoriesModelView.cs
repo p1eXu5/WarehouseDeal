@@ -134,19 +134,29 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             SetCategoriesLists();
         }
 
-        private void LoadCategoriesFromFile (string fileName)
+        public int LoadCategoriesFromFile (string fileName)
         {
-            IEnumerable<string[]> lines = GetStringsArrayEnumeratorFromCsvFile (fileName).ToList();
+            ICollection<string[]> lines = GetStringsArrayEnumeratorFromCsvFile (fileName).ToList();
+            ICollection<string[]> removableLines = new List<string[]>();
 
             foreach (var line in lines) {
-                if (!IsCategoryString (line)) continue;
+                if (!IsCategoryString (line)) {
+                    removableLines.Add(line);
+                    continue;
+                }
 
                 _context.AddNewCategory (line[(int) Id], line[(int) Name]);
+            }
+
+            foreach (string[] line in removableLines) {
+                lines.Remove (line);
             }
 
             foreach (var line in lines) {
                 _context.AddParentCategory (line[(int) Id], line[(int) Parent]);
             }
+
+            return lines.Count;
         }
         #endregion Methods
 
