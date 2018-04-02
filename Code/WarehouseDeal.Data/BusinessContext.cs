@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,15 @@ namespace WarehouseDeal.Data
 
         public BusinessContext ()
         {
-            this._context = new DataContext();
+            try {
+                this._context = new DataContext();
+                _context.Database.Initialize (false);
+            }
+            catch (Exception ex) {
+
+                Debug.WriteLine ("Инициализация не выполнена. Ошибка: ");
+                Debug.WriteLine (ex.Message);
+            }
         }
 
         #region Read Data
