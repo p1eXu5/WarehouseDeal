@@ -72,11 +72,11 @@ namespace WarehouseDeal.Data.Tests
 
                 //Assert.IsTrue (rootCategory == category3);
 
-                //ICollection<Category> childCategories = (ICollection<Category>)bc.GetChildCategiries(rootCategory);
+                //ICollection<Category> childCategories = (ICollection<Category>)bc.GetChildrenCategories(rootCategory);
 
                 //Assert.IsTrue(childCategories.Contains (category2));
 
-                //childCategories = (ICollection<Category>)bc.GetChildCategiries (category2);
+                //childCategories = (ICollection<Category>)bc.GetChildrenCategories (category2);
 
                 //Assert.IsTrue (childCategories.Contains (category1));
             }

@@ -24,6 +24,15 @@ namespace ElseTests
 
             Console.WriteLine (kod.Equals (rus));
             Console.WriteLine (kod.Equals (eng));
+
+            List<int> ints = new List<int>();
+
+            foreach (int i in ints) {
+
+                Console.WriteLine (i);
+            }
+
+            Console.WriteLine ("End");
         }
     }
 }
