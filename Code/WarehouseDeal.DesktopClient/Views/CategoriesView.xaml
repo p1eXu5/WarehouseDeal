@@ -60,7 +60,7 @@
 
         <DockPanel Grid.Column="0">
             <DockPanel Height="24" DockPanel.Dock="Top">
-                <Button Command="{Binding GetCategoryList}" 
+                <Button Command="{Binding GetCategoryListCommand}" 
                         DockPanel.Dock="Left" 
                         Background="{x:Null}" BorderBrush="{x:Null}" 
                         Width="24" Height="24" 

@@ -12,20 +12,22 @@ using WarehouseDeal.Data;
 
 namespace WarehouseDeal.DesktopClient.ViewModels
 {
+
     using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
     using static FileOfCategoriesColumns;
      
     public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
 
+
+
     public class CategoriesModelView : ViewModel
     {
-        private int ind = 0;
         private readonly BusinessContext _context;
         private Category _selectedCategory;
+        private bool _isTreeView = true;    // Declarate which control is visible now
+        private string _viewContent;        // Content for toggle button
 
-        public ICommand ImportCommand => new ActionCommand (a => ImportFileCategory());
-        public ICommand GetCategoryList => new ActionCommand (a => GetCategoriesLists());
-
+        #region constructors
         public CategoriesModelView() : this(new BusinessContext()) { }
 
         public CategoriesModelView (BusinessContext context)
@@ -36,11 +38,10 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             GetCategoriesLists ();
             IsTreeView = true;
         }
-
+        #endregion constructors
 
         public ICollection<Category> Categories { get; private set; }
         public ObservableCollection<CategoryHierarchy> CategoriesHierarchy { get; private set; }
-
         public Category SelectedCategory
         {
             get => _selectedCategory;
@@ -49,8 +50,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 NotifyPropertyChanged ();
             }
         }
-
-        private bool _isTreeView = true;
         public bool IsTreeView
         {
             get => _isTreeView;
@@ -63,8 +62,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 NotifyPropertyChanged ();
             }
         }
-
-        private string _viewContent;
         public string ViewContent
         {
             get => _viewContent;
@@ -74,15 +71,48 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             }
         }
 
+        #region Commands
+        public ICommand ImportCommand => new ActionCommand (a => ImportFileCategory());
+        public ICommand GetCategoryListCommand => new ActionCommand (a => GetCategoriesLists());
+        #endregion Commands
+
+
         private void GetCategoriesLists()
         {
+            GetHierarchyCategories();
+            GetCategoryList();
+        }
+
+        private void GetCategoryList()
+        {
+            Categories.Clear();
+
+            foreach (Category category in _context.GetAllCategories()) {
+                
+                Categories.Add (category);
+            }
+        }
+
+        private void GetHierarchyCategories()
+        {
             CategoriesHierarchy.Clear();
-            CategoriesHierarchy.Add (TestCategoryHierarchy);
 
-            //foreach (Category category in _context.GetCategoriesLists()) {
+            foreach (Category category in _context.GetAllRootCategiries()) {
 
-            //    CategoriesHierarchy.Add (category);
-            //}
+                CategoriesHierarchy.Add (new CategoryHierarchy {Category = category, Categories = LoadChildrenCategories (category)});
+            }
+        }
+
+        private ObservableCollection<CategoryHierarchy> LoadChildrenCategories (Category category)
+        {
+            ObservableCollection<CategoryHierarchy> hierarchyCategories = new ObservableCollection<CategoryHierarchy>();
+
+            foreach (Category childCategiry in _context.GetChildrenCategories (category)) {
+                
+                hierarchyCategories.Add (new CategoryHierarchy { Category = childCategiry, Categories = LoadChildrenCategories (childCategiry) });
+            }
+
+            return hierarchyCategories.Count > 0 ? hierarchyCategories: null;
         }
 
 
@@ -115,8 +145,10 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             GetCategoriesLists();
         }
 
+
         public bool IsCategoryString (string[] line)
         {
+
             return !(line == null || line.Length != 4 || 
                      String.IsNullOrEmpty (line[0]) || line[0].Length != 7 ||
                      String.IsNullOrWhiteSpace (line[1]) ||

@@ -31,12 +31,12 @@ namespace WarehouseDeal.Data
             return _context.CategorySet.First (p => p.CategoryParent == null);
         }
 
-        public IEnumerable<Category> GetRootsCategiries ()
+        public IEnumerable<Category> GetAllRootCategiries ()
         {
             return _context.CategorySet.Where (p => p.CategoryParent == null).ToArray ();
         }
 
-        public IEnumerable<Category> GetChildCategiries (Category rootCategory)
+        public IEnumerable<Category> GetChildrenCategories (Category rootCategory)
         {
             return _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
         }
