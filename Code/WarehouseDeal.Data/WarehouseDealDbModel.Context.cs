@@ -23,9 +23,9 @@ namespace WarehouseDeal.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
              modelBuilder.Entity<Category> ()
-                    .HasOptional (p => p.CategoryParent)
-                    .WithOptionalPrincipal (c => c.CategoryChild)
-                    .WillCascadeOnDelete (false);
+                        .HasOptional (p => p.CategoryChild)
+                        .WithOptionalPrincipal (c => c.CategoryParent)
+                        .WillCascadeOnDelete (false);
     
                 modelBuilder.Entity<Category> ()
                     .HasMany (p => p.Product)

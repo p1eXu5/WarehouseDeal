@@ -67,6 +67,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         #region Commands
         public ICommand ImportCommand => new ActionCommand (a => ImportFileCategory());
+        public ICommand ClearCommand => new ActionCommand (a => ClearCategoriesLists ());
         public ICommand GetCategoryListCommand => new ActionCommand (a => SetCategoriesLists());
         #endregion Commands
 
@@ -126,7 +127,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             SetCategoriesLists();
         }
 
-        
+        public void ClearCategoriesLists()
+        {
+            _context.DeleteAllCategories();
+            Categories.Clear();
+            CategoriesHierarchy.Clear();
+        }
         #endregion Methods
 
 

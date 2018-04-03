@@ -114,7 +114,8 @@ namespace WarehouseDeal.Data
             }
 
             foreach (var line in lines) {
-                AddParentCategory (line[(int)Id], line[(int)Parent]);
+                if (!String.IsNullOrWhiteSpace (line[(int)Parent]))
+                    AddParentCategory (line[(int)Id], line[(int)Parent]);
             }
 
             return lines.Count;
@@ -151,6 +152,16 @@ namespace WarehouseDeal.Data
 
         //-----------------------------------------------------------------------------------------------
         #endregion Update Data
+
+        #region Delete
+
+        public void DeleteAllCategories()
+        {
+            _context.CategorySet.RemoveRange(GetAllCategories());
+            _context.SaveChanges();
+        }
+
+        #endregion
 
 
         #region Check Class

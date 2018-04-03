@@ -18,7 +18,7 @@ namespace WarehouseDeal.DesktopClient.Tests
         {
             var viewModel = new StubViewModel();
 
-            int count = viewModel.Context.LoadCategoriesFromFile ("D:\\programming projects\\C# Projects\\WarehouseDeal\\Code\\WarehouseDeal.Data\\Assets\\Categories.csv");
+            int count = viewModel.Context.LoadCategoriesFromFile (testFile);
 
             viewModel.SetCategoriesLists ();
 

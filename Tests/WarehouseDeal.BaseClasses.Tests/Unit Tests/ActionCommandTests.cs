@@ -52,7 +52,7 @@ namespace WarehouseDeal.BaseClasses.Tests.Unit_Tests
         }
 
         [TestMethod]
-        public void CanExecuteIsTrueByDefault()
+        public void CanExecute_IsTrue_ByDefault()
         {
             ActionCommand command = new ActionCommand((parametr) => { });
             Assert.IsTrue (command.CanExecute (null));

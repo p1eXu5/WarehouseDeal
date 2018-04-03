@@ -1,0 +1,1 @@
+﻿DELETE FROM WarehouseDeal_Session02.dbo.Categories;

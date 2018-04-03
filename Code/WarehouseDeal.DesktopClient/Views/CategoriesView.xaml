@@ -95,13 +95,23 @@
                 </Button>
                 <Separator DockPanel.Dock="Left"></Separator>
                 <Button DockPanel.Dock="Left"
-                        Command="ApplicationCommands.Open"
+                        Command="{Binding ImportCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}"  
                         Width="auto" Height="24" 
                         ToolTip="Импорт">
                     <TextBlock>Импорт</TextBlock>
                 </Button>
-                <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" Content="{Binding ViewContent}" BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>
+                <Button DockPanel.Dock="Left"
+                        Command="{Binding ClearCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        Width="auto" Height="24" 
+                        ToolTip="Очистить">
+                    <TextBlock>Очистить</TextBlock>
+                </Button>
+                <ToggleButton DockPanel.Dock="Right" Margin="10,0,0,0"
+                              IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" 
+                              Content="{Binding ViewContent}" 
+                              BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>
             </DockPanel>
             <ContentControl ContentTemplate="{StaticResource DataTemplate}" Content="{Binding}"></ContentControl>
         </DockPanel>

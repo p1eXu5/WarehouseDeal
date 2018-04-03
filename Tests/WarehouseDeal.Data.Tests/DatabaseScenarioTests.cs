@@ -4,9 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WarehouseDeal.Data.Tests
 {
+
     [TestClass]
     public class DatabaseScenarioTests
     {
+        protected string testFile = "..\\..\\..\\..\\Build\\TestCategories.csv";
+
         [TestInitialize]
         public virtual void CanCreateDatabase ()
         {
