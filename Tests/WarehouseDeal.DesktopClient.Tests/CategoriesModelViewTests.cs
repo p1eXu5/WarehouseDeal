@@ -17,7 +17,6 @@ namespace WarehouseDeal.DesktopClient.Tests
         public void CanSetCategoriesListsFromDatabase ()
         {
             var viewModel = new StubViewModel();
-
             int count = viewModel.Context.LoadCategoriesFromFile (testFile);
 
             viewModel.SetCategoriesLists ();

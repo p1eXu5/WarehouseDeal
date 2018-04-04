@@ -153,6 +153,7 @@ namespace WarehouseDeal.Data
         //-----------------------------------------------------------------------------------------------
         #endregion Update Data
 
+
         #region Delete
 
         public void DeleteAllCategories()
