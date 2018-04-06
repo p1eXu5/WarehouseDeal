@@ -82,11 +82,6 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
-         modelBuilder.Entity<Category> ()
-                    .HasOptional (p => p.CategoryChild)
-                    .WithOptionalPrincipal (c => c.CategoryParent)
-                    .WillCascadeOnDelete (false);
-
             modelBuilder.Entity<Category> ()
                 .HasMany (p => p.Product)
                 .WithRequired (c => c.Category)

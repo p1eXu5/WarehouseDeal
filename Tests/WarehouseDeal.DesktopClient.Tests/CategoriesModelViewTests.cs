@@ -13,22 +13,22 @@ namespace WarehouseDeal.DesktopClient.Tests
     [TestClass]
     public class CategoriesModelViewTests : DatabaseScenarioTests
     {
-        [TestMethod]
-        public void CanSetCategoriesListsFromDatabase ()
-        {
-            var viewModel = new StubViewModel();
-            int count = viewModel.Context.LoadCategoriesFromFile (testFile);
+        //[TestMethod]
+        //public void CanSetCategoriesListsFromDatabase ()
+        //{
+        //    var viewModel = new StubViewModel();
+        //    int count = viewModel.Context.LoadCategoriesFromFile (testFile);
 
-            viewModel.SetCategoriesLists ();
+        //    viewModel.SetCategoriesLists ();
 
-            int countFromModel = viewModel.Categories.Count<Category> ();
+        //    int countFromModel = viewModel.Categories.Count<Category> ();
 
-            Assert.IsTrue (count == countFromModel);
-        }
+        //    Assert.IsTrue (count == countFromModel);
+        //}
 
-        private class StubViewModel : CategoriesModelView
-        {
-            public BusinessContext Context => _context;
-        }
+        //private class StubViewModel : MainModelView
+        //{
+        //    public CategoryContext Context => _context;
+        //}
     }
 }

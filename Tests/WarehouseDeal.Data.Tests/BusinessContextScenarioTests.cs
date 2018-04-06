@@ -17,7 +17,7 @@ namespace WarehouseDeal.Data.Tests
         {
             Debug.Print ("Running AddNewCategoryWithValidValues");
 
-            using (var bc = new BusinessContext()) {
+            using (var bc = new CategoryContext()) {
 
                 Category entity = bc.AddNewCategory ("AM18162",
                     "01. Аксессуары (Чехлы и сумки, Манипуляторы, Аудиотехника)");
@@ -33,7 +33,7 @@ namespace WarehouseDeal.Data.Tests
             Category category2 = new Category {Id = "2222222", Name = "Category 2"};
             Category category3 = new Category {Id = "3333333", Name = "Category 3"};
 
-            using (var bc = new BusinessContext()) {
+            using (var bc = new CategoryContext()) {
 
                 bc.AddNewCategory (category1);
                 bc.AddNewCategory (category2);
@@ -56,7 +56,7 @@ namespace WarehouseDeal.Data.Tests
             Category category2 = new Category { Id = "2222222", Name = "Category 2" };
             Category category3 = new Category { Id = "3333333", Name = "Category 3" };
 
-            using (var bc = new BusinessContext()) {
+            using (var bc = new CategoryContext()) {
 
                 bc.AddNewCategory(category1);
                 bc.AddNewCategory(category2);
@@ -65,7 +65,6 @@ namespace WarehouseDeal.Data.Tests
                 bc.AddParentCategory (category1, category2);
                 
                 Assert.IsTrue (category1.CategoryParent == category2);
-                Assert.IsTrue (category2.CategoryChild == category1);
 
 
                 //Category rootCategory = bc.GetRootCategory();
@@ -86,47 +85,47 @@ namespace WarehouseDeal.Data.Tests
         public void IsCategoryStringReturnsFalseWhenLineIsNotCorrect ()
         {
                 string[] line = {"12345678", "Some CategoryName", "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"1234567", "Some CategoryName", "Да", "12345678"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"1234567", "Some CategoryName", "Да", "123456"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"123456", "Some CategoryName", "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"1234567", "", "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"1234567", null, "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {"", "Some CategoryName", "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
 
                 line = new[] {null, "Some CategoryName", "Да", "1234567"};
-                Assert.IsFalse (BusinessContext.Check.IsCategoryString (line));
+                Assert.IsFalse (CategoryContext.Check.IsCategoryString (line));
         }
 
         [TestMethod]
         public void IsCategoryStringReturnsTrueWhenLineIsCorrect ()
         {
             string[] line = { "1234567", "Some CategoryName", "Да", "1234567" };
-            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+            Assert.IsTrue (CategoryContext.Check.IsCategoryString (line));
 
             line = new[] { "1234567", "Some CategoryName", "Да", "" };
-            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+            Assert.IsTrue (CategoryContext.Check.IsCategoryString (line));
 
             line = new[] { "1234567", "Some CategoryName", "Да", null };
-            Assert.IsTrue (BusinessContext.Check.IsCategoryString (line));
+            Assert.IsTrue (CategoryContext.Check.IsCategoryString (line));
         }
 
         [TestMethod]
         public void CanLoadCategoriesFromFile ()
         {
-            using (var bc = new BusinessContext()) {
+            using (var bc = new CategoryContext()) {
 
                 int count = bc.LoadCategoriesFromFile (
                     testFile);

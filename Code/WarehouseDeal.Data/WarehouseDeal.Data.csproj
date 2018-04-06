@@ -68,11 +68,14 @@
     <Compile Include="AuxiliaryWorkDocument.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="BusinessContext.cs" />
+    <Compile Include="CategoryContext.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Change.cs">
+      <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComplexityLimits.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Dept.cs">

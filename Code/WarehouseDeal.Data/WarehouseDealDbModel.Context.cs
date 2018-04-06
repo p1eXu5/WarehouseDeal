@@ -22,11 +22,6 @@ namespace WarehouseDeal.Data
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-             modelBuilder.Entity<Category> ()
-                        .HasOptional (p => p.CategoryChild)
-                        .WithOptionalPrincipal (c => c.CategoryParent)
-                        .WillCascadeOnDelete (false);
-    
                 modelBuilder.Entity<Category> ()
                     .HasMany (p => p.Product)
                     .WithRequired (c => c.Category)
@@ -57,5 +52,6 @@ namespace WarehouseDeal.Data
         public virtual DbSet<LoadingUnloading> LoadingUnloadingSet { get; set; }
         public virtual DbSet<AuxiliaryWorkDocument> AuxiliaryWorkDocumentSet { get; set; }
         public virtual DbSet<AuxiliaryWork> AuxiliaryWorkSet { get; set; }
+        public virtual DbSet<ComplexityLimits> ComplexityLimitsSet { get; set; }
     }
 }

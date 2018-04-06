@@ -13,9 +13,9 @@ namespace WarehouseDeal.DesktopClient
         {
             base.OnStartup (e);
 
-            var viewModel = new CategoriesModelView();
+            var viewModel = new MainModelView();
 
-            var window = new CategoriesView
+            var window = new MainWindowView()
             {
                 DataContext = viewModel
             };

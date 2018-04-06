@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WarehouseDeal.DesktopClient.Views.ComplexityControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             d:DataContext="{d:DesignInstance viewModels:MainModelView}"
+             xmlns:local="clr-namespace:WarehouseDeal.DesktopClient.Views"
+             xmlns:viewModels="clr-namespace:WarehouseDeal.DesktopClient.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="56.604" d:DesignWidth="300" Background="White">
+    <Grid Margin="5,0" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                   Style="{StaticResource TextBlockStyle}"
+                   Text="{Binding Title}" />
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 Width="50" Height="24"
+                 HorizontalAlignment="Left" VerticalAlignment="Center"
+                 Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext}"/>
+        <Slider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext}"
+                Minimum="{Binding MinComplexity}" 
+                Maximum="{Binding MaxComplexity}"/>
+    </Grid>
+</UserControl>

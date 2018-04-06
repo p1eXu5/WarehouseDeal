@@ -7,10 +7,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Mvvm;
 
 namespace WarehouseDeal.BaseClasses
 {
-    public abstract class ViewModel : ObservableObject, IDataErrorInfo
+    public abstract class ViewModel : BindableBase, IDataErrorInfo
     {
         public string this[string columnName] => OnValidate (columnName);
 

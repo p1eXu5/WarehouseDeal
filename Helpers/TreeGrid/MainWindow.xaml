@@ -1,0 +1,100 @@
+﻿<Window x:Class="DirectoryView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DirectoryView"
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+    <Grid Grid.IsSharedSizeScope="True"
+          Name="treeGrid">
+        <Grid.RowDefinitions>
+            <!-- Header row -->
+            <RowDefinition Height="Auto" />
+            <!-- Row for data -->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid.Resources>
+
+            <!-- Converts the level in the tree to the width of the spacer column -->
+            <local:LevelConverter x:Key="levelConverter" />
+
+            <!-- Template for directory information at all levels -->
+            <HierarchicalDataTemplate ItemsSource="{Binding Items}"
+                                      DataType="{x:Type local:DirectoryRecord}">
+                <Grid ShowGridLines="True">
+
+                    <!-- All column widths are shared except for column 1 which is sized
+                         to compensate for different indentation at each level -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="rowHeaderColumn"/>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition SharedSizeGroup="column1"/>
+                        <ColumnDefinition SharedSizeGroup="column2"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding Info.Name}"></TextBlock>
+                    <Rectangle Grid.Column="1">
+                        <Rectangle.Width>
+                            <MultiBinding Converter="{StaticResource levelConverter}">
+                                <Binding Path="Level"></Binding>
+                                <Binding ElementName="treeViewItemToMeasure"
+                                         Path="ActualWidth"></Binding>
+                            </MultiBinding>
+                        </Rectangle.Width>
+                    </Rectangle>
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding Info.LastAccessTime}"></TextBlock>
+                    <TextBlock Grid.Column="3"
+                               Text="{Binding Files.Count}"></TextBlock>
+                </Grid>
+            </HierarchicalDataTemplate>
+        </Grid.Resources>
+
+        <!-- Tree view with one item for the header row -->
+        
+        <TreeView BorderThickness="0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <TreeViewItem>
+                <TreeViewItem.Header>
+                    <Grid ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="rowHeaderColumn"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition SharedSizeGroup="column1"/>
+                            <ColumnDefinition SharedSizeGroup="column2"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="Name"></TextBlock>
+                        <TreeViewItem Grid.Column="1">
+                            <TreeViewItem.Header>
+                                <TreeViewItem Name="treeViewItemToMeasure"
+                                              Padding="0"></TreeViewItem>
+                            </TreeViewItem.Header>
+
+                            <!-- Set the width of Column 1 to the same width as the top level 
+                                 in the data -->
+                            <TreeViewItem.Width>
+                                <MultiBinding Converter="{StaticResource levelConverter}">
+                                    <Binding Path="Level"></Binding>
+                                    <Binding ElementName="treeViewItemToMeasure"
+                                             Path="ActualWidth"></Binding>
+                                </MultiBinding>
+                            </TreeViewItem.Width>
+                        </TreeViewItem>
+                        <TextBlock Grid.Column="2"
+                                   Text="LastAccessTime"></TextBlock>
+                        <TextBlock Grid.Column="3"
+                                   Text="File Count"></TextBlock>
+                    </Grid>
+                </TreeViewItem.Header>
+            </TreeViewItem>
+        </TreeView>
+
+        <!-- Tree view that will display hierarchical data rows -->
+        
+        <TreeView Grid.Row="1"
+                  BorderThickness="0"
+                  ItemsSource="{Binding}"></TreeView>
+    </Grid>
+</Window>

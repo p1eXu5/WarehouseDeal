@@ -16,10 +16,6 @@
           <EntitySet Name="CategorySet" EntityType="SdelkaModel.Category" />
           <EntitySet Name="AppointmentSet" EntityType="SdelkaModel.Appointment" />
           <EntitySet Name="RankSet" EntityType="SdelkaModel.Rank" />
-          <AssociationSet Name="CategoryCategory" Association="SdelkaModel.CategoryCategory">
-            <End Role="Category" EntitySet="CategorySet" />
-            <End Role="Category1" EntitySet="CategorySet" />
-          </AssociationSet>
           <EntitySet Name="DeptSet" EntityType="SdelkaModel.Dept" />
           <EntitySet Name="ChangeSet" EntityType="SdelkaModel.Change" />
           <EntitySet Name="WorkersStatusSet" EntityType="SdelkaModel.WorkersStatus" />
@@ -172,6 +168,11 @@
             <End Role="Category" EntitySet="CategorySet" />
             <End Role="Product" EntitySet="ProductSet" />
           </AssociationSet>
+          <EntitySet Name="ComplexityLimitsSet" EntityType="SdelkaModel.ComplexityLimits" />
+          <AssociationSet Name="CategoryCategory" Association="SdelkaModel.CategoryCategory">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Category1" EntitySet="CategorySet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -179,17 +180,16 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" FixedLength="true" MaxLength="7" />
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="Unnamed" />
-          <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
-          <NavigationProperty Name="CategoryChild" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
           <Property Name="SearchComplexity" Type="Double" Nullable="true" />
           <Property Name="PickingComplexity" Type="Double" Nullable="true" />
           <Property Name="PackagingComplexity" Type="Double" Nullable="true" />
           <Property Name="RankingComplexity" Type="Double" Nullable="true" />
-          <Property Name="CountingComplexity" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="CountingComplexity" Type="Double" Nullable="true" />
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptCategory" FromRole="Category" ToRole="Dept" />
           <Property Name="DeptId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Product" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           </EntityType>
         <EntityType Name="Appointment">
           <Key>
@@ -211,10 +211,6 @@
           <Property Name="FinalHourlyRateShipment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <NavigationProperty Name="Worker" Relationship="SdelkaModel.RankWorker" FromRole="Rank" ToRole="Worker" />
         </EntityType>
-        <Association Name="CategoryCategory">
-          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="SdelkaModel.Category" Role="Category1" Multiplicity="1" />
-        </Association>
         <EntityType Name="Dept">
           <Key>
             <PropertyRef Name="Id" />
@@ -860,6 +856,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ComplexityLimits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="MinComplexity" Type="Double" Nullable="false" DefaultValue="0.0" />
+          <Property Name="MaxComplexity" Type="Double" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <Association Name="CategoryCategory">
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="SdelkaModel.Category" Role="Category1" Multiplicity="0..1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -899,7 +908,6 @@
         <EntityTypeShape EntityType="SdelkaModel.Product" Width="1.5" PointX="16.375" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Operation" Width="1.5" PointX="14.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Shipment" Width="1.5" PointX="13.625" PointY="5.875" IsExpanded="true" />
-        <AssociationConnector Association="SdelkaModel.CategoryCategory" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.WorkersStatusWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.AppointmentWorker" ManuallyRouted="false" />
         <AssociationConnector Association="SdelkaModel.RankWorker" ManuallyRouted="false" />
@@ -946,6 +954,8 @@
         <AssociationConnector Association="SdelkaModel.OperationShipment" />
         <AssociationConnector Association="SdelkaModel.DeptCategory" />
         <AssociationConnector Association="SdelkaModel.CategoryProduct" />
+        <EntityTypeShape EntityType="SdelkaModel.ComplexityLimits" Width="1.5" PointX="5.625" PointY="2.125" />
+        <AssociationConnector Association="SdelkaModel.CategoryCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

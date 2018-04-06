@@ -1,0 +1,1394 @@
+﻿{"#",e603c0f2-92fb-4d47-8f38-a44a381cf235,
+{1,
+{19,
+{0,"Запрос",
+{"Pattern",
+{"S",100,1}
+},"Список Отчетов (запросов)",172},
+{1,"ТекстЗапроса",
+{"Pattern"},"",0},
+{2,"ПараметрыЗапроса",
+{"Pattern"},"",0},
+{3,"СпособВыгрузки",
+{"Pattern"},"",0},
+{4,"ЯвляетсяЗапросом",
+{"Pattern",
+{"B"}
+},"",0},
+{5,"ПараметрыПостроителя",
+{"Pattern"},"",0},
+{6,"Представления_Форматы_ДляИмен",
+{"Pattern"},"",0},
+{7,"ОтчетРасшифровки",
+{"Pattern"},"",0},
+{8,"ТипОформления",
+{"Pattern"},"",0},
+{9,"РазмещениеГруппировок",
+{"Pattern"},"",0},
+{10,"РазмещениеРеквизитов",
+{"Pattern"},"",0},
+{11,"РазмещениеИтогов",
+{"Pattern"},"",0},
+{12,"ИспользоватьМакет",
+{"Pattern",
+{"B"}
+},"",0},
+{13,"Макет",
+{"Pattern"},"",0},
+{14,"ФиксированныйЗаголовок",
+{"Pattern",
+{"B"}
+},"",0},
+{15,"МакетСОформлением",
+{"Pattern",
+{"B"}
+},"",0},
+{16,"СписокВременныхТаблиц",
+{"Pattern",
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3}
+},"",0},
+{17,"ИНДЕКСВременныхТаблиц",
+{"Pattern",
+{"N",15,0,1}
+},"",0},
+{18,"СоответствиеИменВременнымТаблицам",
+{"Pattern",
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6}
+},"",0}
+},
+{2,19,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,
+{1,1,
+{2,0,19,
+{"S","Запросы"},
+{"S",""},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,0},-1,-1},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},1,
+{1,13,
+{2,1,19,
+{"S","ПриёмТовара"},
+{"S","ВЫБРАТЬ
+	ПриемТовара.Дата КАК Дата,
+	Пользователи.Код КАК КодСотрудника,
+	ПриемТовара.Автор КАК Сотрудник,
+	ПриемТовара.Номер КАК НомерДокумента,
+	ПриемТовара.Ссылка КАК Документ,
+	СоставПриема.Товар.Код КАК КодТовара,
+	СоставПриема.Товар КАК Товар,
+	СоставПриема.Количество КАК Количество,
+	СоставПриема.КоличествоСканов КАК КоличествоСканов,
+	СоставПриема.Адрес КАК Адрес,
+	СоставПриема.СканированиеТранзитов КАК СканированиеТранзитов,
+	РАЗНОСТЬДАТ(ПриемТовара.ВремяНачала, ПриемТовара.ВремяЗавершения, СЕКУНДА) КАК ВремяОперации_Сек
+ИЗ
+	Документ.ПриемТовара КАК ПриемТовара
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ПриемТовара.Состав КАК СоставПриема
+		ПО
+		    ПриемТовара.Ссылка = СоставПриема.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Справочник.Пользователи КАК Пользователи
+		ПО
+			ПриемТовара.Автор = Пользователи.Ссылка
+ГДЕ
+	ПриемТовара.Дата МЕЖДУ &Период1 И &Период2 //И ДвижениеТоваров.ВремяНачала <> ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0)
+	И ПриемТовара.Проведен = ИСТИНА
+УПОРЯДОЧИТЬ ПО
+	Дата
+АВТОУПОРЯДОЧИВАНИЕ"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,4,
+{2,0,3,
+{"S","Период1"},
+{"B",0},
+{"D",20180201000000},0},
+{2,1,3,
+{"S","Период2"},
+{"B",0},
+{"D",20180301000000},0},
+{2,2,3,
+{"S","СканированиеТовара"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:9a4317e3861889f04998ff66380ef93b},0},
+{2,3,3,
+{"S","СканированиеТранзитов"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:874478b4b0c421a34525f4a4e27b6417},0}
+},-1,3},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezEyLCLQlNCw0YLQsCIsItCa0L7QtNCh0L7RgtGA0YPQtNC90LjQutCwIiwi
+0KHQvtGC0YDRg9C00L3QuNC6Iiwi0J3QvtC80LXRgNCU0L7QutGD0LzQtdC90YLQ
+sCIsItCU0L7QutGD0LzQtdC90YIiLCLQmtC+0LTQotC+0LLQsNGA0LAiLCLQotC+
+0LLQsNGAIiwi0JrQvtC70LjRh9C10YHRgtCy0L4iLCLQmtC+0LvQuNGH0LXRgdGC
+0LLQvtCh0LrQsNC90L7QsiIsItCQ0LTRgNC10YEiLCLQodC60LDQvdC40YDQvtCy
+0LDQvdC40LXQotGA0LDQvdC30LjRgtC+0LIiLCLQktGA0LXQvNGP0J7Qv9C10YDQ
+sNGG0LjQuF/QodC10LoifQ==},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,2,19,
+{"S","ОтгрузкаТоваров"},
+{"S","ВЫБРАТЬ
+	ДвижениеТоваров.Дата КАК Дата,
+	Пользователи.Код КАК КодСотрудника,
+	ДвижениеТоваров.Автор КАК Сотрудник,
+	ДвижениеТоваров.Операция КАК Операция,
+	ДвижениеТоваров.СозданНаТСД КАК СозданНаТСД,
+	ДвижениеТоваров.Номер КАК НомерДокумента,
+	ДвижениеТоваров.Ссылка КАК Документ,
+	СоставДвижения.Товар.Код КАК КодТовара,
+	СоставДвижения.Товар КАК Товар,
+	СоставДвижения.Количество КАК Количество,
+	СоставДвижения.АдресОтправитель КАК АдресОтправитель,
+	СоставДвижения.АдресПолучатель КАК АдресПолучатель,
+	РАЗНОСТЬДАТ(ВремяНачала, ВремяЗавершения, СЕКУНДА) КАК ВремяОперации_Сек
+ИЗ
+	Документ.ДвижениеТоваровПоСкладу КАК ДвижениеТоваров
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ДвижениеТоваровПоСкладу.Состав КАК СоставДвижения
+		ПО
+		    ДвижениеТоваров.Ссылка = СоставДвижения.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Справочник.Пользователи КАК Пользователи
+		ПО
+			ДвижениеТоваров.Автор = Пользователи.Ссылка
+ГДЕ
+	ДвижениеТоваров.Дата МЕЖДУ &Период1 И &Период2 И ДвижениеТоваров.ВремяНачала <> ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0)
+	И ДвижениеТоваров.Проведен = ИСТИНА
+	И (
+		ДвижениеТоваров.Операция = &ВертДефрагментация
+		ИЛИ ДвижениеТоваров.Операция = &ГорДефрагментация
+		ИЛИ ДвижениеТоваров.Операция = &Дефрагментация
+		ИЛИ ДвижениеТоваров.Операция = &ПеремещениеТовара
+		ИЛИ ДвижениеТоваров.Операция = &ПодборКлиентскогоТовара
+		ИЛИ ДвижениеТоваров.Операция = &ПодборТовара
+		ИЛИ ДвижениеТоваров.Операция = &ПодборТоваровПокупателей
+		ИЛИ ДвижениеТоваров.Операция = &РазмещениеТовара
+		ИЛИ ДвижениеТоваров.Операция = &УпаковкаТовараВМеста
+	)
+УПОРЯДОЧИТЬ ПО
+	Дата
+АВТОУПОРЯДОЧИВАНИЕ"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,12,
+{2,0,3,
+{"S","Период1"},
+{"B",0},
+{"D",20180201000000},0},
+{2,1,3,
+{"S","Период2"},
+{"B",0},
+{"D",20180301000000},0},
+{2,2,3,
+{"S","Документ"},
+{"B",0},
+{"#",8cd51e53-b581-4880-9a5e-5b9a95f2a90f,39:b15c00155d28220111e82ceb9fd8709d},0},
+{2,3,3,
+{"S","ВертДефрагментация"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:b949fac79e6245e849d0cd69d56bd586},0},
+{2,4,3,
+{"S","ГорДефрагментация"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:85b42cdcbbbe2fe549bef69addf6b4c1},0},
+{2,5,3,
+{"S","Дефрагментация"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:9fcbcbdb161a399841833e0fcba2ada5},0},
+{2,6,3,
+{"S","ПодборКлиентскогоТовара"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:bf8570255282d2f34a228ce4a03177aa},0},
+{2,7,3,
+{"S","ПодборТовара"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:8952662fe182fba9443aca6cbae3f5ba},0},
+{2,8,3,
+{"S","ПодборТоваровПокупателей"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:b6bd0df4db5ad7c04560533e5781542d},0},
+{2,9,3,
+{"S","УпаковкаТовараВМеста"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:ba616d42ba38c1264f57ebbc080c85cb},0},
+{2,10,3,
+{"S","РазмещениеТовара"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:997654af9a1df7804fe8d10a8ba8f28c},0},
+{2,11,3,
+{"S","ПеремещениеТовара"},
+{"B",0},
+{"#",315c204f-119f-4c68-82b2-d1879cc49951,63:afb44d8b2ff0c22c4b3a5a13210408e0},0}
+},-1,11},
+{0,0}
+}
+},
+{"N",2},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMSwNCnsNCnsNCnsw
+fSwwLCLQlNCw0YLQsCIsItCU0LDRgtCwIiwi0JTQsNGC0LAiLCLQlNCw0YLQsCIs
+DQp7MCxiNjMwZDBkMy1lMWYxLTQ4OGQtODllYS1iMDYxZmRlMWE1YjR9DQp9DQp9
+DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezEzLCLQlNCw0YLQsCIsItCa0L7QtNCh0L7RgtGA0YPQtNC90LjQutCwIiwi
+0KHQvtGC0YDRg9C00L3QuNC6Iiwi0J7Qv9C10YDQsNGG0LjRjyIsItCh0L7Qt9C0
+0LDQvdCd0LDQotCh0JQiLCLQndC+0LzQtdGA0JTQvtC60YPQvNC10L3RgtCwIiwi
+0JTQvtC60YPQvNC10L3RgiIsItCa0L7QtNCi0L7QstCw0YDQsCIsItCi0L7QstCw
+0YAiLCLQmtC+0LvQuNGH0LXRgdGC0LLQviIsItCQ0LTRgNC10YHQntGC0L/RgNCw
+0LLQuNGC0LXQu9GMIiwi0JDQtNGA0LXRgdCf0L7Qu9GD0YfQsNGC0LXQu9GMIiwi
+0JLRgNC10LzRj9Ce0L/QtdGA0LDRhtC40Lhf0KHQtdC6In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,3,19,
+{"S","Инвентаризация"},
+{"S","ВЫБРАТЬ
+	ИнвентаризацияАдресная.Дата КАК Дата,
+	Пользователи.Код КАК КодСотрудника,
+	ИнвентаризацияАдресная.Автор КАК Сотрудник,
+	ИнвентаризацияАдресная.Номер КАК НомерДокумента,
+	ИнвентаризацияАдресная.Ссылка КАК Документ,
+	СоставИнвентаризации.Товар.Код КАК КодТовара,
+	СоставИнвентаризации.Товар КАК Товар,
+	СоставИнвентаризации.Учет КАК КоличествоУчет,
+	СоставИнвентаризации.Факт КАК КоличествоФакт,
+	СоставИнвентаризации.Адрес КАК Адрес,
+	РАЗНОСТЬДАТ(ИнвентаризацияАдресная.ВремяНачала, ИнвентаризацияАдресная.ВремяЗавершения, СЕКУНДА) КАК ВремяОперации_Сек
+ИЗ
+	Документ.ИнвентаризацияАдресная КАК ИнвентаризацияАдресная
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ИнвентаризацияАдресная.Состав КАК СоставИнвентаризации
+		ПО
+		    ИнвентаризацияАдресная.Ссылка = СоставИнвентаризации.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Справочник.Пользователи КАК Пользователи
+		ПО
+			ИнвентаризацияАдресная.Автор = Пользователи.Ссылка
+ГДЕ
+	ИнвентаризацияАдресная.Дата МЕЖДУ &Период1 И &Период2 И ИнвентаризацияАдресная.ВремяНачала <> ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0)
+	И ИнвентаризацияАдресная.Проведен = ИСТИНА
+УПОРЯДОЧИТЬ ПО
+	Дата
+АВТОУПОРЯДОЧИВАНИЕ"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,2,
+{2,0,3,
+{"S","Период1"},
+{"B",0},
+{"D",20180201000000},0},
+{2,1,3,
+{"S","Период2"},
+{"B",0},
+{"D",20180301000000},0}
+},-1,1},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezExLCLQlNCw0YLQsCIsItCa0L7QtNCh0L7RgtGA0YPQtNC90LjQutCwIiwi
+0KHQvtGC0YDRg9C00L3QuNC6Iiwi0J3QvtC80LXRgNCU0L7QutGD0LzQtdC90YLQ
+sCIsItCU0L7QutGD0LzQtdC90YIiLCLQmtC+0LTQotC+0LLQsNGA0LAiLCLQotC+
+0LLQsNGAIiwi0JrQvtC70LjRh9C10YHRgtCy0L7Qo9GH0LXRgiIsItCa0L7Qu9C4
+0YfQtdGB0YLQstC+0KTQsNC60YIiLCLQkNC00YDQtdGBIiwi0JLRgNC10LzRj9Ce
+0L/QtdGA0LDRhtC40Lhf0KHQtdC6In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,12,19,
+{"S","ПогрузкаРазгрузка"},
+{"S","ВЫБРАТЬ
+	ПРР.Дата КАК Дата,
+	Пользователи.Код КАК КодСотрудника,
+	СотрудникиПРР.Сотрудник КАК Сотрудник,
+	ПРР.Операция КАК Операция,
+	ПРР.Номер КАК НомерДокумента,
+	ПРР.Ссылка КАК Документ,
+	ТТН.ИтогоВес КАК ВесВсего,
+	ТТН.ИтогоМест КАК МестВсего,
+	КОЛИЧЕСТВО(МестаТТН.Место) КАК МестаГМВсего,
+	(ТТН.ИтогоМест - КОЛИЧЕСТВО(МестаТТН.Место)) КАК МестаБезГМВсего,
+	РАЗНОСТЬДАТ(ПРР.ВремяНачала, ПРР.ВремяЗавершения, МИНУТА) КАК ВремяОперации_Мин
+ПОМЕСТИТЬ вт_ПогрузкаРазгрузка
+ИЗ
+	Документ.ПогрузочноРазгрузочныеРаботы КАК ПРР
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ПогрузочноРазгрузочныеРаботы.Сотрудники КАК СотрудникиПРР
+		ПО
+			ПРР.Ссылка = СотрудникиПРР.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ТТН КАК ТТН
+		ПО
+		    ПРР.ДокументОснование = ТТН.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Документ.ТТН.Места КАК МестаТТН
+		ПО
+			ТТН.Ссылка = МестаТТН.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ
+			Справочник.Пользователи КАК Пользователи
+		ПО
+			СотрудникиПРР.Сотрудник = Пользователи.Ссылка	
+ГДЕ
+	ПРР.Дата МЕЖДУ &Период1 И &Период2 И ПРР.ВремяНачала <> ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0)
+	И ПРР.Проведен = ИСТИНА
+СГРУППИРОВАТЬ ПО
+	ПРР.Номер, ПРР.Ссылка, ТТН.ИтогоВес, ТТН.ИтогоМест, ПРР.Операция, ПРР.Дата, Пользователи.Код, СотрудникиПРР.Сотрудник
+//УПОРЯДОЧИТЬ ПО
+//	Дата
+//АВТОУПОРЯДОЧИВАНИЕ
+;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	вт_ПогрузкаРазгрузка.Дата КАК Дата,
+	вт_ПогрузкаРазгрузка.КодСотрудника КАК КодСотрудника,
+	вт_ПогрузкаРазгрузка.Сотрудник КАК Сотрудник,
+	вт_ПогрузкаРазгрузка.Операция КАК Операция,
+	вт_ПогрузкаРазгрузка.НомерДокумента КАК НомерДокумента,
+	вт_ПогрузкаРазгрузка.Документ КАК Документ,
+	ВЫРАЗИТЬ(вт_ПогрузкаРазгрузка.ВесВсего / КОЛИЧЕСТВО(СотрудникиПРР.Сотрудник) КАК ЧИСЛО(15,2)) КАК ВесНаСотрудника,
+	ВЫРАЗИТЬ(вт_ПогрузкаРазгрузка.МестВсего / КОЛИЧЕСТВО(СотрудникиПРР.Сотрудник) КАК ЧИСЛО(15,2)) КАК МестНаСотрудника,
+	ВЫРАЗИТЬ(вт_ПогрузкаРазгрузка.МестаГМВсего / КОЛИЧЕСТВО(СотрудникиПРР.Сотрудник) КАК ЧИСЛО(15,2)) КАК МестаГмНаСотрудника,
+	ВЫРАЗИТЬ(вт_ПогрузкаРазгрузка.МестаБезГМВсего / КОЛИЧЕСТВО(СотрудникиПРР.Сотрудник) КАК ЧИСЛО(15,2)) КАК МестаБезГмНаСотрудника,
+	вт_ПогрузкаРазгрузка.ВремяОперации_Мин КАК ВремяОперации_Мин 
+ИЗ
+	вт_ПогрузкаРазгрузка
+	ЛЕВОЕ СОЕДИНЕНИЕ
+		Документ.ПогрузочноРазгрузочныеРаботы.Сотрудники КАК СотрудникиПРР
+	ПО
+		вт_ПогрузкаРазгрузка.Документ = СотрудникиПРР.Ссылка
+СГРУППИРОВАТЬ ПО
+	НомерДокумента, Документ, Дата, КодСотрудника, вт_ПогрузкаРазгрузка.Сотрудник, ВремяОперации_Мин, Операция, ВесВсего, МестВсего, МестаГМВсего, МестаБезГМВсего
+УПОРЯДОЧИТЬ ПО
+	Дата
+АВТОУПОРЯДОЧИВАНИЕ
+;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+УНИЧТОЖИТЬ
+	вт_ПогрузкаРазгрузка			"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,2,
+{2,0,3,
+{"S","Период1"},
+{"B",0},
+{"D",20180201000000},0},
+{2,1,3,
+{"S","Период2"},
+{"B",0},
+{"D",20180301000000},0}
+},-1,1},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMSwNCnsNCnsNCnsw
+fSwwLCLQlNCw0YLQsCIsItCU0LDRgtCwIiwi0JTQsNGC0LAiLCLQlNCw0YLQsCIs
+DQp7MCw5OGQ4MzNhZS00OGIzLTQ5MTMtYWU5Ny05OTliOGFkYzFhNGN9DQp9DQp9
+DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezExLCLQlNCw0YLQsCIsItCa0L7QtNCh0L7RgtGA0YPQtNC90LjQutCwIiwi
+0KHQvtGC0YDRg9C00L3QuNC6Iiwi0J7Qv9C10YDQsNGG0LjRjyIsItCd0L7QvNC1
+0YDQlNC+0LrRg9C80LXQvdGC0LAiLCLQlNC+0LrRg9C80LXQvdGCIiwi0JLQtdGB
+0J3QsNCh0L7RgtGA0YPQtNC90LjQutCwIiwi0JzQtdGB0YLQndCw0KHQvtGC0YDR
+g9C00L3QuNC60LAiLCLQnNC10YHRgtCw0JPQvNCd0LDQodC+0YLRgNGD0LTQvdC4
+0LrQsCIsItCc0LXRgdGC0LDQkdC10LfQk9C80J3QsNCh0L7RgtGA0YPQtNC90LjQ
+utCwIiwi0JLRgNC10LzRj9Ce0L/QtdGA0LDRhtC40Lhf0JzQuNC9In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,4,19,
+{"S","Пользователи"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Справочник.Пользователи КАК ПользователиФирмы
+ГДЕ
+	ПользователиФирмы.ЯвляетсяСотрудникомФилиала = &Фирма
+	//И ПользователиФирмы.ПометкаУдаления = ЛОЖЬ
+	
+УПОРЯДОЧИТЬ ПО
+	ПользователиФирмы.Наименование
+	
+АВТОУПОРЯДОЧИВАНИЕ
+"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,3,
+{2,0,3,
+{"S","Период1"},
+{"B",0},
+{"D",20180320000000},0},
+{2,1,3,
+{"S","Период2"},
+{"B",0},
+{"D",20180320000000},0},
+{2,2,3,
+{"S","Фирма"},
+{"B",0},
+{"#",d68aed69-3c14-464b-b4cc-ca9f5b4a7ab4,21:af8bda93e393f1c44472770dc0d6c05a},0}
+},-1,2},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMSwNCnsNCnsNCnsw
+fSwwLCLQndCw0LjQvNC10L3QvtCy0LDQvdC40LUiLCLQndCw0LjQvNC10L3QvtCy
+0LDQvdC40LUiLCLQndCw0LjQvNC10L3QvtCy0LDQvdC40LUiLCLQndCw0LjQvNC1
+0L3QvtCy0LDQvdC40LUiLA0KezAsMjIzOTE0MzEtZDAzYS00NmRhLTlmM2MtMGY1
+NWJjNGY4NjIzfQ0KfQ0KfQ0KfQ==},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezgsItCh0YHRi9C70LrQsCIsItCS0LXRgNGB0LjRj9CU0LDQvdC90YvRhSIs
+ItCf0L7QvNC10YLQutCw0KPQtNCw0LvQtdC90LjRjyIsItCf0YDQtdC00L7Qv9GA
+0LXQtNC10LvQtdC90L3Ri9C5Iiwi0JrQvtC0Iiwi0J3QsNC40LzQtdC90L7QstCw
+0L3QuNC1Iiwi0JvQvtCz0LjQvSIsItCv0LLQu9GP0LXRgtGB0Y/QodC+0YLRgNGD
+0LTQvdC40LrQvtC80KTQuNC70LjQsNC70LAifQ==},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"#",81b8d0f5-6e5d-4985-95d9-edcd3570bffe,2},
+{"#",44109548-bda9-4408-81ca-79a610a009a0,0},
+{"#",aa4fe927-51c0-420e-8104-3ad37e1a2006,0},
+{"#",0f9c62cc-0429-462f-825a-bc6fedc3cebd,0},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,5,19,
+{"S","___ТабличнаяЧастьДвижения"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ДвижениеТоваровПоСкладу.Состав КАК ТабличнаяЧасть
+ГДЕ
+	ТабличнаяЧасть.Ссылка = &Документ"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",8cd51e53-b581-4880-9a5e-5b9a95f2a90f,39:b15c00155d28220111e82cf52fbe41e6},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezgsItCh0YHRi9C70LrQsCIsItCd0L7QvNC10YDQodGC0YDQvtC60LgiLCLQ
+otC+0LLQsNGAIiwi0JrQvtC70LjRh9C10YHRgtCy0L4iLCLQkNC00YDQtdGB0J7R
+gtC/0YDQsNCy0LjRgtC10LvRjNCh0YLQsNGA0YvQuSIsItCQ0LTRgNC10YHQn9C+
+0LvRg9GH0LDRgtC10LvRjNCh0YLQsNGA0YvQuSIsItCQ0LTRgNC10YHQntGC0L/R
+gNCw0LLQuNGC0LXQu9GMIiwi0JDQtNGA0LXRgdCf0L7Qu9GD0YfQsNGC0LXQu9GM
+In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,6,19,
+{"S","___Номенклатура"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Справочник.Номенклатура"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,0},-1,-1},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezE0LCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQn9GA0LXQtNC+0L/R
+gNC10LTQtdC70LXQvdC90YvQuSIsItCg0L7QtNC40YLQtdC70YwiLCLQrdGC0L7Q
+k9GA0YPQv9C/0LAiLCLQmtC+0LQiLCLQndCw0LjQvNC10L3QvtCy0LDQvdC40LUi
+LCLQktC40LTQotC+0LLQsNGA0LAiLCLQmtC+0LTQn9GA0L7QuNC30LLQvtC00LjR
+gtC10LvRjyIsItCg0LXRgtGN0LjQu9Ck0LDRgdC+0LLQutC4Iiwi0JLQtdGA0YXQ
+vdC40LnQo9GA0L7QstC10L3RjCIsItCh0YDQvtC60JPQvtC00L3QvtGB0YLQuCIs
+ItCQ0YHRgdC+0YDRgtC40LzQtdC90YLQvdGL0Llf0KHRgtCw0YLRg9GBIn0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,7,19,
+{"S","___ДвижениеТовара"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ДвижениеТоваровПоСкладу
+ГДЕ
+	Документ.ДвижениеТоваровПоСкладу.Ссылка = &Документ"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",8cd51e53-b581-4880-9a5e-5b9a95f2a90f,39:b15c00155d28220111e82cfa0d9c5bcf},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezE5LCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQndC+0LzQtdGAIiwi
+0JTQsNGC0LAiLCLQn9GA0L7QstC10LTQtdC9Iiwi0KTQuNGA0LzQsCIsItCQ0LLR
+gtC+0YAiLCLQkNCy0YLQvtGAMiIsItCS0LjQtNCU0LLQuNC20LXQvdC40Y8iLCLQ
+ntC/0LXRgNCw0YbQuNGPIiwi0JLRgNC10LzRj9Cd0LDRh9Cw0LvQsCIsItCS0YDQ
+tdC80Y/Ql9Cw0LLQtdGA0YjQtdC90LjRjyIsItCa0L7QvNC80LXQvdGC0LDRgNC4
+0LkiLCLQpNC40LvQuNCw0LvQn9C+0LvRg9GH0LDRgtC10LvRjCIsItCh0LrQu9Cw
+0LTQpNC40LvQuNCw0LvQsNCf0L7Qu9GD0YfQsNGC0LXQu9GPIiwi0KHQvtC30LTQ
+sNC90J3QsNCi0KHQlCIsItCh0L7RgdGC0LDQsiIsItCh0L7RgtGA0YPQtNC90LjQ
+utC4In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,8,19,
+{"S","___ПриёмТовара"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ПриемТовара
+ГДЕ
+	Документ.ПриемТовара.Ссылка = &Документ	"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",39600f62-e38c-4306-8f47-8f655ba18083,42:b15c00155d28220111e82d906b6fb65a},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezEyLCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQndC+0LzQtdGAIiwi
+0JTQsNGC0LAiLCLQn9GA0L7QstC10LTQtdC9Iiwi0KTQuNGA0LzQsCIsItCQ0LLR
+gtC+0YAiLCLQkNCy0YLQvtGAMiIsItCS0YDQtdC80Y/QndCw0YfQsNC70LAiLCLQ
+ktGA0LXQvNGP0JfQsNCy0LXRgNGI0LXQvdC40Y8iLCLQodC+0YHRgtCw0LIifQ==
+},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,9,19,
+{"S","___АдреснаяИнвентаризация"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ИнвентаризацияАдресная
+ГДЕ
+	Документ.ИнвентаризацияАдресная.Ссылка = &Документ	
+"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",371205c6-452e-46c8-8436-b9feb15faaf3,46:b15c00155d28220111e82c112c6580e8},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezE1LCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQndC+0LzQtdGAIiwi
+0JTQsNGC0LAiLCLQn9GA0L7QstC10LTQtdC9Iiwi0KTQuNGA0LzQsCIsItCQ0LLR
+gtC+0YAiLCLQkNCy0YLQvtGAMiIsItCS0YDQtdC80Y/QndCw0YfQsNC70LAiLCLQ
+ktGA0LXQvNGP0JfQsNCy0LXRgNGI0LXQvdC40Y8iLCLQmtC+0LzQvNC10L3RgtCw
+0YDQuNC5Iiwi0KHQvtC30LTQsNC90J3QsNCi0KHQlCIsItCh0L7RgdGC0LDQsiIs
+ItCh0L7RgtGA0YPQtNC90LjQutC4In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,10,19,
+{"S","___ПРР"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ПогрузочноРазгрузочныеРаботы КАК ПРР
+	ЛЕВОЕ СОЕДИНЕНИЕ
+		Документ.ПогрузочноРазгрузочныеРаботы.Сотрудники КАК СотрудникиПРР
+	ПО
+		ПРР.Ссылка = СотрудникиПРР.Ссылка
+ГДЕ
+	ПРР.Ссылка = &Документ	
+"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",e416881e-e883-4d88-9fd4-5e45b7af1358,59:b15c00155d28220111e82d8fcb1be835},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezI0LCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQndC+0LzQtdGAIiwi
+0JTQsNGC0LAiLCLQn9GA0L7QstC10LTQtdC9Iiwi0JDQstGC0L7RgCIsItCQ0LLR
+gtC+0YAyIiwi0KTQuNGA0LzQsCIsItCU0L7QutGD0LzQtdC90YLQntGB0L3QvtCy
+0LDQvdC40LUiLCLQmtC+0L3RgtC10LnQvdC10YAiLCLQntC/0LXRgNCw0YbQuNGP
+Iiwi0JLRgNC10LzRj9Cd0LDRh9Cw0LvQsCIsItCS0YDQtdC80Y/Ql9Cw0LLQtdGA
+0YjQtdC90LjRjyIsItCi0LDRgNC40YQiLCLQntCx0YrQtdC8Iiwi0JrQvtC80LzQ
+tdC90YLQsNGA0LjQuSIsItCS0L7RgNC+0YLQsCIsItCg0LXQt9C10YDQsiIsItCS
+0YDQtdC80Y/Qn9C+0YHRgtCw0L3QvtCy0LrQuNCi0KEiLCLQodC+0YLRgNGD0LTQ
+vdC40LrQuCIsItCh0YHRi9C70LrQsDEiLCLQndC+0LzQtdGA0KHRgtGA0L7QutC4
+Iiwi0KHQvtGC0YDRg9C00L3QuNC6In0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,11,19,
+{"S","___ТТН_Места"},
+{"S","ВЫБРАТЬ
+	ТТН.Ссылка,
+	ТТН.Номер,
+	КОЛИЧЕСТВО(МестаТТН.Место) КАК КоличествоМест
+ИЗ
+	Документ.ТТН КАК ТТН
+	ЛЕВОЕ СОЕДИНЕНИЕ
+		Документ.ТТН.Места КАК МестаТТН
+	ПО
+		ТТН.Ссылка = МестаТТН.Ссылка
+ГДЕ
+	ТТН.Ссылка = &Документ
+СГРУППИРОВАТЬ ПО
+	ТТН.Номер, ТТН.Ссылка
+	
+"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",9f586005-61d5-48a3-9d63-f12f48604e8e,51:9ef700155d28210311e82ce164be2d68},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezMsItCh0YHRi9C70LrQsCIsItCd0L7QvNC10YAiLCLQmtC+0LvQuNGH0LXR
+gdGC0LLQvtCc0LXRgdGCIn0=},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0},
+{2,13,19,
+{"S","___ТТН"},
+{"S","ВЫБРАТЬ
+	*
+ИЗ
+	Документ.ТТН КАК ТТН
+	//ЛЕВОЕ СОЕДИНЕНИЕ
+	//	Документ.ТТН.Места КАК МестаТТН
+	//ПО
+	//	ТТН.Ссылка = МестаТТН.Ссылка
+ГДЕ
+	ТТН.Ссылка = &Документ
+//СГРУППИРОВАТЬ ПО
+//	ТТН.Номер, ТТН.Ссылка
+	
+"},
+{"#",acf6192e-81ca-46ef-93a6-5a6968b78663,
+{9,
+{3,
+{0,"ИмяПараметра",
+{"Pattern",
+{"S",50,1}
+},"Имя параметра",22},
+{1,"ЭтоВыражение",
+{"Pattern",
+{"B"}
+},"ЭтоВыражение",0},
+{2,"ЗначениеПараметра",
+{"Pattern",
+{"#",280f5f0e-9c8a-49cc-bf6d-4d296cc17a63},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3},
+{"B"},
+{"S",100,1},
+{"D"},
+{"N",15,3,0}
+},"Значение параметра",18}
+},
+{2,3,0,0,1,1,2,2,
+{1,1,
+{2,0,3,
+{"S","Документ"},
+{"B",0},
+{"#",9f586005-61d5-48a3-9d63-f12f48604e8e,51:9ef700155d28210311e82ce164be2d68},0}
+},-1,0},
+{0,0}
+}
+},
+{"N",1},
+{"B",0},
+{"#",de7ad39b-388d-46ef-97ea-dea11bd65471,
+{6,1,
+{#base64:77u/ZDI4YjQ1OTktY2M2Mi00YmE0LTkxZDUtZWY3NjdmYWY2ZGNmLA0KezMsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/YzA3Y2NlYTEtZmNkNC00MjBmLWI0MGUtYzllNzk5MWNhZTI1LA0KezEsMDAw
+MDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwLDAsMCwNCnt9DQp9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezB9},1,
+{#base64:77u/ezQ0LCLQodGB0YvQu9C60LAiLCLQktC10YDRgdC40Y/QlNCw0L3QvdGL0YUi
+LCLQn9C+0LzQtdGC0LrQsNCj0LTQsNC70LXQvdC40Y8iLCLQndC+0LzQtdGAIiwi
+0JTQsNGC0LAiLCLQn9GA0L7QstC10LTQtdC9Iiwi0JDQstGC0L7RgCIsItCQ0LLR
+gtC+0YAyIiwi0JLQuNC00KLQotCdIiwi0JTQvtC60YPQvNC10L3RgtCe0YHQvdC+
+0LLQsNC90LjQtSIsItCY0YLQvtCz0L7QktC10YEiLCLQmNGC0L7Qs9C+0J7QsdGK
+0LXQvCIsItCa0L7QvNC80LXQvdGC0LDRgNC40LkiLCLQndC+0LzQtdGA0KLQotCd
+0J/QtdGA0LXQstC+0LfRh9C40LrQsCIsItCf0YPQvdC60YLQn9C+0LPRgNGD0LfQ
+utC4Iiwi0KDQtdC50YHQn9GA0LjRhtC10L8iLCLQodC/0L7RgdC+0LHQlNC+0YHR
+gtCw0LLQutC4Iiwi0KLRgNCw0L3RgdC/0L7RgNGCIiwi0KTQuNGA0LzQsCIsItCt
+0LrRgdC/0LXQtNC40YLQvtGAIiwi0K7RgNCb0LjRhtC+0K3QutGB0L/QtdC00LjR
+gtC+0YDQsCIsItCY0YLQvtCz0L7QnNC10YHRgiIsItCS0LjQtNCi0YDQsNC90YHQ
+v9C+0YDRgtCwIiwi0JHQvtC60L7QstCw0Y/Qn9C70L7QvNCx0LAiLCLQktC+0LfQ
+stGA0LDRgtC90YvQtdCf0LvQvtC80LHRiyIsItCu0YDQm9C40YbQvtCe0YLQv9GA
+0LDQstC40YLQtdC70Y8iLCLQoNC10LfQtdGA0LIiLCLQmtC+0Y3RhNCX0LDQs9GA
+0YPQt9C60LgiLCLQmtC+0L3RgtC10LnQvdC10YAiLCLQpNC+0YDQstCw0YDQtNC1
+0YAiLCLQlNCw0YLQsNCS0YvRhdC+0LTQsCIsItCS0L7QtNC40YLQtdC70YxfIiwi
+0JzQsNGA0YjRgNGD0YIiLCLQktC40LTQotCw0YDQuNGE0LjQutCw0YbQuNC40JTQ
+vtGB0YLQsNCy0LrQuCIsItCi0LjQv9Ci0KEiLCLQpNCw0LrRgtC40YfQtdGB0LrQ
+vtC10JLRgNC10LzRj9CU0L7RgdGC0LDQstC60LgiLCLQktC+0LfQstGA0LDRgtC9
+0YvQudCc0LDRgNGI0YDRg9GCIiwi0JTQsNGC0LDQn9GA0LjQsdGL0YLQuNGPIiwi
+0J7RgNC40LPQuNC90LDQu9CU0L7QstC10YDQtdC90L3QvtGB0YLQuCIsItCh0L7R
+gdGC0LDQsiIsItCU0L7QutGD0LzQtdC90YLRi9Ce0YLQs9GA0YPQt9C60LgiLCLQ
+nNC10YHRgtCwIiwi0J/QvtC70YPRh9Cw0YLQtdC70LjQk9GA0YPQt9C+0LIiLCLQ
+mtC+0L3RgtC10LnQvdC10YDRi9CS0K3QlCJ9},1,
+{#base64:77u/OTk3NDQxZGUtZmQ0MS00MDA2LWJmYmEtZTBkY2Q0NGQ0YTI3LA0KezAsMH0=}
+}
+},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"U"},
+{"B",0},
+{"U"},
+{"B",0},
+{"B",0},
+{"#",4772b3b4-f4a3-49c0-a1a5-8cb5961511a3,
+{6,1e512aab-1b41-4ef6-9375-f0137be9dd91,0,0,
+{0},
+{"Pattern"},0,-1}
+},
+{"N",0},
+{"#",3d48feae-a9c6-4c5a-a099-9eb6477630c6,
+{0}
+},0}
+}
+}
+},18,13}
+}
+}
