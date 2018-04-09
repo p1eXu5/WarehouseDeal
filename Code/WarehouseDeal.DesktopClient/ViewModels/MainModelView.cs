@@ -19,22 +19,24 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         private readonly CategoryContext _categoryContext = new CategoryContext ();
         private bool _isTreeView;
         private string _viewContent;
-        private CategoryViewModel _selectedCategory;
+        private CategoryHierarchyViewModel _selectedCategory;
 
         public MainModelView ()
         {
-            Categories = new ObservableCollection<CategoryViewModel>(_categoryContext.Categories.Select (c => new CategoryViewModel (c)));
             CategoriesHierarchy = LoadHierarchy();
-            RaisePropertyChanged ("CategoriesHierarchy");
+            //RaisePropertyChanged ("CategoriesHierarchy");
 
-            SetSelectedItemCommand = new DelegateCommand<CategoryHierarchy> (SetSelectedCategory);
+            _selectedCategory = null;
+
+            SetSelectedItemCommand = new DelegateCommand<CategoryHierarchyViewModel> (SetSelectedCategory);
             ImportCategoriesCommand = new DelegateCommand (ImportFileCategory);
+            SetInDealSelectedCategoryCommand = new DelegateCommand<CategoryHierarchyViewModel> (CategoryHierarchyViewModel.SetInDealSelectedCategory);
 
             IsTreeView = true;
         }
 
-        public ObservableCollection<CategoryViewModel> Categories { get; }
-        public CategoryViewModel SelectedCategory
+        public ObservableCollection<CategoryHierarchyViewModel> CategoriesHierarchy { get; }
+        public CategoryHierarchyViewModel SelectedCategory
         {
             get => _selectedCategory;
             set {
@@ -42,9 +44,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
-        public ObservableCollection<CategoryHierarchy> CategoriesHierarchy { get; }
-        public DelegateCommand<CategoryHierarchy> SetSelectedItemCommand { get; }
+        public DelegateCommand<CategoryHierarchyViewModel> SetSelectedItemCommand { get; }
         public DelegateCommand ImportCategoriesCommand { get; }
+        public DelegateCommand<CategoryHierarchyViewModel> SetInDealSelectedCategoryCommand { get; }
         public bool IsTreeView
         {
             get => _isTreeView;
@@ -70,48 +72,39 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         public string Name { get; set; }
 
-        private ObservableCollection<CategoryHierarchy> LoadHierarchy()
+        // Заполнение иерархии категорий TreeView
+        private ObservableCollection<CategoryHierarchyViewModel> LoadHierarchy()
         {
-            var hierarchy = new ObservableCollection<CategoryHierarchy>()
+            // Корневая категория TreeView - "Категория"
+            var hierarchy = new ObservableCollection<CategoryHierarchyViewModel> ()
                                 {
-                                    new CategoryHierarchy
-                                    {
-                                        Category = new CategoryViewModel (new Category {Name = "Категория"}),
-                                        Categories = LoadRootHierarchy()
-                                    }
+                                    new CategoryHierarchyViewModel (new Category {Name = "Категория"}, LoadRootHierarchy())
                                 };
 
             return hierarchy;
         }
-
-        private ObservableCollection<CategoryHierarchy> LoadRootHierarchy ()
+        private ObservableCollection<CategoryHierarchyViewModel> LoadRootHierarchy ()
         {
-            ObservableCollection<CategoryHierarchy> hierarchyRootCategories = new ObservableCollection<CategoryHierarchy> ();
-            foreach (Category category in _categoryContext.GetAllRootCategiries())
-                hierarchyRootCategories.Add (new CategoryHierarchy
-                                                {
-                                                    Category = new CategoryViewModel (category),
-                                                    Categories = LoadChildrenCategories (category)
-                                                });
+            ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel> ();
+            IEnumerable<Category> categories = _categoryContext.GetAllRootCategiries();
+
+            foreach (Category category in categories)
+                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, LoadChildrenCategories(category)));
 
             return hierarchyRootCategories.Count > 0 ? hierarchyRootCategories : null;
         }
-
-        private ObservableCollection<CategoryHierarchy> LoadChildrenCategories (Category category)
+        private ObservableCollection<CategoryHierarchyViewModel> LoadChildrenCategories (Category category)
         {
-            ObservableCollection<CategoryHierarchy> hierarchyCategories = new ObservableCollection<CategoryHierarchy> ();
+            ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories = new ObservableCollection<CategoryHierarchyViewModel> ();
+            IEnumerable<Category> categories = _categoryContext.GetChildrenCategories (category);
 
-            foreach (Category childCategiry in _categoryContext.GetChildrenCategories (category)) {
-                hierarchyCategories.Add (new CategoryHierarchy
-                                            {
-                                                Category = new CategoryViewModel (childCategiry),
-                                                Categories = LoadChildrenCategories (childCategiry)
-                                            });
+            foreach (Category childCategiry in categories) {
+
+                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, LoadChildrenCategories (childCategiry)));
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
         }
-
         private void ImportFileCategory ()
         {
             OpenFileDialog ofd = new OpenFileDialog ();
@@ -125,44 +118,17 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 _categoryContext.LoadCategoriesFromFile (fileName);
             }
         }
-
-        private void SetSelectedCategory (CategoryHierarchy item)
+        private void SetSelectedCategory (CategoryHierarchyViewModel item)
         {
-            SelectedCategory = item.Category;
-
+            SelectedCategory = item;
         }
-
         private void ClearCategoriesLists ()
         {
             _categoryContext.DeleteAllCategories ();
         }
 
-
-        public class CategoryHierarchy
-        {
-            public CategoryViewModel Category { get; set; }
-            public ObservableCollection<CategoryHierarchy> Categories { get; set; }
-        }      
+            
     }
 
-    public class CategoryViewModel : ViewModel
-    {
-        public Category Category { get; }
-
-        public CategoryViewModel (Category category)
-        {
-            Category = category;
-            IsInDeal = category.SearchComplexity != null;
-        }
-
-        public string Id => Category.Id;
-        public string Name => Category.Name;
-        private bool _isInDeal;
-        public bool IsInDeal { get => _isInDeal;
-            set {
-                _isInDeal = value;
-                RaisePropertyChanged ();
-            }
-        }
-    }
+    
 }

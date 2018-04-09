@@ -24,7 +24,7 @@
         <views:CategoriesListControl Grid.Row="0" Grid.Column="0"/>
         <GridSplitter Grid.Row="0" Grid.Column="1" Width="3" HorizontalAlignment="Center"/>
         <!-- Настройка сложностей категорий -->
-        <views:CategoryControl Grid.Row="0" Grid.Column="2" />
+        <views:CategoryControl Grid.Row="0" Grid.Column="2" IsEnabled="{Binding SelectedSelectedCategory.IsInDeal}"/>
         <GridSplitter Grid.Row="0" Grid.Column="3" Width="3" HorizontalAlignment="Center"/>
         <!-- Настройка сложностей категорий -->
         <views:DealSettingsControl Grid.Row="0" Grid.Column="4"/>

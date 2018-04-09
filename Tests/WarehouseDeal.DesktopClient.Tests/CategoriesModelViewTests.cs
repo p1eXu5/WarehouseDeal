@@ -21,7 +21,7 @@ namespace WarehouseDeal.DesktopClient.Tests
 
         //    viewModel.SetCategoriesLists ();
 
-        //    int countFromModel = viewModel.Categories.Count<Category> ();
+        //    int countFromModel = viewModel.Categories.Count<SelectedCategory> ();
 
         //    Assert.IsTrue (count == countFromModel);
         //}

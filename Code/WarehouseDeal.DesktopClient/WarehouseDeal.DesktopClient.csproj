@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Backup.cs" />
+    <Compile Include="ViewModels\CategoryHierarchyViewModel.cs" />
     <Compile Include="Views\CategoriesListControl.xaml.cs">
       <DependentUpon>CategoriesListControl.xaml</DependentUpon>
     </Compile>
