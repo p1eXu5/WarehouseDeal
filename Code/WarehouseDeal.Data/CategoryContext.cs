@@ -11,8 +11,12 @@ namespace WarehouseDeal.Data
 {
     using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
     using static FileOfCategoriesColumns;
+
     public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
 
+    /// <summary>
+    /// Контекст категорий
+    /// </summary>
     public sealed class CategoryContext : IDisposable
     {
         private readonly DataContext _context;
