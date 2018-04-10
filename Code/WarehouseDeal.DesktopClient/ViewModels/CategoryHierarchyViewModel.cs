@@ -37,6 +37,8 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
+
+        public static string SearchComplexityString { get; } = "Сложность поиска";
         public double? PickingComplexity
         {
             get => Category.PickingComplexity;
@@ -84,49 +86,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 _isInDeal = value;
                 RaisePropertyChanged ();
             }
-        }
-
-        public static void SetInDealSelectedCategory (CategoryHierarchyViewModel category)
-        {
-            ICollection<Category> children = new List<Category> { category.Category };
-            Category parent = category.Category.CategoryParent;
-
-            while (parent != null && parent.SearchComplexity == null) {
-                children.Add (parent);
-                parent = parent.CategoryParent;
-            }
-
-            if (parent != null) {
-
-                if (parent.SearchComplexity != null) {
-
-                    // Заполняем сложности всех детей до целевого значениями предка
-                    foreach (Category child in children) {
-
-                        child.SearchComplexity = parent.SearchComplexity;
-                        child.PickingComplexity = parent.PickingComplexity;
-                        child.RankingComplexity = parent.RankingComplexity;
-                        child.CountingComplexity = parent.CountingComplexity;
-                        child.IsPiecesInDeal = parent.IsPiecesInDeal;
-
-                        return;
-                    }
-                }
-
-                category.IsPiecesInDeal = parent.IsPiecesInDeal;
-            }
-
-            if (category.SearchComplexity != null) return;
-
-            category.SearchComplexity = 0;
-            category.PickingComplexity = 0;
-            category.RankingComplexity = 0;
-            category.CountingComplexity = 0;
-        }
-
-        public void UnsetInDealSelectedCategory ()
-        {
-
         }
     }
 }
