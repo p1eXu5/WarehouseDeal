@@ -11,7 +11,6 @@ namespace WarehouseDeal.Data
 {
     using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
     using static FileOfCategoriesColumns;
-
     public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
 
     public sealed class CategoryContext : IDisposable
@@ -42,28 +41,23 @@ namespace WarehouseDeal.Data
 
         #region Read Data
         //-----------------------------------------------------------------------------------------------
-
         public IEnumerable<Category> GetAllCategories ()
         {
             return _context.CategorySet.Select (s => s).ToArray();
         }
-
         public Category GetRootCategory()
         {
             return _context.CategorySet.First (p => p.CategoryParent == null);
         }
-
         public IEnumerable<Category> GetAllRootCategiries ()
         {
             var a = _context.CategorySet.Where (p => p.CategoryParent == null).ToArray ();
             return a;
         }
-
         public IEnumerable<Category> GetChildrenCategories (Category rootCategory)
         {
             return _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
         }
-
         //-----------------------------------------------------------------------------------------------
         #endregion Read Data
 

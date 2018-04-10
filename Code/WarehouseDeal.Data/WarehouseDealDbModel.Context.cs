@@ -13,7 +13,7 @@ namespace WarehouseDeal.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DataContext : DbContext
+    public class DataContext : DbContext
     {
         public DataContext()
             : base("Default")
