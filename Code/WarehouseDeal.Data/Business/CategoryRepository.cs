@@ -1,75 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WarehouseDeal.Data
+﻿namespace WarehouseDeal.Data.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Data.Entity;
     using static WarehouseDeal.ServiceClasses.WatehouseDealServiceClass;
     using static FileOfCategoriesColumns;
 
-    public enum FileOfCategoriesColumns : Int32 { Id, Name, Parent = 3 }
+
 
     /// <summary>
     /// Контекст категорий
     /// </summary>
-    public sealed class CategoryContext : IDisposable
+    public class CategoryRepository : IRepository<Category,string>
     {
         private readonly DataContext _context;
-        public DataContext DataContext => _context;
-        private bool _disposed;
 
-        private ObservableCollection<Category> _categories;
-        public ReadOnlyObservableCollection<Category> Categories { get; }
-
-        public CategoryContext ()
+        public CategoryRepository (DataContext context)
         {
-            try {
-                this._context = new DataContext();
-                _context.Database.Initialize (false);
-            }
-            catch (Exception ex) {
-
-                Debug.WriteLine ("Инициализация не выполнена. Ошибка: ");
-                Debug.WriteLine (ex.Message);
-            }
-
-            //_context.CategorySet.Load();
-            _categories = _context.CategorySet.Local;
-            Categories = new ReadOnlyObservableCollection<Category>(_categories);
+            _context = context;
         }
 
         #region Read Data
         //-----------------------------------------------------------------------------------------------
-        public IEnumerable<Category> GetAllCategories ()
-        {
-            return _context.CategorySet.Select (s => s).ToArray();
-        }
-        public Category GetRootCategory()
-        {
-            return _context.CategorySet.First (p => p.CategoryParent == null);
-        }
-        public IEnumerable<Category> GetAllRootCategiries ()
-        {
-            var a = _context.CategorySet.Where (p => p.CategoryParent == null).ToArray ();
-            return a;
-        }
-        public IEnumerable<Category> GetChildrenCategories (Category rootCategory)
-        {
-            return _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id).ToArray();
-        }
+        public IEnumerable<Category> GetAll () => _context.CategorySet;
+        public Category Get (string id) => _context.CategorySet.Find (id);
+        public Category GetRootCategory() => _context.CategorySet.FirstOrDefault (p => p.CategoryParent == null);
+        public IEnumerable<Category> GetAllRootCategiries () => _context.CategorySet.Where (p => p.CategoryParent == null);
+        public IEnumerable<Category> GetChildrenCategories (Category rootCategory) => _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id);
         //-----------------------------------------------------------------------------------------------
         #endregion Read Data
 
 
         #region Create Data
         //-----------------------------------------------------------------------------------------------
-
-        public Category AddNewCategory (string id, string name)
+        public Category AddNew (string id, string name)
         {
             Check.IsCategoryIdCorrect (id);
             Check.IsCategoryNameCorrect (name);
@@ -86,15 +51,13 @@ namespace WarehouseDeal.Data
 
             return category;
         }
-
-        public void AddNewCategory (Category category)
+        public void AddNew (Category category)
         {
             Check.IsCategoryIdCorrect (category.Id);
             Check.IsCategoryNameCorrect (category.Name);
             category.CategoryParent = null;
             category.Dept = null;
             category.Product = null;
-
 
             _context.CategorySet.Add (category);
             _context.SaveChanges ();
@@ -116,7 +79,7 @@ namespace WarehouseDeal.Data
                     continue;
                 }
 
-                AddNewCategory (line[(int)Id], line[(int)Name]);
+                AddNew (line[(int)Id], line[(int)Name]);
             }
 
             foreach (string[] line in removableLines) {
@@ -152,7 +115,6 @@ namespace WarehouseDeal.Data
 
             _context.SaveChanges();
         }
-
         public void AddParentCategory (Category child, Category parent)
         {
             Category category = _context.CategorySet.Find (child.Id);
@@ -164,19 +126,26 @@ namespace WarehouseDeal.Data
 
             _context.SaveChanges ();
         }
-
+        public void Update (Category category)
+        {
+            _context.Entry (category).State = EntityState.Modified;
+        }
         //-----------------------------------------------------------------------------------------------
         #endregion Update Data
 
 
         #region Delete
-
+        public void Delete (string id)
+        {
+            Category category = _context.CategorySet.Find (id);
+            if (category != null)
+                _context.CategorySet.Remove (category);
+        }
         public void DeleteAllCategories()
         {
-            _context.CategorySet.RemoveRange(GetAllCategories());
+            _context.CategorySet.RemoveRange(GetAll());
             _context.SaveChanges();
         }
-
         #endregion
 
 
@@ -191,7 +160,6 @@ namespace WarehouseDeal.Data
                 if (id.Trim().Length != 7)
                     throw new ArgumentException();
             }
-
             public static void IsCategoryNameCorrect (string name)
             {
                 if (name == null)
@@ -200,7 +168,6 @@ namespace WarehouseDeal.Data
                 if (name.Trim ().Length == 0)
                     throw new ArgumentException ();
             }
-
             public static bool IsCategoryString (string[] line)
             {
 
@@ -213,25 +180,5 @@ namespace WarehouseDeal.Data
         }
         #endregion Check Class
 
-
-        #region IDisposable Members
-        public void Dispose ()
-        {
-            Dispose(true);
-
-            GC.SuppressFinalize (this);
-
-        }
-
-        private void Dispose (bool disposing)
-        {
-            if (!disposing || _disposed)
-                return;
-
-            _context?.Dispose();
-
-            _disposed = true;
-        }
-        #endregion IDisposable Members
     }
 }

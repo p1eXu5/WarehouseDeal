@@ -28,7 +28,7 @@ namespace WarehouseDeal.DesktopClient.Tests
 
         //private class StubViewModel : MainModelView
         //{
-        //    public CategoryContext Context => _context;
+        //    public CategoryRepository Context => _context;
         //}
     }
 }

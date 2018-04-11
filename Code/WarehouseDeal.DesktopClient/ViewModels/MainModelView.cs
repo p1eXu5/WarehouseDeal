@@ -11,13 +11,13 @@ using Prism.Commands;
 using WarehouseDeal.BaseClasses;
 using WarehouseDeal.Data;
 using Prism.Mvvm;
+using WarehouseDeal.Data.Business;
 
 namespace WarehouseDeal.DesktopClient.ViewModels
 {
     public class MainModelView : ViewModel
     {
-        private readonly CategoryContext _categoryContext = new CategoryContext();
-        private ObservableCollection<CategoryHierarchyViewModel> _categoriesHierarchy;
+        private readonly UnitOfWork _unitOfWork = new UnitOfWork ();
         //private readonly ComplexityComtext _complexityContext = new ComplexityComtext();
         private bool _isTreeView;
         private bool _isSelectedCategoryNotNull;
@@ -27,8 +27,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         public MainModelView()
         {
-            _categoriesHierarchy = LoadHierarchy();
-            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(_categoriesHierarchy);
+            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(LoadHierarchy ());
 
             //_complexityContext = LoadComplexities();
 
@@ -107,7 +106,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         private ObservableCollection<CategoryHierarchyViewModel> LoadRootHierarchy()
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _categoryContext.GetAllRootCategiries();
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries();
 
             foreach (Category category in categories)
                 hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, LoadChildrenCategories (category)));
@@ -118,7 +117,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories =
                 new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _categoryContext.GetChildrenCategories (category);
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (category);
 
             foreach (Category childCategiry in categories) {
 
@@ -139,7 +138,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             if (ofd.ShowDialog() == true) {
 
                 string fileName = ofd.FileName;
-                _categoryContext.LoadCategoriesFromFile (fileName);
+                _unitOfWork.CategoryRepository.LoadCategoriesFromFile (fileName);
             }
         }
         private void SetSelectedCategory (CategoryHierarchyViewModel item)
@@ -148,7 +147,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         }
         private void ClearCategoriesLists()
         {
-            _categoryContext.DeleteAllCategories();
+            _unitOfWork.CategoryRepository.DeleteAllCategories();
         }
         private void SetInDealSelectedCategory()
         {

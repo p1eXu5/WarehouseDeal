@@ -8,15 +8,15 @@
 //{
 //    public class MainModelView : ViewModel
 //    {
-//        protected readonly CategoryContext _context;
+//        protected readonly CategoryRepository _context;
 //        private SelectedCategory _selectedSelectedCategory;
 //        private bool _isTreeView = true;    // Declarate which control is visible now
 //        private string _viewContent;        // Content for toggle button
 
 //        #region constructors
-//        public MainModelView () : this (new CategoryContext ()) { }
+//        public MainModelView () : this (new CategoryRepository ()) { }
 
-//        public MainModelView (CategoryContext context)
+//        public MainModelView (CategoryRepository context)
 //        {
 //            _context = context;
 //            Categories = new ObservableCollection<SelectedCategory> ();
