@@ -65,6 +65,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged();
             }
         }
+        /// <summary>
+        /// Text of toggle button
+        /// </summary>
         public string ViewContent
         {
             get => _viewContent;
@@ -82,6 +85,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
+
 
         #endregion
 
@@ -103,26 +107,35 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
             return hierarchy;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private ObservableCollection<CategoryHierarchyViewModel> LoadRootHierarchy()
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries();
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries().ToArray();
 
             foreach (Category category in categories)
                 hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, LoadChildrenCategories (category)));
 
             return hierarchyRootCategories.Count > 0 ? hierarchyRootCategories : null;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         private ObservableCollection<CategoryHierarchyViewModel> LoadChildrenCategories (Category category)
         {
-            ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories =
-                new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (category);
+            ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories = new ObservableCollection<CategoryHierarchyViewModel>();
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (category).ToArray();
 
             foreach (Category childCategiry in categories) {
 
-                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry,
-                    LoadChildrenCategories (childCategiry)));
+                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, LoadChildrenCategories (childCategiry)));
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
@@ -193,11 +206,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         }
 
-        public struct Complexity
-        {
-            public string Title { get; }
-            public double MinComplexity { get; }
-            public double MaxComplexity { get; }
-        }
+    }
+
+    public struct Complexity
+    {
+        public string Title { get; }
+        public double MinComplexity { get; }
+        public double MaxComplexity { get; }
     }
 }

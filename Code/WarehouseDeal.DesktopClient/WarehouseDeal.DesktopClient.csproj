@@ -77,11 +77,11 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\Backup.cs" />
     <Compile Include="ViewModels\CategoryHierarchyViewModel.cs" />
+    <Compile Include="Views\CategoriesTreeControl.xaml.cs">
+      <DependentUpon>CategoriesTreeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CategoriesListControl.xaml.cs">
       <DependentUpon>CategoriesListControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CategoryControl.xaml.cs">
-      <DependentUpon>CategoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ComplexityControl.xaml.cs">
       <DependentUpon>ComplexityControl.xaml</DependentUpon>
@@ -99,11 +99,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoriesListControl.xaml">
+    <Page Include="Views\CategoriesTreeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoryControl.xaml">
+    <Page Include="Views\CategoriesListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
