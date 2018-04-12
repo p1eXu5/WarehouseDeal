@@ -27,6 +27,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         private CategoryHierarchyViewModel _selectedCategory;
         private List<Complexity> _complexityList;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public MainModelView()
         {
             _categoryHierarchy = GetCategoryHierarchy();
@@ -105,7 +108,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             // Корневая категория TreeView - "Категория"
             var hierarchy = new ObservableCollection<CategoryHierarchyViewModel>()
             {
-                new CategoryHierarchyViewModel (new Category {Name = "Категория"}, GetRootsCategories())
+                new CategoryHierarchyViewModel (new Category {Name = "Категория"}, GetRootsCategories(), null)
             };
 
             return hierarchy;
@@ -118,10 +121,13 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         private ObservableCollection<CategoryHierarchyViewModel> GetRootsCategories()
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries().ToArray();
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries().ToArray();     // ToArray() - из-за разделения DataAdapter'а
 
-            foreach (Category category in categories)
-                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, GetChildrenCategories (category)));
+            foreach (Category category in categories) { 
+
+
+                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, GetChildrenCategories (category), GetCategoryComplexityList (category)));
+            }
 
             return hierarchyRootCategories.Count > 0 ? hierarchyRootCategories : null;
         }
@@ -138,10 +144,23 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
             foreach (Category childCategiry in categories) {
 
-                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, GetChildrenCategories (childCategiry)));
+                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, GetChildrenCategories (childCategiry), GetCategoryComplexityList (childCategiry)));
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
+        }
+
+        private ObservableCollection<CategoryComplexityViewModel> GetCategoryComplexityList (Category category)
+        {
+            var categoryComplexityList = new ObservableCollection<CategoryComplexityViewModel>();
+            IEnumerable<CategoryComplexity> categoryComplexities = _unitOfWork.CategoryComplexityRepository.GetAll();
+
+            foreach (CategoryComplexity categoryComplexity in categoryComplexities) {
+                
+
+            }
+
+            return categoryComplexityList;
         }
 
         private void ImportFileCategory()
@@ -172,25 +191,31 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             _unitOfWork.CategoryRepository.DeleteAllCategories();
         }
 
+        /// <summary>
+        /// Обработчик гиперкнопки "Добавить категорию в сделку"
+        /// </summary>
         private void SetInDealSelectedCategory()
         {
             var category = SelectedCategory;
-            ICollection<Category> children = new List<Category> {category.Category};    // Инициализация списка категорий, для которых устанавливаются сложности
-            Category parent = category.Category.CategoryParent;                         // Родитель отправной категории
+            category.SetInDeal();
+
+            ICollection<Category> parents = new List<Category> {category.Category};    // Инициализация списка категорий, для которых устанавливаются сложности
+            CategoryHierarchyViewModel parent = new CategoryHierarchyViewModel(category.Category.CategoryParent);category.Category.CategoryParent.;                         // Родитель отправной категории
 
             // Заполнение списка
-            while (parent != null && parent.IsInDeal == null) {                         // Пока есть родитель и он не учавствует в сделке
+            while (parent != null && parent.IsInDeal == false) {                         // Пока есть родитель и он не учавствует в сделке
 
-                children.Add (parent);
+                parent.SetInDeal();
                 parent = parent.CategoryParent;
             }
 
+            // Если цикл
             if (parent != null) {
 
                 if (parent.SearchComplexity != null) {
 
                     // Заполняем сложности всех детей до целевого значениями предка
-                    foreach (Category child in children) {
+                    foreach (Category child in parents) {
 
                         child.SearchComplexity = parent.SearchComplexity;
                         child.PickingComplexity = parent.PickingComplexity;
@@ -218,12 +243,5 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         }
 
-    }
-
-    public struct Complexity
-    {
-        public string Title { get; }
-        public double MinComplexity { get; }
-        public double MaxComplexity { get; }
     }
 }

@@ -18,55 +18,22 @@ namespace WarehouseDeal.DesktopClient.ViewModels
     {
         public Category Category { get; }
         public ObservableCollection<CategoryHierarchyViewModel> Categories { get; }
-        private bool _isInDeal;
 
-        public CategoryHierarchyViewModel (Category category, ObservableCollection<CategoryHierarchyViewModel> categories)
+        public CategoryHierarchyViewModel (Category category, ObservableCollection<CategoryHierarchyViewModel> categories, ObservableCollection<CategoryComplexityViewModel> categoryComplexityList)
         {
             Category = category;
             Categories = categories;
+
+            CategoryComplexityList = categoryComplexityList;
         }
 
         public string Id => Category?.Id;
         public string Name => Category?.Name;
-        public double? SearchComplexity
+        public bool IsInDeal
         {
-            get => Category.SearchComplexity;
+            get => Category.IsInDeal;
             set {
-                Category.SearchComplexity = value;
-                RaisePropertyChanged ();
-            }
-        }
-
-        public static string SearchComplexityString { get; } = "Сложность поиска";
-        public double? PickingComplexity
-        {
-            get => Category.PickingComplexity;
-            set {
-                Category.PickingComplexity = value;
-                RaisePropertyChanged ();
-            }
-        }
-        public double? PackagingComplexity
-        {
-            get => Category.PackagingComplexity;
-            set {
-                Category.PackagingComplexity = value;
-                RaisePropertyChanged ();
-            }
-        }
-        public double? RankingComplexity
-        {
-            get => Category.RankingComplexity;
-            set {
-                Category.RankingComplexity = value;
-                RaisePropertyChanged ();
-            }
-        }
-        public double? CountingComplexity
-        {
-            get => Category.CountingComplexity;
-            set {
-                Category.CountingComplexity = value;
+                Category.IsInDeal = value;
                 RaisePropertyChanged ();
             }
         }
@@ -78,13 +45,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
-        public bool IsInDeal
-        {
-            get => _isInDeal;
-            set {
-                _isInDeal = value;
-                RaisePropertyChanged ();
-            }
-        }
+        public ObservableCollection<CategoryComplexityViewModel> CategoryComplexityList { get; set; }
     }
 }

@@ -192,7 +192,7 @@
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptCategory" FromRole="Category" ToRole="Dept" />
-          <Property Name="IsInDeal" Type="String" Nullable="false" DefaultValue="false" />
+          <Property Name="IsInDeal" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="DeptId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CategoryComplexity" Relationship="SdelkaModel.CategoryCategoryComplexity" FromRole="Category" ToRole="CategoryComplexity" />
           <NavigationProperty Name="Products" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />

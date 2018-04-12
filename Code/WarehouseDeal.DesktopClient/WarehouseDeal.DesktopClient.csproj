@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\Backup.cs" />
     <Compile Include="ViewModels\CategoryHierarchyViewModel.cs" />
+    <Compile Include="ViewModels\CategoryComplexityViewModel.cs" />
     <Compile Include="Views\CategoriesTreeControl.xaml.cs">
       <DependentUpon>CategoriesTreeControl.xaml</DependentUpon>
     </Compile>

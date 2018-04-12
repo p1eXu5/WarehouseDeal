@@ -11,6 +11,7 @@ namespace WarehouseDeal.Data.Business
         private readonly DataContext _context = new DataContext();
 
         private CategoryRepository _categoryRepository;
+        private CategoryComplexityRepository _categoryComplexityRepository;
 
         public CategoryRepository CategoryRepository
         {
@@ -22,6 +23,9 @@ namespace WarehouseDeal.Data.Business
                 return _categoryRepository;
             }
         }
+
+        public CategoryComplexityRepository CategoryComplexityRepository => _categoryComplexityRepository ??
+                                                                            (_categoryComplexityRepository = new CategoryComplexityRepository (_context));
 
         public DataContext DataContext => _context;
 

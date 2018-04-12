@@ -69,7 +69,7 @@
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Business\CategoryRepository.cs" />
-    <Compile Include="Business\ComplexityRepository.cs" />
+    <Compile Include="Business\CategoryComplexityRepository.cs" />
     <Compile Include="Business\FilesColumns.cs" />
     <Compile Include="Business\IRepository.cs" />
     <Compile Include="Business\UnitOfWork.cs" />

@@ -18,7 +18,7 @@ namespace WarehouseDeal.Data
         public Category()
         {
             this.Name = "Unnamed";
-            this.IsInDeal = "false";
+            this.IsInDeal = false;
             this.CategoryComplexity = new HashSet<CategoryComplexity>();
             this.Products = new HashSet<Product>();
         }
@@ -26,7 +26,7 @@ namespace WarehouseDeal.Data
         public string Id { get; set; }
         public string Name { get; set; }
         public bool IsPiecesInDeal { get; set; }
-        public string IsInDeal { get; set; }
+        public bool IsInDeal { get; set; }
         public Nullable<int> DeptId { get; set; }
     
         public virtual Category CategoryParent { get; set; }
