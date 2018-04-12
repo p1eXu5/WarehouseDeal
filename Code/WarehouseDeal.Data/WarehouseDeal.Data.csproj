@@ -69,16 +69,20 @@
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Business\CategoryRepository.cs" />
+    <Compile Include="Business\ComplexityRepository.cs" />
     <Compile Include="Business\FilesColumns.cs" />
     <Compile Include="Business\IRepository.cs" />
     <Compile Include="Business\UnitOfWork.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CategoryComplexity.cs">
+      <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Change.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ComplexityLimits.cs">
+    <Compile Include="Complexity.cs">
       <DependentUpon>WarehouseDealDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Dept.cs">
@@ -147,6 +151,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Assets\Categories.csv" />
+    <None Include="Assets\TestCategories.csv" />
     <None Include="packages.config" />
     <EntityDeploy Include="SdelkaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

@@ -23,6 +23,10 @@ namespace WarehouseDeal.Data.Business
             }
         }
 
+        public DataContext DataContext => _context;
+
+        #region IDisposable
+
         private bool _disposed;
         public void Dispose ()
         {
@@ -38,5 +42,7 @@ namespace WarehouseDeal.Data.Business
             _context?.Dispose();
             _disposed = true;
         }
+
+        #endregion
     }
 }

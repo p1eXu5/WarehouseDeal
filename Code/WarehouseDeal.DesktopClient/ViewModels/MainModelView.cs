@@ -18,6 +18,8 @@ namespace WarehouseDeal.DesktopClient.ViewModels
     public class MainModelView : ViewModel
     {
         private readonly UnitOfWork _unitOfWork = new UnitOfWork ();
+
+        private ObservableCollection<CategoryHierarchyViewModel> _categoryHierarchy;
         //private readonly ComplexityComtext _complexityContext = new ComplexityComtext();
         private bool _isTreeView;
         private bool _isSelectedCategoryNotNull;
@@ -27,7 +29,8 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         public MainModelView()
         {
-            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(LoadHierarchy ());
+            _categoryHierarchy = GetCategoryHierarchy();
+            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(_categoryHierarchy);
 
             //_complexityContext = LoadComplexities();
 
@@ -97,28 +100,28 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         #endregion
 
         // Заполнение иерархии категорий TreeView
-        private ObservableCollection<CategoryHierarchyViewModel> LoadHierarchy()
+        private ObservableCollection<CategoryHierarchyViewModel> GetCategoryHierarchy()
         {
             // Корневая категория TreeView - "Категория"
             var hierarchy = new ObservableCollection<CategoryHierarchyViewModel>()
             {
-                new CategoryHierarchyViewModel (new Category {Name = "Категория"}, LoadRootHierarchy())
+                new CategoryHierarchyViewModel (new Category {Name = "Категория"}, GetRootsCategories())
             };
 
             return hierarchy;
         }
 
         /// <summary>
-        /// 
+        /// Получить корневые категории
         /// </summary>
-        /// <returns></returns>
-        private ObservableCollection<CategoryHierarchyViewModel> LoadRootHierarchy()
+        /// <returns>Наблюдаемую коллекцию корневых категорий</returns>
+        private ObservableCollection<CategoryHierarchyViewModel> GetRootsCategories()
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
             IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiries().ToArray();
 
             foreach (Category category in categories)
-                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, LoadChildrenCategories (category)));
+                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, GetChildrenCategories (category)));
 
             return hierarchyRootCategories.Count > 0 ? hierarchyRootCategories : null;
         }
@@ -128,14 +131,14 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        private ObservableCollection<CategoryHierarchyViewModel> LoadChildrenCategories (Category category)
+        private ObservableCollection<CategoryHierarchyViewModel> GetChildrenCategories (Category category)
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories = new ObservableCollection<CategoryHierarchyViewModel>();
             IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (category).ToArray();
 
             foreach (Category childCategiry in categories) {
 
-                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, LoadChildrenCategories (childCategiry)));
+                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, GetChildrenCategories (childCategiry)));
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
@@ -151,24 +154,33 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             if (ofd.ShowDialog() == true) {
 
                 string fileName = ofd.FileName;
-                _unitOfWork.CategoryRepository.LoadCategoriesFromFile (fileName);
+                ClearCategoriesLists();
+                CategoryRepository.LoadCategoriesFromFile (fileName, _unitOfWork.DataContext);
+                CategoryHierarchyViewModel rootCategory = _categoryHierarchy.First();
+                rootCategory.Categories.Clear();
+                rootCategory.Categories.AddRange (GetRootsCategories());
             }
         }
+
         private void SetSelectedCategory (CategoryHierarchyViewModel item)
         {
             SelectedCategory = item;
         }
+
         private void ClearCategoriesLists()
         {
             _unitOfWork.CategoryRepository.DeleteAllCategories();
         }
+
         private void SetInDealSelectedCategory()
         {
             var category = SelectedCategory;
-            ICollection<Category> children = new List<Category> {category.Category};
-            Category parent = category.Category.CategoryParent;
+            ICollection<Category> children = new List<Category> {category.Category};    // Инициализация списка категорий, для которых устанавливаются сложности
+            Category parent = category.Category.CategoryParent;                         // Родитель отправной категории
 
-            while (parent != null && parent.SearchComplexity == null) {
+            // Заполнение списка
+            while (parent != null && parent.IsInDeal == null) {                         // Пока есть родитель и он не учавствует в сделке
+
                 children.Add (parent);
                 parent = parent.CategoryParent;
             }

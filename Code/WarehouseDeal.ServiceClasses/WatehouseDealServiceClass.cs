@@ -11,6 +11,11 @@ namespace WarehouseDeal.ServiceClasses
     {
         const string ConstCsvFileExtension = ".csv";
 
+        /// <summary>
+        /// Возвращает последовательность строк из csv-файла
+        /// </summary>
+        /// <param name="fileName">Имя файла</param>
+        /// <returns>IEnumerable&lt;string[]&gt;</returns>
         public static IEnumerable<string[]> GetStringsArrayEnumeratorFromCsvFile (string fileName)
         {
             if (!File.Exists (fileName) || !fileName.EndsWith (ConstCsvFileExtension))

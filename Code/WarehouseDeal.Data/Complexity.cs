@@ -12,28 +12,22 @@ namespace WarehouseDeal.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Complexity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Complexity()
         {
-            this.Name = "Unnamed";
-            this.IsInDeal = "false";
+            this.MinComplexity = 0D;
+            this.MaxComplexity = 0D;
             this.CategoryComplexity = new HashSet<CategoryComplexity>();
-            this.Products = new HashSet<Product>();
         }
     
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public bool IsPiecesInDeal { get; set; }
-        public string IsInDeal { get; set; }
-        public Nullable<int> DeptId { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public double MinComplexity { get; set; }
+        public double MaxComplexity { get; set; }
     
-        public virtual Category CategoryParent { get; set; }
-        public virtual Dept Dept { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryComplexity> CategoryComplexity { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -58,6 +58,7 @@ using System.Linq;
     public <#=code.Escape(container)#>()
         : base("Default")
     {
+		Database.SetInitializer(new WarehouseDealDbInitializer());
 <#
 if (!loader.IsLazyLoadingEnabled(container))
 {
@@ -83,7 +84,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
             modelBuilder.Entity<Category> ()
-                .HasMany (p => p.Product)
+                .HasMany (p => p.Products)
                 .WithRequired (c => c.Category)
                 .HasForeignKey (k => k.CategoryId)
                 .WillCascadeOnDelete (false);

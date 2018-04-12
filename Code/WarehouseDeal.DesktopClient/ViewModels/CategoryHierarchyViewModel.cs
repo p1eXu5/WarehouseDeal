@@ -24,7 +24,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         {
             Category = category;
             Categories = categories;
-            IsInDeal = category.SearchComplexity != null;
         }
 
         public string Id => Category?.Id;

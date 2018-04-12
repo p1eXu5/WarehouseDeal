@@ -12,18 +12,19 @@ namespace WarehouseDeal.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ComplexityLimits
+    public partial class CategoryComplexity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ComplexityLimits()
+        public CategoryComplexity()
         {
-            this.MinComplexity = 0D;
-            this.MaxComplexity = 0D;
+            this.Value = 0D;
         }
     
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public double MinComplexity { get; set; }
-        public double MaxComplexity { get; set; }
+        public string CategoryId { get; set; }
+        public int ComplexityId { get; set; }
+        public double Value { get; set; }
+    
+        public virtual Category Category { get; set; }
+        public virtual Complexity Complexity { get; set; }
     }
 }

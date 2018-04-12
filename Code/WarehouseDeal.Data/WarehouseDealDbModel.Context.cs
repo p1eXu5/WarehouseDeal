@@ -13,17 +13,18 @@ namespace WarehouseDeal.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public class DataContext : DbContext
+    public partial class DataContext : DbContext
     {
         public DataContext()
             : base("Default")
         {
+    		Database.SetInitializer(new WarehouseDealDbInitializer());
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
                 modelBuilder.Entity<Category> ()
-                    .HasMany (p => p.Product)
+                    .HasMany (p => p.Products)
                     .WithRequired (c => c.Category)
                     .HasForeignKey (k => k.CategoryId)
                     .WillCascadeOnDelete (false);
@@ -52,6 +53,7 @@ namespace WarehouseDeal.Data
         public virtual DbSet<LoadingUnloading> LoadingUnloadingSet { get; set; }
         public virtual DbSet<AuxiliaryWorkDocument> AuxiliaryWorkDocumentSet { get; set; }
         public virtual DbSet<AuxiliaryWork> AuxiliaryWorkSet { get; set; }
-        public virtual DbSet<ComplexityLimits> ComplexityLimitsSet { get; set; }
+        public virtual DbSet<Complexity> ComplexitySet { get; set; }
+        public virtual DbSet<CategoryComplexity> CategoryComplexitySet { get; set; }
     }
 }
