@@ -59,11 +59,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         {
             get => _selectedCategory;
             set {
-                if (value.Id != null) {
                     _selectedCategory = value;
                     RaisePropertyChanged();
-                    IsSelectedCategoryNotNull = SelectedCategory != null;
-                }
+                    IsSelectedCategoryNotNull = value.Id != null;
             }
         }
         public bool IsTreeView
@@ -121,6 +119,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                                 {
                                     new CategoryHierarchyViewModel 
                                     (
+                                        parent: null,
                                         category: new Category {Name = "Категория"}, 
                                         categories: GetRootsCategories()
                                     )
@@ -138,10 +137,11 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
             IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiriesIncludeCategoryComplexity().ToArray();     // ToArray() - из-за разделения DataAdapter'а
 
-            foreach (Category category in categories) { 
+            foreach (Category category in categories) {
 
-
-                hierarchyRootCategories.Add (new CategoryHierarchyViewModel (category, GetChildrenCategories (category)));
+                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (null, category, null);
+                categoryHierarchyViewModel.Categories = GetChildrenCategories (categoryHierarchyViewModel);
+                hierarchyRootCategories.Add (categoryHierarchyViewModel);
             }
 
             return hierarchyRootCategories.Count > 0 ? hierarchyRootCategories : null;
@@ -150,34 +150,21 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="categoryHierarchyViewModelParent"></param>
         /// <returns></returns>
-        private ObservableCollection<CategoryHierarchyViewModel> GetChildrenCategories (Category category)
+        private ObservableCollection<CategoryHierarchyViewModel> GetChildrenCategories (CategoryHierarchyViewModel categoryHierarchyViewModelParent)
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyCategories = new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (category).ToArray();
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetChildrenCategories (categoryHierarchyViewModelParent.Category).ToArray();
 
             foreach (Category childCategiry in categories) {
 
-                hierarchyCategories.Add (new CategoryHierarchyViewModel (childCategiry, GetChildrenCategories (childCategiry)));
+                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (categoryHierarchyViewModelParent, childCategiry, null);
+                categoryHierarchyViewModel.Categories = GetChildrenCategories (categoryHierarchyViewModel);
+                hierarchyCategories.Add (categoryHierarchyViewModel);
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
-        }
-
-        private ObservableCollection<CategoryComplexityViewModel> GetCategoryComplexityList (Category category)
-        {
-            var categoryComplexityList = new ObservableCollection<CategoryComplexityViewModel>();
-            IEnumerable<CategoryComplexity> categoryComplexities = _unitOfWork.CategoryComplexityRepository.GetAll();
-
-            foreach (CategoryComplexity categoryComplexity in categoryComplexities) {
-                
-                // TODO:
-
-
-            }
-
-            return categoryComplexityList;
         }
 
         private void ImportFileCategory()

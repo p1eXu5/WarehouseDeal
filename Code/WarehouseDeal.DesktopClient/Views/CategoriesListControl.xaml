@@ -11,7 +11,7 @@
              x:Name="CategoryUserControl">
     <Grid>
         <DockPanel>
-            <!--<DockPanel.Style>
+            <DockPanel.Style>
                 <Style TargetType="DockPanel">
                     <Setter Property="Visibility" Value="Hidden" />
                     <Style.Triggers>
@@ -22,7 +22,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DockPanel.Style>-->
+            </DockPanel.Style>
             <TextBlock DockPanel.Dock="Top"
                            HorizontalAlignment="Center"
                            FontSize="24"
@@ -121,7 +121,7 @@
                         </Style>
                     </StackPanel.Style>
                     <!-- Сложность поиска -->
-                    <ListBox ItemsSource="{Binding CategoryComplexityList}"
+                    <ListBox ItemsSource="{Binding CategoryComplexityViewModelList}"
                              HorizontalContentAlignment="Stretch"
                              Padding="5"
                              MinHeight="200"
