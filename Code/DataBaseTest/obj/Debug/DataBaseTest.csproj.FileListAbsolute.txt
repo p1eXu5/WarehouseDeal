@@ -1,0 +1,9 @@
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\bin\Debug\DataBaseTest.exe.config
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\bin\Debug\DataBaseTest.exe
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\bin\Debug\DataBaseTest.pdb
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\bin\Debug\EntityFramework.dll
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\obj\Debug\DataBaseTest.csprojResolveAssemblyReference.cache
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\obj\Debug\DataBaseTest.csproj.CoreCompileInputs.cache
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\obj\Debug\DataBaseTest.exe
+D:\Projects\C# projects\WarehouseDeal\Code\DataBaseTest\obj\Debug\DataBaseTest.pdb

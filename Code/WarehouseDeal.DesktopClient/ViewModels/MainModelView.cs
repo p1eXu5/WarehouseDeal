@@ -40,8 +40,8 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             ImportCategoriesCommand = new DelegateCommand (ImportFileCategory);
             SetInDealSelectedCategoryCommand = new DelegateCommand (() =>
                                                                         {
-                                                                            CategoryHierarchyViewModel.SetInDeal (SelectedCategory, 
-                                                                                                                  _unitOfWork.ComplexityRepository, 
+                                                                            CategoryHierarchyViewModel.SetInDeal (SelectedCategory,
+                                                                                                                  _unitOfWork.ComplexityRepository,
                                                                                                                   _unitOfWork.CategoryComplexityRepository);
                                                                         });
 
@@ -59,9 +59,11 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         {
             get => _selectedCategory;
             set {
-                _selectedCategory = value;
-                RaisePropertyChanged();
-                IsSelectedCategoryNotNull = SelectedCategory != null;
+                if (value.Id != null) {
+                    _selectedCategory = value;
+                    RaisePropertyChanged();
+                    IsSelectedCategoryNotNull = SelectedCategory != null;
+                }
             }
         }
         public bool IsTreeView
@@ -103,6 +105,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         #region Commands
         public DelegateCommand<CategoryHierarchyViewModel> SetSelectedItemCommand { get; }
         public DelegateCommand ImportCategoriesCommand { get; }
+
         public DelegateCommand SetInDealSelectedCategoryCommand { get; }
         public DelegateCommand UnsetInDealSelectedCategoryCommand { get; }
         #endregion

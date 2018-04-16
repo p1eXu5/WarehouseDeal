@@ -17,11 +17,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 {
     public class CategoryHierarchyViewModel : ViewModel
     {
-
-        public Category Category { get; }
-        public ObservableCollection<CategoryHierarchyViewModel> Categories { get; }
-
-
         public CategoryHierarchyViewModel (Category category, ObservableCollection<CategoryHierarchyViewModel> categories)
         {
             Category = category;
@@ -34,6 +29,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 }
         }
 
+        public Category Category { get; }
+        public ObservableCollection<CategoryHierarchyViewModel> Categories { get; }
+        public ObservableCollection<CategoryComplexityViewModel> CategoryComplexityList { get; set; } = new ObservableCollection<CategoryComplexityViewModel>();
         public string Id => Category?.Id;
         public string Name => Category?.Name;
         public bool IsInDeal
@@ -52,11 +50,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
-        public ObservableCollection<CategoryComplexityViewModel> CategoryComplexityList { get; set; } = new ObservableCollection<CategoryComplexityViewModel>();
 
         
         public static void SetInDeal (CategoryHierarchyViewModel categoryHierarchy, IRepository<Complexity,int> complexityRepository, IRepository<CategoryComplexity, Tuple<Category, Complexity>> categoryComplexityRepository)
         {
+            if (categoryHierarchy?.Id == null || categoryHierarchy.IsInDeal) return;
+
             // Получаем множество всех имеющихся в сделке сложностей, относящихся к категориям
             ISet<Complexity> complexityAddingSet = new HashSet<Complexity> (complexityRepository.GetAll());
 

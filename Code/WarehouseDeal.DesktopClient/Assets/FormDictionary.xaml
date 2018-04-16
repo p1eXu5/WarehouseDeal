@@ -106,19 +106,9 @@
         <Setter Property="Margin" Value="0,0,30,0"/>
         <Setter Property="HorizontalAlignment" Value="Right"></Setter>
     </Style>
-    <Style x:Key="IsSelectedCategory" TargetType="TextBlock">
-        <Setter Property="Visibility" Value="Hidden" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="24"></Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsSelectedCategoryNotNull}" Value="false">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
 
-    <DataTemplate DataType="{x:Type vm:CategoryComplexityViewModel}">
+
+    <DataTemplate DataType="{x:Type vm:CategoryComplexityViewModel}" >
         <Grid Margin="5,0" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -134,9 +124,9 @@
             <TextBox Grid.Row="0" Grid.Column="1"
                      Width="50" Height="24"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
-                     Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext}"/>
+                     Text="{Binding Value}"/>
             <Slider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext}"
+                    Value="{Binding Value}"
                     Minimum="{Binding MinComplexity}" 
                     Maximum="{Binding MaxComplexity}"/>
         </Grid>

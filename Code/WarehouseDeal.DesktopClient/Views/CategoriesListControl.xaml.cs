@@ -18,9 +18,9 @@ namespace WarehouseDeal.DesktopClient.Views
     /// <summary>
     /// Interaction logic for CategoryView.xaml
     /// </summary>
-    public partial class CategoryControl : UserControl
+    public partial class CategoryListControl : UserControl
     {
-        public CategoryControl ()
+        public CategoryListControl ()
         {
             InitializeComponent ();
         }

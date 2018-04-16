@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="WarehouseDeal.DesktopClient.Views.CategoryControl"
+﻿<UserControl x:Class="WarehouseDeal.DesktopClient.Views.CategoryListControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             d:DataContext="{d:DesignInstance viewModels:MainModelView}"
              xmlns:views="clr-namespace:WarehouseDeal.DesktopClient.Views"
              xmlns:viewModels="clr-namespace:WarehouseDeal.DesktopClient.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:CategoryHierarchyViewModel}"
              d:DesignHeight="421.962" d:DesignWidth="300" Background="White"
              x:Name="CategoryUserControl">
     <Grid>
@@ -15,7 +15,9 @@
                 <Style TargetType="DockPanel">
                     <Setter Property="Visibility" Value="Hidden" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSelectedCategoryNotNull}" Value="true">
+                        <DataTrigger Binding="{Binding DataContext.IsSelectedCategoryNotNull,
+                                                       RelativeSource={RelativeSource AncestorType=Window}}" 
+                                     Value="true">
                             <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -38,19 +40,19 @@
                 </Grid.RowDefinitions>
 
                 <!-- Шапка, наименование и родитель категории -->
-                <TextBlock Grid.Row="0" Grid.Column="0"  
+                <TextBlock Text="Категория: " 
+                           Grid.Row="0" Grid.Column="0"  
                            HorizontalAlignment="Right" 
-                           Style="{StaticResource TextBlockStyle}"
-                           Text="Категория: "/>
+                           Style="{StaticResource TextBlockStyle}" />
                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="0"
                            Style="{StaticResource TextBlockStyle}">
-                        <Run Text="{Binding SelectedCategory.Name, Mode=OneWay}"/>
+                        <Run Text="{Binding Name, Mode=OneWay}"/>
                         (<Run>
                             <Run.Style>
                                 <Style TargetType="Run">
-                                    <Setter Property="Text" Value="{Binding SelectedCategory.Id, Mode=OneWay}"/>
+                                    <Setter Property="Text" Value="{Binding Id, Mode=OneWay}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedCategory.Id}" Value="{x:Null}">
+                                        <DataTrigger Binding="{Binding Id}" Value="{x:Null}">
                                             <Setter Property="Text" Value="нет"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -58,17 +60,17 @@
                             </Run.Style>
                         </Run>)
                 </TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" 
+                <TextBlock Text="Родитель: " Grid.Row="1" Grid.Column="0" 
                            Style="{StaticResource TextBlockStyle}"
-                           Text="Родитель: " />
+                           HorizontalAlignment="Right" />
                 <TextBlock Grid.Row="1" Grid.Column="1" Margin="0"
                            Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left">
                         <Run>
                             <Run.Style>
                                 <Style TargetType="Run">
-                                    <Setter Property="Text" Value="{Binding SelectedCategory.Category.CategoryParent.Name, Mode=OneWay}"/>
+                                    <Setter Property="Text" Value="{Binding Category.CategoryParent.Name, Mode=OneWay}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedCategory.Category.CategoryParent.Name}" Value="{x:Null}">
+                                        <DataTrigger Binding="{Binding Category.CategoryParent.Name}" Value="{x:Null}">
                                             <Setter Property="Text" Value="Категория"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -78,9 +80,9 @@
                         (<Run>
                             <Run.Style>
                                 <Style TargetType="Run">
-                                    <Setter Property="Text" Value="{Binding SelectedCategory.Category.CategoryParent.Id, Mode=OneWay}"/>
+                                    <Setter Property="Text" Value="{Binding Category.CategoryParent.Id, Mode=OneWay}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedCategory.Category.CategoryParent.Id}" Value="{x:Null}">
+                                        <DataTrigger Binding="{Binding Category.CategoryParent.Id}" Value="{x:Null}">
                                             <Setter Property="Text" Value="нет"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -88,29 +90,79 @@
                             </Run.Style>
                         </Run>)
                 </TextBlock>
+                
                 <!-- Кнопки Hyperlink -->
                 <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                            Style="{StaticResource HyperlinkRemoveButton}">
-                        <Hyperlink Command="{Binding UnsetInDealSelectedCategoryCommand}">Убрать категорию из сделки</Hyperlink>
+                        <Hyperlink Command="{Binding DataContext.UnsetInDealSelectedCategoryCommand, 
+                                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                            Убрать категорию из сделки
+                        </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                            Style="{StaticResource HyperlinkAddButton}">
-                        <Hyperlink Command="{Binding SetInDealSelectedCategoryCommand}">Добавить категорию в сделку</Hyperlink>
+                        <Hyperlink Command="{Binding DataContext.SetInDealSelectedCategoryCommand, 
+                                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                            Добавить категорию в сделку
+                        </Hyperlink>
                 </TextBlock>
             </Grid>
             <!-- Настройки сложностей -->
-            <StackPanel IsEnabled="{Binding SelectedCategory.IsInDeal}">
-                <!-- Сложность поиска -->
-                <ListBox ItemsSource="{Binding ComplexityList}" 
-                         MinHeight="200">
-                </ListBox>
+            <Grid>
+                <StackPanel IsEnabled="{Binding IsInDeal}">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInDeal}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <!-- Сложность поиска -->
+                    <ListBox ItemsSource="{Binding CategoryComplexityList}"
+                             HorizontalContentAlignment="Stretch"
+                             Padding="5"
+                             MinHeight="200"
+                             BorderThickness="0">
+                    </ListBox>
 
-                <CheckBox Margin="0,20,0,0"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" 
-                          IsChecked="{Binding SelectedCategory.Category.IsPiecesInDeal}">Поштучный учёт</CheckBox>
-            </StackPanel>
+                    <CheckBox Margin="0,20,0,0"
+                              HorizontalAlignment="Center" VerticalAlignment="Center" 
+                              IsChecked="{Binding Category.IsPiecesInDeal}">Поштучный учёт</CheckBox>
+                </StackPanel>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontStyle="Italic">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsInDeal}" Value="True">
+                                    <Setter Property="Visibility" Value="Hidden" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    Не учавствует в сделке
+                    <TextBlock.RenderTransform>
+                        <TranslateTransform Y="-80"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </Grid>
         </DockPanel>
-        <TextBlock Style="{StaticResource IsSelectedCategory}">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontStyle="Italic">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsSelectedCategoryNotNull,
+                                                       RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                     Value="true">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
             Выберите категорию
         </TextBlock>
     </Grid>
