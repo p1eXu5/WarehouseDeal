@@ -57,7 +57,22 @@
             </i:Interaction.Triggers>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
-                    <TextBlock Text="{Binding Category.Name}" />
+                    <TextBlock Text="{Binding Category.Name}" >
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="DimGray" />
+                                <Setter Property="FontStyle" Value="Italic"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsInDeal}" Value="True">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="FontStyle" Value="Normal"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
