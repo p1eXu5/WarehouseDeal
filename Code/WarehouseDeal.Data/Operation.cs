@@ -19,6 +19,7 @@ namespace WarehouseDeal.Data
         {
             this.AuxiliaryWorkDocument = new HashSet<AuxiliaryWorkDocument>();
             this.Shipment = new HashSet<Shipment>();
+            this.Complexities = new HashSet<Complexity>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace WarehouseDeal.Data
         public virtual ICollection<AuxiliaryWorkDocument> AuxiliaryWorkDocument { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shipment> Shipment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Complexity> Complexities { get; set; }
     }
 }

@@ -182,6 +182,10 @@
             <End Role="Complexity" EntitySet="ComplexitySet" />
             <End Role="CategoryComplexity" EntitySet="CategoryComplexitySet" />
           </AssociationSet>
+          <AssociationSet Name="ComplexityOperation" Association="SdelkaModel.ComplexityOperation">
+            <End Role="Complexity" EntitySet="ComplexitySet" />
+            <End Role="Operation" EntitySet="OperationSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -346,6 +350,7 @@
           <Property Name="Cost" Type="Decimal" Nullable="true" Precision="5" Scale="2" />
           <NavigationProperty Name="AuxiliaryWorkDocument" Relationship="SdelkaModel.OperationAuxiliaryWorkDocument" FromRole="Operation" ToRole="AuxiliaryWorkDocument" />
           <NavigationProperty Name="Shipment" Relationship="SdelkaModel.OperationShipment" FromRole="Operation" ToRole="Shipment" />
+          <NavigationProperty Name="Complexities" Relationship="SdelkaModel.ComplexityOperation" FromRole="Operation" ToRole="Complexity" />
         </EntityType>
         <EntityType Name="Shipment">
           <Key>
@@ -871,6 +876,7 @@
           <Property Name="MinComplexity" Type="Double" Nullable="false" DefaultValue="0.0" />
           <Property Name="MaxComplexity" Type="Double" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="CategoryComplexity" Relationship="SdelkaModel.ComplexityCategoryComplexity" FromRole="Complexity" ToRole="CategoryComplexity" />
+          <NavigationProperty Name="Operations" Relationship="SdelkaModel.ComplexityOperation" FromRole="Complexity" ToRole="Operation" />
         </EntityType>
         <Association Name="CategoryCategory">
           <End Type="SdelkaModel.Category" Role="Category" Multiplicity="0..1" />
@@ -910,6 +916,10 @@
               <PropertyRef Name="ComplexityId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="ComplexityOperation">
+          <End Type="SdelkaModel.Complexity" Role="Complexity" Multiplicity="*" />
+          <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1001,6 +1011,7 @@
         <EntityTypeShape EntityType="SdelkaModel.CategoryComplexity" Width="1.5" PointX="5.125" PointY="0.875" />
         <AssociationConnector Association="SdelkaModel.CategoryCategoryComplexity" />
         <AssociationConnector Association="SdelkaModel.ComplexityCategoryComplexity" />
+        <AssociationConnector Association="SdelkaModel.ComplexityOperation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

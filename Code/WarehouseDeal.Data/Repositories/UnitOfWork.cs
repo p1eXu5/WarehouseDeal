@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarehouseDeal.Data.Business
+namespace WarehouseDeal.Data.Repositories
 {
     public class UnitOfWork : IDisposable
     {
@@ -12,6 +12,7 @@ namespace WarehouseDeal.Data.Business
 
         private CategoryRepository _categoryRepository;
         private CategoryComplexityRepository _categoryComplexityRepository;
+        private ComplexityRepository _complexityRepository;
 
         public CategoryRepository CategoryRepository
         {
@@ -24,8 +25,8 @@ namespace WarehouseDeal.Data.Business
             }
         }
 
-        public CategoryComplexityRepository CategoryComplexityRepository => _categoryComplexityRepository ??
-                                                                            (_categoryComplexityRepository = new CategoryComplexityRepository (_context));
+        public CategoryComplexityRepository CategoryComplexityRepository => _categoryComplexityRepository ?? (_categoryComplexityRepository = new CategoryComplexityRepository (_context));
+        public ComplexityRepository ComplexityRepository => _complexityRepository ?? (_complexityRepository = new ComplexityRepository (_context));
 
         public DataContext DataContext => _context;
 

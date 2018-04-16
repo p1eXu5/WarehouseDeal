@@ -1,4 +1,4 @@
-﻿namespace WarehouseDeal.Data.Business
+﻿namespace WarehouseDeal.Data.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -71,7 +71,7 @@
         /// <returns></returns>
         public static int LoadCategoriesFromFile (string fileName, DataContext context)
         {
-            ICollection<string[]> lines = ServiceClasses.WatehouseDealServiceClass.GetStringsArrayEnumeratorFromCsvFile (fileName).ToArray();
+            ICollection<string[]> lines = ServiceClasses.WatehouseDealServiceClass.GetStringsArrayEnumeratorFromCsvFile (fileName).ToList();
             ICollection<string[]> removableLines = new List<string[]> ();
 
             foreach (var line in lines) {
@@ -101,9 +101,13 @@
         #region Read Data
         //-----------------------------------------------------------------------------------------------
         public IEnumerable<Category> GetAll () => _context.CategorySet;
+        public IEnumerable<Category> GetAllIncludeCategoryComplexity () => _context.CategorySet.Include ("CategoryComplexity");
         public Category Get (string id) => _context.CategorySet.Find (id);
+
+
         public Category GetRootCategory() => _context.CategorySet.FirstOrDefault (p => p.CategoryParent == null);
         public IEnumerable<Category> GetAllRootCategiries () => _context.CategorySet.Where (p => p.CategoryParent == null);
+        public IEnumerable<Category> GetAllRootCategiriesIncludeCategoryComplexity () => _context.CategorySet.Include("CategoryComplexity").Where (p => p.CategoryParent == null);
         public IEnumerable<Category> GetChildrenCategories (Category rootCategory) => _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id);
         //-----------------------------------------------------------------------------------------------
         #endregion Read Data

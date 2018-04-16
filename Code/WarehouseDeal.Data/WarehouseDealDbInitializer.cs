@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WarehouseDeal.Data
 {
-    using Business;
+    using Repositories;
 
     class WarehouseDealDbInitializer : DropCreateDatabaseIfModelChanges<DataContext>
     {
@@ -25,7 +25,7 @@ namespace WarehouseDeal.Data
 
             context.ComplexitySet.AddRange (defaultComplexities);
 
-            CategoryRepository.LoadCategoriesFromFile ("Assets/TestCategories.csv", context);
+            CategoryRepository.LoadCategoriesFromFile ("TestCategories.csv", context);
 
             base.Seed (context);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,12 @@ namespace ElseTests
             }
 
             Console.WriteLine ("End");
+
+            var a = new Collection<string>();
+            IEnumerable<string> ie = a;
+            var b = new ObservableCollection<string>();
+            ie = b;
+
         }
     }
 }

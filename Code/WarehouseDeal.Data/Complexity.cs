@@ -20,6 +20,7 @@ namespace WarehouseDeal.Data
             this.MinComplexity = 0D;
             this.MaxComplexity = 0D;
             this.CategoryComplexity = new HashSet<CategoryComplexity>();
+            this.Operations = new HashSet<Operation>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,7 @@ namespace WarehouseDeal.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryComplexity> CategoryComplexity { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Operation> Operations { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarehouseDeal.Data.Business
+namespace WarehouseDeal.Data.Repositories
 {
-    interface IRepository<T,TKey>  where T : class
+    public interface IRepository<T,TKey>  where T : class
     {
         IEnumerable<T> GetAll();
         T Get (TKey id);

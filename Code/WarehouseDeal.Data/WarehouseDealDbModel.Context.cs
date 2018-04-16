@@ -23,6 +23,8 @@ namespace WarehouseDeal.Data
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+    			modelBuilder.Entity<CategoryComplexity> ().HasKey (cc => new {cc.CategoryId, cc.ComplexityId});
+    
                 modelBuilder.Entity<Category> ()
                     .HasMany (p => p.Products)
                     .WithRequired (c => c.Category)

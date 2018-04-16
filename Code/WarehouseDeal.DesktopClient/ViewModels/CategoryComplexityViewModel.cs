@@ -12,36 +12,39 @@ namespace WarehouseDeal.DesktopClient.ViewModels
     public class CategoryComplexityViewModel : BindableBase
     {
         private readonly CategoryComplexity _categoryComplexity;
+        private readonly Complexity _complexity;
 
-
-        public CategoryComplexityViewModel (CategoryComplexity complexity)
+        public CategoryComplexityViewModel (CategoryComplexity categoryComplexity)
         {
-                _categoryComplexity = complexity;
+            _categoryComplexity = categoryComplexity;
+            _complexity = _categoryComplexity.Complexity;
         }
+
+        public Complexity Complexity  => _complexity;
 
         public string Title
         {
-            get => _categoryComplexity.Complexity.Title;
+            get => _complexity.Title;
             set {
-                _categoryComplexity.Complexity.Title = value;
+                _complexity.Title = value;
                 RaisePropertyChanged();
             }
         }
 
         public double MinComplexity
         {
-            get => _categoryComplexity.Complexity.MinComplexity;
+            get => _complexity.MinComplexity;
             set {
-                _categoryComplexity.Complexity.MinComplexity = value;
+                _complexity.MinComplexity = value;
                 RaisePropertyChanged();
             }
         }
 
         public double MaxComplexity
         {
-            get => _categoryComplexity.Complexity.MaxComplexity;
+            get => _complexity.MaxComplexity;
             set {
-                _categoryComplexity.Complexity.MaxComplexity = value;
+                _complexity.MaxComplexity = value;
                 RaisePropertyChanged ();
             }
         }

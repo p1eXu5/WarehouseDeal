@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarehouseDeal.Data.Business
+namespace WarehouseDeal.Data.Repositories
 {
     public class CategoryComplexityRepository : IRepository<CategoryComplexity, Tuple<Category,Complexity>>
     {
@@ -19,8 +19,7 @@ namespace WarehouseDeal.Data.Business
 
         public IEnumerable<CategoryComplexity> GetAll() => _context.CategoryComplexitySet;
 
-        public CategoryComplexity Get (Tuple<Category, Complexity> id) =>
-            _context.CategoryComplexitySet.Find (new object[] {id.Item1.Id, id.Item2});
+        public CategoryComplexity Get (Tuple<Category, Complexity> id) => _context.CategoryComplexitySet.Find (new object[] {id.Item1.Id, id.Item2});
 
         public void AddNew (CategoryComplexity item)
         {
