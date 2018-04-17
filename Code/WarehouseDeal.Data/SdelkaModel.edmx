@@ -169,10 +169,6 @@
             <End Role="Product" EntitySet="ProductSet" />
           </AssociationSet>
           <EntitySet Name="ComplexitySet" EntityType="SdelkaModel.Complexity" />
-          <AssociationSet Name="CategoryCategory" Association="SdelkaModel.CategoryCategory">
-            <End Role="Category" EntitySet="CategorySet" />
-            <End Role="Category1" EntitySet="CategorySet" />
-          </AssociationSet>
           <EntitySet Name="CategoryComplexitySet" EntityType="SdelkaModel.CategoryComplexity" />
           <AssociationSet Name="CategoryCategoryComplexity" Association="SdelkaModel.CategoryCategoryComplexity">
             <End Role="Category" EntitySet="CategorySet" />
@@ -186,6 +182,10 @@
             <End Role="Complexity" EntitySet="ComplexitySet" />
             <End Role="Operation" EntitySet="OperationSet" />
           </AssociationSet>
+          <AssociationSet Name="CategoryCategory" Association="SdelkaModel.CategoryCategory">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Category1" EntitySet="CategorySet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -194,12 +194,14 @@
           <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" FixedLength="true" MaxLength="7" />
           <Property Name="Name" Type="String" Nullable="false" DefaultValue="Unnamed" />
           <Property Name="IsPiecesInDeal" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CategoryParent" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
           <NavigationProperty Name="Dept" Relationship="SdelkaModel.DeptCategory" FromRole="Category" ToRole="Dept" />
           <Property Name="IsInDeal" Type="Boolean" Nullable="false" DefaultValue="False" />
           <Property Name="DeptId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CategoryComplexity" Relationship="SdelkaModel.CategoryCategoryComplexity" FromRole="Category" ToRole="CategoryComplexity" />
           <NavigationProperty Name="Products" Relationship="SdelkaModel.CategoryProduct" FromRole="Category" ToRole="Product" />
+          <Property Name="ParentCategoryId" Type="String" Nullable="false" />
+          <NavigationProperty Name="ParentCategory" Relationship="SdelkaModel.CategoryCategory" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="ChildrenCategories" Relationship="SdelkaModel.CategoryCategory" FromRole="Category1" ToRole="Category" />
           </EntityType>
         <EntityType Name="Appointment">
           <Key>
@@ -878,10 +880,6 @@
           <NavigationProperty Name="CategoryComplexity" Relationship="SdelkaModel.ComplexityCategoryComplexity" FromRole="Complexity" ToRole="CategoryComplexity" />
           <NavigationProperty Name="Operations" Relationship="SdelkaModel.ComplexityOperation" FromRole="Complexity" ToRole="Operation" />
         </EntityType>
-        <Association Name="CategoryCategory">
-          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="SdelkaModel.Category" Role="Category1" Multiplicity="0..1" />
-        </Association>
         <EntityType Name="CategoryComplexity">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -921,6 +919,10 @@
           <End Type="SdelkaModel.Complexity" Role="Complexity" Multiplicity="*" />
           <End Type="SdelkaModel.Operation" Role="Operation" Multiplicity="*" />
         </Association>
+        <Association Name="CategoryCategory">
+          <End Type="SdelkaModel.Category" Role="Category" Multiplicity="*" />
+          <End Type="SdelkaModel.Category" Role="Category1" Multiplicity="0..1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -949,7 +951,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="3afc8b17df6742f892f082b3f1c0a19e" Name="Diagram1" ZoomLevel="60">
         <EntityTypeShape EntityType="SdelkaModel.Category" Width="2.625" PointX="9.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Appointment" Width="1.5" PointX="2.25" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SdelkaModel.Rank" Width="1.5" PointX="2.25" PointY="14.125" IsExpanded="true" />
@@ -1007,11 +1009,11 @@
         <AssociationConnector Association="SdelkaModel.DeptCategory" />
         <AssociationConnector Association="SdelkaModel.CategoryProduct" />
         <EntityTypeShape EntityType="SdelkaModel.Complexity" Width="1.5" PointX="1.5" PointY="0.625" />
-        <AssociationConnector Association="SdelkaModel.CategoryCategory" />
         <EntityTypeShape EntityType="SdelkaModel.CategoryComplexity" Width="1.5" PointX="5.125" PointY="0.875" />
         <AssociationConnector Association="SdelkaModel.CategoryCategoryComplexity" />
         <AssociationConnector Association="SdelkaModel.ComplexityCategoryComplexity" />
         <AssociationConnector Association="SdelkaModel.ComplexityOperation" />
+        <AssociationConnector Association="SdelkaModel.CategoryCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

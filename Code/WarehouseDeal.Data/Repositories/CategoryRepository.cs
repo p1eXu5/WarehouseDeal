@@ -39,7 +39,7 @@
             {
                 Id = id,
                 Name = name,
-                CategoryParent = null
+                ParentCategory = null
             };
 
             context.CategorySet.Add (category);
@@ -55,7 +55,7 @@
             Check.IsCategoryIdCorrect (category.Id);
             Check.IsCategoryNameCorrect (category.Name);
 
-            category.CategoryParent = null;
+            category.ParentCategory = null;
             category.Dept = null;
             category.Products = null;
 
@@ -105,10 +105,10 @@
         public Category Get (string id) => _context.CategorySet.Find (id);
 
 
-        public Category GetRootCategory() => _context.CategorySet.FirstOrDefault (p => p.CategoryParent == null);
-        public IEnumerable<Category> GetAllRootCategiries () => _context.CategorySet.Where (p => p.CategoryParent == null);
-        public IEnumerable<Category> GetAllRootCategiriesIncludeCategoryComplexity () => _context.CategorySet.Include("CategoryComplexity").Where (p => p.CategoryParent == null);
-        public IEnumerable<Category> GetChildrenCategories (Category rootCategory) => _context.CategorySet.Where (p => p.CategoryParent.Id == rootCategory.Id);
+        public Category GetRootCategory() => _context.CategorySet.FirstOrDefault (p => p.ParentCategory == null);
+        public IEnumerable<Category> GetAllRootCategiries () => _context.CategorySet.Where (p => p.ParentCategory == null);
+        public IEnumerable<Category> GetAllRootIncludeCollections () => _context.CategorySet.Include("CategoryComplexity").Where (p => p.ParentCategory == null);
+        public IEnumerable<Category> GetChildrenCategories (Category rootCategory) => _context.CategorySet.Where (p => p.ParentCategory.Id == rootCategory.Id);
         //-----------------------------------------------------------------------------------------------
         #endregion Read Data
 
@@ -128,7 +128,7 @@
             if (category == null)
                 throw new ArgumentException ();
 
-            category.CategoryParent = context.CategorySet.Find (idParent);
+            category.ParentCategory = context.CategorySet.Find (idParent);
 
             context.SaveChanges();
         }
@@ -145,7 +145,7 @@
             if (category == null)
                 throw new ArgumentException();
 
-            category.CategoryParent = _context.CategorySet.Find (parent.Id);
+            category.ParentCategory = _context.CategorySet.Find (parent.Id);
 
             _context.SaveChanges ();
         }

@@ -13,7 +13,7 @@ namespace WarehouseDeal.Data
     {
         protected override void Seed (DataContext context)
         {
-            //TODO:
+            // Заполнение базы данных начальными значениями Сложностей и тестовыми Категорий:
             IEnumerable<Complexity> defaultComplexities = new List<Complexity>
             {
                 new Complexity { Title = "Сложность поиска", MinComplexity = 0.0, MaxComplexity = 99.9 },

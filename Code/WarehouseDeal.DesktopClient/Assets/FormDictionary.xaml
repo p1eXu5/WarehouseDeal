@@ -35,15 +35,43 @@
         <Setter Property="Width" Value="24"></Setter>
         <Setter Property="Height" Value="24"></Setter>
     </Style>
-    
 
-    <!-- CategoriesListTreeView -->
+    <Style TargetType="DataGridCell">
+        <Setter Property="Foreground" Value="DimGray" />
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsInDeal}" Value="True">
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontStyle" Value="Normal"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGridViewTemplate (CategoriesListTreeView) -->
     <ControlTemplate x:Key="DataGridViewTemplate">
-        <DataGrid AutoGenerateColumns="False"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"/>
+        <DockPanel>
+            <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Right">Показать все категории</CheckBox>
+            <DataGrid AutoGenerateColumns="False"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      SelectionMode="Single" GridLinesVisibility="None"
+                      ItemsSource="{Binding CategoriesTable}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SetSelectedItemCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=SelectedItems[0]}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Категория" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="" Binding="{Binding Name}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
     </ControlTemplate>
 
+    <!-- TreeViewTemplate (CategoriesListTreeView) -->
     <ControlTemplate x:Key="TreeViewTemplate">
         <TreeView HorizontalAlignment="Stretch" 
                   VerticalAlignment="Stretch"
@@ -56,7 +84,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=Categories}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=ChilderenCategoryHierarchyViewModels}">
                     <TextBlock Text="{Binding Category.Name}" >
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">

@@ -17,36 +17,41 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 {
     public class MainModelView : ViewModel
     {
-        private readonly UnitOfWork _unitOfWork = new UnitOfWork ();
-
+        private readonly UnitOfWork _unitOfWork = new UnitOfWork();
         private ObservableCollection<CategoryHierarchyViewModel> _categoryHierarchy;
-        //private readonly ComplexityComtext _complexityContext = new ComplexityComtext();
+        private ObservableCollection<CategoryHierarchyViewModel> _categoryTable;
         private bool _isTreeView;
         private bool _isSelectedCategoryNotNull;
         private string _viewContent;
         private CategoryHierarchyViewModel _selectedCategory;
-        private List<Complexity> _complexityList;
 
         /// <summary>
         /// Конструктор
         /// </summary>
         public MainModelView()
         {
-            _unitOfWork.ComplexityRepository.Load();
+            // Заполнение иерархии категорий:
             _categoryHierarchy = GetCategoryHierarchy();
-            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(_categoryHierarchy);
+            CategoriesHierarchy = new ReadOnlyObservableCollection<CategoryHierarchyViewModel> (_categoryHierarchy);
 
-            SetSelectedItemCommand = new DelegateCommand<CategoryHierarchyViewModel> (SetSelectedCategory);
+            // Заполнение таблицы категорий из иерархии:
+            _categoryTable = new ObservableCollection<CategoryHierarchyViewModel>();
+            foreach (var categoryHierarchyViewModel in _categoryHierarchy[0].ChilderenCategoryHierarchyViewModels) {
+
+                _categoryTable.AddRange (GetCategoryTable (categoryHierarchyViewModel));
+            }
+
+            CategoriesTable = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(_categoryTable);
+
+            // Определение команд:
+            SetSelectedItemCommand = new DelegateCommand<CategoryHierarchyViewModel> (item => SelectedCategory = item);
             ImportCategoriesCommand = new DelegateCommand (ImportFileCategory);
-            SetInDealSelectedCategoryCommand = new DelegateCommand (() =>
-                                                                        {
-                                                                            CategoryHierarchyViewModel.SetInDeal (SelectedCategory,
-                                                                                                                  _unitOfWork.ComplexityRepository,
-                                                                                                                  _unitOfWork.CategoryComplexityRepository);
-                                                                        });
+            SetInDealSelectedCategoryCommand = new DelegateCommand (() => 
+                                    { CategoryHierarchyViewModel.SetInDeal (SelectedCategory, _unitOfWork.ComplexityRepository, _unitOfWork.CategoryComplexityRepository); });
 
-            UnsetInDealSelectedCategoryCommand = new DelegateCommand (UnsetInDealSelectedCategory);
+            UnsetInDealSelectedCategoryCommand = new DelegateCommand (() => { CategoryHierarchyViewModel.UnsetInDeal (SelectedCategory); });
 
+            // Установка свойств:
             IsTreeView = true;
             IsSelectedCategoryNotNull = SelectedCategory != null;
         }
@@ -54,28 +59,32 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         #region Properties
 
+        public List<Complexity> Complexities => _unitOfWork.ComplexityRepository.GetAll().ToList();
         public ReadOnlyObservableCollection<CategoryHierarchyViewModel> CategoriesHierarchy { get; }
+        public ReadOnlyObservableCollection<CategoryHierarchyViewModel> CategoriesTable { get; }
         public CategoryHierarchyViewModel SelectedCategory
         {
             get => _selectedCategory;
             set {
-                    _selectedCategory = value;
-                    RaisePropertyChanged();
-                    IsSelectedCategoryNotNull = value.Id != null;
+                _selectedCategory = value;
+                RaisePropertyChanged();
+                IsSelectedCategoryNotNull = value?.Id != null;
             }
         }
+
         public bool IsTreeView
         {
             get => _isTreeView;
             set {
                 _isTreeView = value;
+                RaisePropertyChanged();
                 if (_isTreeView)
                     ViewContent = "Представление: Иерархия";
                 else
                     ViewContent = "Представление: Таблица";
-                RaisePropertyChanged();
             }
         }
+
         /// <summary>
         /// Text of toggle button
         /// </summary>
@@ -87,13 +96,13 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged();
             }
         }
-        public string Name { get; set; }
+
         public bool IsSelectedCategoryNotNull
         {
             get => _isSelectedCategoryNotNull;
             set {
                 _isSelectedCategoryNotNull = value;
-                RaisePropertyChanged ();
+                RaisePropertyChanged();
             }
         }
 
@@ -101,11 +110,13 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         #endregion
 
         #region Commands
+
         public DelegateCommand<CategoryHierarchyViewModel> SetSelectedItemCommand { get; }
         public DelegateCommand ImportCategoriesCommand { get; }
 
         public DelegateCommand SetInDealSelectedCategoryCommand { get; }
         public DelegateCommand UnsetInDealSelectedCategoryCommand { get; }
+
         #endregion
 
         /// <summary>
@@ -116,14 +127,9 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         {
             // Корневая категория TreeView - "Категория"
             var hierarchy = new ObservableCollection<CategoryHierarchyViewModel>()
-                                {
-                                    new CategoryHierarchyViewModel 
-                                    (
-                                        parent: null,
-                                        category: new Category {Name = "Категория"}, 
-                                        categories: GetRootsCategories()
-                                    )
-                                };
+            {
+                new CategoryHierarchyViewModel (parent: null, category: new Category {Name = "Категория"}, childrenCategoryHierarchy: GetRootsCategories())
+            };
 
             return hierarchy;
         }
@@ -135,12 +141,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
         private ObservableCollection<CategoryHierarchyViewModel> GetRootsCategories()
         {
             ObservableCollection<CategoryHierarchyViewModel> hierarchyRootCategories = new ObservableCollection<CategoryHierarchyViewModel>();
-            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootCategiriesIncludeCategoryComplexity().ToArray();     // ToArray() - из-за разделения DataAdapter'а
+            IEnumerable<Category> categories = _unitOfWork.CategoryRepository.GetAllRootIncludeCollections().ToList(); // ToList() - из-за разделения DataAdapter'а
 
             foreach (Category category in categories) {
 
-                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (null, category, null);
-                categoryHierarchyViewModel.Categories = GetChildrenCategories (categoryHierarchyViewModel);
+                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (null, category, null, Complexities);
+                categoryHierarchyViewModel.ChilderenCategoryHierarchyViewModels = GetChildrenCategories (categoryHierarchyViewModel);
                 hierarchyRootCategories.Add (categoryHierarchyViewModel);
             }
 
@@ -159,14 +165,37 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
             foreach (Category childCategiry in categories) {
 
-                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (categoryHierarchyViewModelParent, childCategiry, null);
-                categoryHierarchyViewModel.Categories = GetChildrenCategories (categoryHierarchyViewModel);
+                var categoryHierarchyViewModel = new CategoryHierarchyViewModel (categoryHierarchyViewModelParent, childCategiry, null, Complexities);
+                categoryHierarchyViewModel.ChilderenCategoryHierarchyViewModels = GetChildrenCategories (categoryHierarchyViewModel);
                 hierarchyCategories.Add (categoryHierarchyViewModel);
             }
 
             return hierarchyCategories.Count > 0 ? hierarchyCategories : null;
         }
 
+        /// <summary>
+        /// Заполнение таблицы категорий
+        /// </summary>
+        /// <param name="categoryHierarchyViewModel"></param>
+        /// <returns></returns>
+        private IEnumerable<CategoryHierarchyViewModel> GetCategoryTable(CategoryHierarchyViewModel categoryHierarchyViewModel)
+        {
+            var categoryTable = new Collection<CategoryHierarchyViewModel>() {categoryHierarchyViewModel};
+
+            if (categoryHierarchyViewModel.ChilderenCategoryHierarchyViewModels != null) {
+
+                foreach (var categoryHierarchy in categoryHierarchyViewModel.ChilderenCategoryHierarchyViewModels) {
+                
+                    categoryTable.AddRange (GetCategoryTable(categoryHierarchy));
+                }
+            }
+
+            return categoryTable;
+        }
+
+        /// <summary>
+        /// Импорт категорий из файла.
+        /// </summary>
         private void ImportFileCategory()
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -179,27 +208,16 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 string fileName = ofd.FileName;
                 ClearCategoriesLists();
                 CategoryRepository.LoadCategoriesFromFile (fileName, _unitOfWork.DataContext);
-                CategoryHierarchyViewModel rootCategory = _categoryHierarchy.First();
-                rootCategory.Categories.Clear();
-                rootCategory.Categories.AddRange (GetRootsCategories());
-            }
-        }
 
-        private void SetSelectedCategory (CategoryHierarchyViewModel item)
-        {
-            SelectedCategory = item;
+                CategoryHierarchyViewModel rootCategory = _categoryHierarchy.First();
+                rootCategory.ChilderenCategoryHierarchyViewModels.Clear();
+                rootCategory.ChilderenCategoryHierarchyViewModels.AddRange (GetRootsCategories());
+            }
         }
 
         private void ClearCategoriesLists()
         {
             _unitOfWork.CategoryRepository.DeleteAllCategories();
-        }
-
-
-        private void UnsetInDealSelectedCategory()
-        {
-            var category = SelectedCategory;
-
         }
 
     }

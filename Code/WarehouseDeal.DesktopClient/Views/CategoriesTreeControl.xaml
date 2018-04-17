@@ -48,9 +48,10 @@
                 </Separator.LayoutTransform>
             </Separator>
             <ToggleButton DockPanel.Dock="Right" Margin="10,0,0,0"
-                              IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" 
-                              Content="{Binding ViewContent}" 
-                              BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>
+                          IsThreeState="False"
+                          IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" 
+                          Content="{Binding ViewContent}" 
+                          BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>
         </DockPanel>
         <ContentControl ContentTemplate="{StaticResource DataTemplate}" Content="{Binding}"></ContentControl>
     </DockPanel>

@@ -51,7 +51,7 @@ namespace WarehouseDeal.Data.Tests
         //[TestMethod]
         //public void AddParentCategoriesMethodTest ()
         //{
-        //    // TODO:
+        //    //
 
         //    Category category1 = new Category { Id = "1111111", Name = "Category 1" };
         //    Category category2 = new Category { Id = "2222222", Name = "Category 2" };

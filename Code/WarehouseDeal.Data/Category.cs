@@ -21,6 +21,7 @@ namespace WarehouseDeal.Data
             this.IsInDeal = false;
             this.CategoryComplexity = new HashSet<CategoryComplexity>();
             this.Products = new HashSet<Product>();
+            this.ChildrenCategories = new HashSet<Category>();
         }
     
         public string Id { get; set; }
@@ -28,12 +29,15 @@ namespace WarehouseDeal.Data
         public bool IsPiecesInDeal { get; set; }
         public bool IsInDeal { get; set; }
         public Nullable<int> DeptId { get; set; }
+        public string ParentCategoryId { get; set; }
     
-        public virtual Category CategoryParent { get; set; }
         public virtual Dept Dept { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryComplexity> CategoryComplexity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        public virtual Category ParentCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> ChildrenCategories { get; set; }
     }
 }
