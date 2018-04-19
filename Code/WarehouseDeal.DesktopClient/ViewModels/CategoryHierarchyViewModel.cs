@@ -17,6 +17,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 {
     public class CategoryHierarchyViewModel : ViewModel
     {
+        #region Constructor
         public CategoryHierarchyViewModel (CategoryHierarchyViewModel parent, 
                                            Category category, 
                                            ObservableCollection<CategoryHierarchyViewModel> childrenCategoryHierarchy, 
@@ -27,13 +28,25 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             ChilderenCategoryHierarchyViewModels = childrenCategoryHierarchy;   // Дочерние view models
 
             // TODO: Заполнение сложностей
-            if (Category.CategoryComplexity != null)
-                foreach (var categoryComplexity in Category.CategoryComplexity) {
-                    
-                    CategoryComplexityViewModelList.Add (new CategoryComplexityViewModel (categoryComplexity));
-                }
-        }
+            if (complexities != null) {
 
+                foreach (var complexity in complexities) {
+
+                    // Есть ли такая установленная сложность у категории
+                    CategoryComplexity categoryComplexity = Category.CategoryComplexity.FirstOrDefault (cc => cc.ComplexityId == complexity.Id);
+
+                    if (categoryComplexity == null) {
+                        CategoryComplexityViewModelList.Add(new CategoryComplexityViewModel(complexity));
+                    }
+                    else {
+                        CategoryComplexityViewModelList.Add(new CategoryComplexityViewModel(categoryComplexity));
+                    }
+                }
+            }
+        }
+        #endregion Constructor
+
+        #region Properties
         public Category Category { get; }                       // Underlying Category
         public CategoryHierarchyViewModel Parent { get; set; }  // Родительская модель категории
         public ObservableCollection<CategoryHierarchyViewModel> ChilderenCategoryHierarchyViewModels { get; internal set; }
@@ -56,20 +69,23 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 RaisePropertyChanged ();
             }
         }
+        #endregion Properties
 
+        #region Static Methods
         /// <summary>
         /// Добавление категорий в сделку
         /// </summary>
         /// <param name="categoryHierarchy"></param>
-        /// <param name="complexityRepository"></param>
+        /// <param name="complexities">Енумератор всех сложностей</param>
         /// <param name="categoryComplexityRepository"></param>
         public static void SetInDeal (CategoryHierarchyViewModel categoryHierarchy, 
-                                      IRepository<Complexity,int> complexityRepository, 
+                                      IEnumerable<Complexity> complexities, 
                                       IRepository<CategoryComplexity, Tuple<Category, Complexity>> categoryComplexityRepository)
         {
+            // Если категория в базе данных не существует, либо категория уже учавствует в сделке, то выйти
             if (categoryHierarchy?.Id == null || categoryHierarchy.IsInDeal) return;
 
-            // Определяем категории, не учавствующие в сделке, начиная с исходной в сторону родителей
+            // Определяем список категорий, не учавствующие в сделке, начиная с исходной в сторону родителей
             ICollection<CategoryHierarchyViewModel> parents = new List<CategoryHierarchyViewModel> {categoryHierarchy};
             CategoryHierarchyViewModel parent = categoryHierarchy.Parent;
 
@@ -79,28 +95,62 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 parent = parent.Parent;
             }
 
-            // Получаем список всех имеющихся в сделке сложностей, относящихся к категориям
-            IEnumerable<Complexity> complexityGlobalSet = complexityRepository.GetAll().ToList();
+            if (parent == null) {
 
-            foreach (CategoryHierarchyViewModel categoryHierarchyViewModel in parents) {
-                
-                ISet<Complexity> complexityAddingSet = new HashSet<Complexity>(complexityGlobalSet);    // Обновляем множество всех категорий из списка
-                complexityAddingSet.ExceptWith (categoryHierarchyViewModel.CategoryComplexityViewModelList.Select (c => c.Complexity));     // Получаем неустановленные сложности выбранной категории
+                parent = parents.Last();
+            }
 
-                foreach (var complexity in complexityAddingSet) {
+            // Исходные значения сложностей для категорий
+            var importComplexities = parent.CategoryComplexityViewModelList.ToArray();
 
-                    CategoryComplexity newCategoryComplexity = new CategoryComplexity { Category = categoryHierarchyViewModel.Category, Complexity = complexity }; // Экземпляр сущности БД
+            foreach (CategoryHierarchyViewModel itemCategoryHierarchyViewModel in parents.Reverse()) {
 
-                    var parentCategoryComplexityViewModel = parent?.CategoryComplexityViewModelList.FirstOrDefault (cc => cc.Complexity == complexity);
+                // Если Категория не является источником значений сложностей
+                if (importComplexities[0] != itemCategoryHierarchyViewModel.CategoryComplexityViewModelList[0]) {
 
-                    if (parentCategoryComplexityViewModel != null)
-                        newCategoryComplexity.Value = parentCategoryComplexityViewModel.Value;
+                    for (int i = 0; i < itemCategoryHierarchyViewModel.CategoryComplexityViewModelList.Count; ++i) {
 
-                    categoryComplexityRepository.AddNew (newCategoryComplexity);                                                                                // Вносим экземпляр в таблицу
-                    categoryHierarchyViewModel.CategoryComplexityViewModelList.Add (new CategoryComplexityViewModel(newCategoryComplexity));                       // Вносим экземпляр во ViewModel
+                        var itemCategoryComplexityViewModel = itemCategoryHierarchyViewModel.CategoryComplexityViewModelList[i];    // Ссылка на сложность категории
+
+                        // Если сложность не установлена для категории (в бд нет записи):
+                        if (itemCategoryComplexityViewModel.IsFake) {
+
+                            double value = 0d;
+
+                            if (!importComplexities[i].IsFake)
+                                value = importComplexities[i].Value;
+
+                            var categoryComplexity = new CategoryComplexity()
+                            {
+                                Category = itemCategoryHierarchyViewModel.Category,
+                                Complexity = itemCategoryComplexityViewModel.Complexity,
+                                Value = value
+                            };
+                            categoryComplexityRepository.AddNew (categoryComplexity);
+                            itemCategoryComplexityViewModel = new CategoryComplexityViewModel (categoryComplexity);
+                        }
+                    }
+                }
+                // Если модель категории является источником значений для сложностей:
+                else {
+
+                    // Список нулевых сложностей:
+                    var createdComplexities = itemCategoryHierarchyViewModel.CategoryComplexityViewModelList.Where (cc => cc.IsFake);
+
+                    // Подменяем нулевые сложности новыми, добавленными в базу данных для текущей категории:
+                    foreach (var itemCategoryComplexityViewModel in createdComplexities) {
+                        
+                        var newCategoryComplexity = new CategoryComplexity() {Category = itemCategoryHierarchyViewModel.Category, Complexity = itemCategoryComplexityViewModel.Complexity};
+                        categoryComplexityRepository.AddNew (newCategoryComplexity);
+                        itemCategoryComplexityViewModel.CategoryComplexity = newCategoryComplexity;
+                    }
                 }
 
-                categoryHierarchyViewModel.IsInDeal = true;
+                // Смещаем указатель исходных значений для устанавлеваемых на следующей итерации сложностей следующей категории
+                importComplexities = itemCategoryHierarchyViewModel.CategoryComplexityViewModelList.ToArray();
+
+                // Установка флага участника сделки
+                itemCategoryHierarchyViewModel.IsInDeal = true;
             }
 
         }
@@ -123,5 +173,6 @@ namespace WarehouseDeal.DesktopClient.ViewModels
                 UnsetInDeal (categoryHierarchyViewModel);    
             }
         }
+        #endregion Static Methods
     }
 }

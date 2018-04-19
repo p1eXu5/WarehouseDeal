@@ -174,5 +174,10 @@
                     Maximum="{Binding MaxComplexity}"/>
         </Grid>
     </DataTemplate>
+    
+    <Style TargetType="MenuItem">
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
 
 </ResourceDictionary>

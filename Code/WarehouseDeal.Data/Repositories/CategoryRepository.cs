@@ -104,7 +104,6 @@
         public IEnumerable<Category> GetAllIncludeCategoryComplexity () => _context.CategorySet.Include ("CategoryComplexity");
         public Category Get (string id) => _context.CategorySet.Find (id);
 
-
         public Category GetRootCategory() => _context.CategorySet.FirstOrDefault (p => p.ParentCategory == null);
         public IEnumerable<Category> GetAllRootCategiries () => _context.CategorySet.Where (p => p.ParentCategory == null);
         public IEnumerable<Category> GetAllRootIncludeCollections () => _context.CategorySet.Include("CategoryComplexity").Where (p => p.ParentCategory == null);
@@ -149,6 +148,11 @@
 
             _context.SaveChanges ();
         }
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="category"></param>
         public void Update (Category category)
         {
             _context.Entry (category).State = EntityState.Modified;

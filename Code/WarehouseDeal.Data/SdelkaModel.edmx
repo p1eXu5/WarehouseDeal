@@ -875,6 +875,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Abbreviation" Type="String" Nullable="false" MaxLength="10" />
           <Property Name="MinComplexity" Type="Double" Nullable="false" DefaultValue="0.0" />
           <Property Name="MaxComplexity" Type="Double" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="CategoryComplexity" Relationship="SdelkaModel.ComplexityCategoryComplexity" FromRole="Complexity" ToRole="CategoryComplexity" />

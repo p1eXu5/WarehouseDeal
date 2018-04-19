@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WarehouseDeal.DesktopClient.Views
 {
     /// <summary>
-    /// Interaction logic for CategoriesListControl.xaml
+    /// Interaction logic for CategoryControl.xaml
     /// </summary>
-    public partial class CategoriesListControl : UserControl
+    public partial class CategoryTreeControl : UserControl
     {
-        public CategoriesListControl ()
+        public CategoryTreeControl ()
         {
             InitializeComponent ();
         }

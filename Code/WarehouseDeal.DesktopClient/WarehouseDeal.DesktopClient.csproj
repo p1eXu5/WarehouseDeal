@@ -78,11 +78,14 @@
     <Compile Include="ViewModels\Backup.cs" />
     <Compile Include="ViewModels\CategoryHierarchyViewModel.cs" />
     <Compile Include="ViewModels\CategoryComplexityViewModel.cs" />
-    <Compile Include="Views\CategoriesTreeControl.xaml.cs">
-      <DependentUpon>CategoriesTreeControl.xaml</DependentUpon>
+    <Compile Include="Views\CategoryListControl.xaml.cs">
+      <DependentUpon>CategoryListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CategoriesListControl.xaml.cs">
-      <DependentUpon>CategoriesListControl.xaml</DependentUpon>
+    <Compile Include="Views\CategoryTreeControl.xaml.cs">
+      <DependentUpon>CategoryTreeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryControl.xaml.cs">
+      <DependentUpon>CategoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ComplexityControl.xaml.cs">
       <DependentUpon>ComplexityControl.xaml</DependentUpon>
@@ -100,11 +103,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoriesTreeControl.xaml">
+    <Page Include="Views\CategoryListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoriesListControl.xaml">
+    <Page Include="Views\CategoryTreeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

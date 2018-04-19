@@ -36,10 +36,12 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
             // Заполнение таблицы категорий из иерархии:
             _categoryTable = new ObservableCollection<CategoryHierarchyViewModel>();
-            foreach (var categoryHierarchyViewModel in _categoryHierarchy[0].ChilderenCategoryHierarchyViewModels) {
 
-                _categoryTable.AddRange (GetCategoryTable (categoryHierarchyViewModel));
-            }
+            if (_categoryHierarchy[0].ChilderenCategoryHierarchyViewModels != null)
+                foreach (var categoryHierarchyViewModel in _categoryHierarchy[0].ChilderenCategoryHierarchyViewModels) {
+
+                    _categoryTable.AddRange (GetCategoryTable (categoryHierarchyViewModel));
+                }
 
             CategoriesTable = new ReadOnlyObservableCollection<CategoryHierarchyViewModel>(_categoryTable);
 
@@ -47,7 +49,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
             SetSelectedItemCommand = new DelegateCommand<CategoryHierarchyViewModel> (item => SelectedCategory = item);
             ImportCategoriesCommand = new DelegateCommand (ImportFileCategory);
             SetInDealSelectedCategoryCommand = new DelegateCommand (() => 
-                                    { CategoryHierarchyViewModel.SetInDeal (SelectedCategory, _unitOfWork.ComplexityRepository, _unitOfWork.CategoryComplexityRepository); });
+                                    { CategoryHierarchyViewModel.SetInDeal (SelectedCategory, Complexities, _unitOfWork.CategoryComplexityRepository); });
 
             UnsetInDealSelectedCategoryCommand = new DelegateCommand (() => { CategoryHierarchyViewModel.UnsetInDeal (SelectedCategory); });
 
@@ -59,7 +61,7 @@ namespace WarehouseDeal.DesktopClient.ViewModels
 
         #region Properties
 
-        public List<Complexity> Complexities => _unitOfWork.ComplexityRepository.GetAll().ToList();
+        public Complexity[] Complexities => _unitOfWork.ComplexityRepository.GetAll().ToArray();
         public ReadOnlyObservableCollection<CategoryHierarchyViewModel> CategoriesHierarchy { get; }
         public ReadOnlyObservableCollection<CategoryHierarchyViewModel> CategoriesTable { get; }
         public CategoryHierarchyViewModel SelectedCategory

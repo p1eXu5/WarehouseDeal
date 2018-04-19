@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800" Background="White">
     <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TabItem Header="Итого"/>
+        <!--<TabItem Header="Итого"/>-->
         <TabItem Header="Отгрузка">
             <views:ShipmentControl />
         </TabItem>

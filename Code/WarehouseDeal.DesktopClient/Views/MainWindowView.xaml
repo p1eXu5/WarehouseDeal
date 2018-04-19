@@ -7,31 +7,85 @@
         xmlns:viewModels="clr-namespace:WarehouseDeal.DesktopClient.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainModelView}"
-        Title="CategoriesHierarchyView" Height="841.9" Width="1103.975" MinHeight="460" MinWidth="632">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="420"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="256"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <!-- Дерево категорий -->
-        <views:CategoriesListControl Grid.Row="0" Grid.Column="0"/>
-        <GridSplitter Grid.Row="0" Grid.Column="1" Width="3" HorizontalAlignment="Center"/>
+        Title="CategoriesHierarchyView" Height="953.9" Width="1103.975" MinHeight="460" MinWidth="632">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Height="24"  Background="{x:Null}">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="_Deal">
+                <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+                <Separator Margin="0" Padding="0"  VerticalAlignment="Center" />
+                <MenuItem Header="_Exit" Command="{Binding CloseCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Staff">
+                <MenuItem Header="Staff Explorer" Command="{Binding StaffExplorerCommand}"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button DockPanel.Dock="Left"
+                        Content="{StaticResource UpdateIcon}"
+                        Command="{Binding GetCategoryListCommand}"
+                        Style="{StaticResource TranspButton}" 
+                        ToolTip="Обновить"/>
+                <Button DockPanel.Dock="Left"
+                        Content="{StaticResource SaveIcon}"
+                        Command="{Binding SaveCategoriesListCommand}"
+                        Style="{StaticResource TranspButton}"
+                        ToolTip="Сохранить" Foreground="{DynamicResource ButtonForeground2}"/>
+                <Separator DockPanel.Dock="Left" Margin="5,0" />
+                <Button DockPanel.Dock="Left"
+                        Content="Импорт"
+                        Command="{Binding ImportCategoriesCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        Width="auto" Height="24" 
+                        ToolTip="Импорт"/>
+                <Separator DockPanel.Dock="Left" Margin="5,0" />
+                <Button DockPanel.Dock="Left"
+                        Content="Очистить"
+                        Command="{Binding ClearCategoriesCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        Width="auto" Height="24" 
+                        ToolTip="Очистить"/>
+                <!-- Кнопка-переключатель контролов -->
+                <!--<Separator DockPanel.Dock="Left" Margin="5,0" />
+                <ToggleButton DockPanel.Dock="Right" Margin="10,0,0,0"
+                          IsThreeState="False"
+                          IsChecked="{Binding IsTreeView, UpdateSourceTrigger=PropertyChanged}" 
+                          Content="{Binding ViewContent}" 
+                          BorderBrush="{x:Null}" Background="{x:Null}"></ToggleButton>-->
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="420"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="256"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Дерево категорий -->
+            <views:CategoryTreeControl DataContext="{Binding}" Grid.Row="0" Grid.Column="0"/>
+            <GridSplitter Grid.Row="0" Grid.Column="1" Width="3" HorizontalAlignment="Center"/>
+            <!-- Настройка сложностей категории -->
+            <views:CategoryControl Grid.Row="0" Grid.Column="2" DataContext="{Binding SelectedCategory}"/>
+            <GridSplitter Grid.Row="0" Grid.Column="3" Width="3" HorizontalAlignment="Center"/>
+            <!-- Дерево категорий -->
+            <views:CategoryListControl DataContext="{Binding}" Grid.Row="0" Grid.Column="4"/>
+            <GridSplitter Grid.Row="0" Grid.Column="1" Width="3" HorizontalAlignment="Center"/>
 
-        <!-- Настройка сложностей категорий -->
-        <views:CategoryListControl Grid.Row="0" Grid.Column="2" DataContext="{Binding SelectedCategory}"/>
-        <GridSplitter Grid.Row="0" Grid.Column="3" Width="3" HorizontalAlignment="Center"/>
-
-        <!-- Настройка сложностей категорий -->
-        <views:DealSettingsControl Grid.Row="0" Grid.Column="4"/>
-        <!-- Результаты -->
-        <views:OutputTabPanelControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"/>
-    </Grid>
+            <!-- Настройка общих сложностей -->
+            <views:DealSettingsControl Grid.Row="1" Grid.Column="4"/>
+            <!-- Результаты -->
+            <views:OutputTabPanelControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"/>
+        </Grid>
+    </DockPanel>
 </Window>
 

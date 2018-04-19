@@ -7,27 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800" Background="White">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button Content="{StaticResource UpdateIcon}" 
-                    Command="{Binding UpdateWorkersList}"
-                    Style="{StaticResource TranspButton}"/>
-            <Button DockPanel.Dock="Left"
-                    Content="Импорт"
-                    Command="{Binding ImportShipmentListCommand}"
-                    Margin="5,0"
-                    Background="{x:Null}" BorderBrush="{x:Null}"  
-                    Width="auto" Height="24" 
-                    ToolTip="Импорт" />
-            <Separator DockPanel.Dock="Left" Width="24">
-                <Separator.LayoutTransform>
-                    <RotateTransform Angle="90"></RotateTransform>
-                </Separator.LayoutTransform>
-            </Separator>
-            <TextBlock VerticalAlignment="Center" Margin="7,0" TextTrimming="CharacterEllipsis" Text="Период:  c"/>
-            <DatePicker VerticalAlignment="Center"></DatePicker>
-            <TextBlock VerticalAlignment="Center" Margin="5,0" TextTrimming="CharacterEllipsis">по</TextBlock>
-            <DatePicker VerticalAlignment="Center"></DatePicker>
-        </StackPanel>
+        <ToolBarTray DockPanel.Dock="Top" Orientation="Horizontal">
+            <ToolBar>
+                <Button Content="{StaticResource UpdateIcon}" 
+                        Command="{Binding UpdateWorkersList}"
+                        Style="{StaticResource TranspButton}"/>
+                <Separator />
+                <Button Content="Импорт"
+                        Command="{Binding ImportShipmentListCommand}"
+                        Margin="5,0"
+                        Background="{x:Null}" BorderBrush="{x:Null}"  
+                        Width="auto" Height="24" 
+                        ToolTip="Импорт" />
+                <Separator />
+                <TextBlock VerticalAlignment="Center" Margin="7,0" 
+                           TextTrimming="CharacterEllipsis" 
+                           Text="Период:  c"/>
+                <DatePicker x:Name="DateFrom" VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center" Margin="5,0" 
+                           TextTrimming="CharacterEllipsis"
+                           Text="по" />
+                <DatePicker x:Name="DateTo" VerticalAlignment="Center" />
+            </ToolBar>
+        </ToolBarTray>
         <ListView DockPanel.Dock="Left" Width="Auto" ItemsSource="{Binding WorkersResults}">
             <ListView.View>
                 <GridView>

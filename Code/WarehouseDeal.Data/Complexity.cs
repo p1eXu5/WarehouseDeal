@@ -25,6 +25,7 @@ namespace WarehouseDeal.Data
     
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Abbreviation { get; set; }
         public double MinComplexity { get; set; }
         public double MaxComplexity { get; set; }
     
